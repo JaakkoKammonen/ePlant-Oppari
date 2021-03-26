@@ -34,26 +34,29 @@ WiFiClient wifiClient;
  *  MenuItems: https://hieromon.github.io/AutoConnect/apiconfig.html#menuitems
 */
 
-int vesiPumppu = 33; // Vesipumpun ohjauspinni
+int ilmaPumppu = 33;                 // Ilmapumpun ohjauspinni eli Releen ohjaus
 
-int vesiTasoAnturiVirta = 5; // Antureiden virrat
-int kosteusAnturiVirta = 18; 
+int PHTasoAnturiVirta = 5;          // Antureiden virrat
+int PHAnturi= 32;
 
-int vesiPumppuArvo = 4; // Thingpeakin Read-metodilla päivitettävä arvo 0/1
-int anturienArvo = 5; // Thingspeak Read-metodilla päivitettävä arvo 0/1 
-int automaattiOhjaus = 6; // Thingspeak Read-metodilla päivitettävä arvo 0/1 
+int ECAnturiVirta = 18;
+int ECAnturi= 35;
+ 
+int ilmaPumppuThingspeakOhjaus = 4; // Thingpeakin Read-metodilla päivitettävä arvo 0/1
+int anturienArvo = 5;               // Thingspeak Read-metodilla päivitettävä arvo 0/1 
+int automaattiOhjaus = 6;           // Thingspeak Read-metodilla päivitettävä arvo 0/1 
 int moistureRead = 0; 
 
 int moistureField = 2;
-int vesiPumppuField = 4; // Thingspeak-field numero
-int anturienField = 5; // Thingspeak field arvo
-int automaattiOhjausField = 6; // Thingspeak field arvo
+int ThingSpeakFieldIlmaPumppu = 4; // Thingspeak-field numero
+int anturienField = 5;             // Thingspeak field arvo
+int automaattiOhjausField = 6;     // Thingspeak field arvo
 
 void setup() {
 
-  pinMode(vesiPumppu,OUTPUT);             // PinOutput anturien pinneille
-  pinMode(vesiTasoAnturiVirta,OUTPUT);    // ja releelle
-  pinMode(kosteusAnturiVirta,OUTPUT);
+  pinMode(ilmaPumppu,OUTPUT);             // PinOutput anturien pinneille
+  pinMode(PHTasoAnturiVirta,OUTPUT);    // ja releelle
+  pinMode(ECAnturiVirta,OUTPUT);
 
   delay(1000);
   config.apid = "ePlantVol2";             // Hotspot-nimi
@@ -81,72 +84,56 @@ send_interval_ms = millis();            // ajan aloitus
 
 }
 
- static int kosteusAnturiArvo() {
+ static int ECAnturiArvo() {
 
-        digitalWrite(kosteusAnturiVirta, HIGH);             // Virrat päälle, odotus, luetaan, tallennetaan muuttujaan tieto, virrat pois
+        digitalWrite(ECAnturiVirta, HIGH);             // Virrat päälle, odotus, luetaan, tallennetaan muuttujaan tieto, virrat pois
         delay(5000);
         
-        int moistureLevel1 = analogRead(35);
+        int ECTaso1 = analogRead(ECAnturi);
         delay(1000);
-        int moistureLevel2 = analogRead(35);
+        int ECTaso2 = analogRead(ECAnturi);
         delay(1000);
-        int moistureLevel3 = analogRead(35);
+        int ECTaso3 = analogRead(ECAnturi);
         delay(1000);
-        int moistureLevel4 = analogRead(35);
+        int ECTaso4 = analogRead(ECAnturi);
         delay(1000);
-        int moistureLevel5 = analogRead(35);
+        int ECTaso5 = analogRead(ECAnturi);
         delay(1000);
 
-        int moistureLevel = (moistureLevel1 + moistureLevel2 + moistureLevel3 + moistureLevel4 + moistureLevel5)/5;
+        int ECTaso = (ECTaso1 + ECTaso2 + ECTaso3 + ECTaso4 + ECTaso5)/5;
         
-        Serial.println("Mullan kosteus lukemat:"); 
-        Serial.println(moistureLevel);
+        Serial.println("EC lukemat:"); 
+        Serial.println(ECTaso);
         Serial.println(""); 
-        digitalWrite(kosteusAnturiVirta,LOW);
+        digitalWrite(ECAnturiVirta,LOW);
       
-        /* Kosteusanturin arvoja:
-          5: 2300->      // Lilluu vedessä....         // EI pida paikkaansa uudella anturilla!
-          4: 2200-2300   // Liian märkä
-          3: 2100-2200   // Optimaali
-          2: 1900-2100   // Hyvä
-          1: 0-1900      // Liian kuiva, kastellaan 
-         */
-      
-       return moistureLevel;
+       return ECTaso;
     };
 
-  static  int vesiTasoAnturiArvo() {
+  static  int PHTasoAnturiArvo() {
   
-        digitalWrite(vesiTasoAnturiVirta, HIGH);                // Virrat päälle, odotus, luetaan, tallennetaan muuttujaan tieto, virrat pois
+        digitalWrite(PHTasoAnturiVirta, HIGH);                // Virrat päälle, odotus, luetaan, tallennetaan muuttujaan tieto, virrat pois
         delay(5000);
         
-        int waterLevel1 = analogRead(32);
+        int PHTaso1 = analogRead(PHAnturi);
         delay(1000);
-        int waterLevel2 = analogRead(32);
+        int PHTaso2 = analogRead(PHAnturi);
         delay(1000);
-        int waterLevel3 = analogRead(32);
+        int PHTaso3 = analogRead(PHAnturi);
         delay(1000);
-        int waterLevel4 = analogRead(32);
+        int PHTaso4 = analogRead(PHAnturi);
         delay(1000);
-        int waterLevel5 = analogRead(32);
+        int PHTaso5 = analogRead(PHAnturi);
         delay(1000);
 
-        int waterlevel = (waterLevel1 + waterLevel2 + waterLevel3 + waterLevel4 + waterLevel5)/5;
+        int PHTaso = (PHTaso1 + PHTaso2 + PHTaso3 + PHTaso4 + PHTaso5)/5;
         
-        Serial.println("Vedentaso");
-        Serial.println(waterlevel);
+        Serial.println("PHTaso");
+        Serial.println(PHTaso);
         Serial.println(" ");
-        digitalWrite(vesiTasoAnturiVirta, LOW);
-      
-        /*    Vesitaso arvoja:
-         *    5: 1600-1800      // Ihan yläraja, älä täytä enää!
-         *    4: 1400-1600      // Vettä sopivasti
-         *    3: 1000-1400      // Vettä sopivasti
-         *    2: 400-1000       // Vettä vähän
-         *    1: 0-400          // Juuri alarajassa, pumppua ei saa käyttää 
-         */
+        digitalWrite(PHTasoAnturiVirta, LOW);
 
-         return waterlevel;
+         return PHTaso;
  };
 
    
@@ -154,61 +141,35 @@ void loop() {
   
   Portal.handleClient();
 
-  if (WiFi.status() != WL_CONNECTED) {                      // Wifi ei ole kytketty
+  if (WiFi.status() != WL_CONNECTED) {            // Wifi ei ole kytketty
       
-  int vesiTasoAnturi = vesiTasoAnturiArvo();                // Kutsutaan vesianturin mittaus metodia ja tallentaan muuttujaan
-  int kosteusAnturi = kosteusAnturiArvo();                  // Kutsutaan kosteusanturin mittaus metodia ja tallentaan muuttujaan
-  
-     if (400 < vesiTasoAnturi){                             // Mikäli veden taso on liian alhainen, pumppua ei voida laittaa paalle
-        
-         if (kosteusAnturi < 1500) {                        // Jos mullan kosteus on alle 1500
-            digitalWrite(vesiPumppu,HIGH);                  // Vesipumppu päälle
-       
-            
-            delay(3000);                                    // Odotetaan 1sec
-            Serial.println("Vesipumppu kävi 3 sec");        // Tulostetaan consoleen
-                     
-            digitalWrite(vesiPumppu,LOW);                   // Vesipumppu pois päältä
-            delay(7200000);                                 // Odotellaan 2 tuntia 
-            Serial.println("Odotellaan 2h");                              
-         } else {
-                                                            // Jos mullan kosteus yli 1500
-          Serial.println("Mullan kosteus ok, ei kastelua"); // Tulostetaan consoleen
-          Serial.println(" ");   
-          digitalWrite(vesiPumppu,LOW);                     // Varmistus, että pumppu on pois päältä
-    }
-   
-  } else {
-    Serial.println("Täytä vesiastia");                    // Jos vedentaso liian alhainen, tulostus consoleen
-    Serial.println(" ");
-  } 
-  
+  // Pidetään ilmapummpua päällä
+  Serial.println("Ei nettiä, ilmapumppu päällä kokoajan.")
+  digitalWrite(ilmaPumppu,HIGH);                  // Ilmapumppu päälle eli Releen pinni aktivoidaan
+
   }
 
   
    if (WiFi.status() == WL_CONNECTED) {                                                  // Wifi kytkettyna
  
-      vesiPumppuArvo = ThingSpeak.readFloatField(channel_id, vesiPumppuField);           // Luetaan vesipumpunohjausarvo Thingspeakista
+      ilmaPumppuThingspeakOhjaus = ThingSpeak.readFloatField(channel_id, ThingSpeakFieldIlmaPumppu);      // Luetaan ilmapumpunohjausarvo Thingspeakista
         
-      if(vesiPumppuArvo == 1){                                                           // Jos arvo 1 == pumppu paalla 3sec
-        digitalWrite(vesiPumppu, HIGH);                                                  // Jos arvo 0 == pumppu ei paalla
-        delay(3000);
-        digitalWrite(vesiPumppu, LOW);
-        Serial.println("Vesipumppu oli päällä 3 sekuntia.");
-        
+      if(ilmaPumppuThingspeakOhjaus == 1){                                                           // Jos arvo 1 == pumppu paalla 3sec
+        digitalWrite(ilmaPumppu, HIGH);                                                  // Jos arvo 0 == pumppu ei paalla
+        Serial.println("ThingSpeak arvo 1. Ilmapumppu on päällä. ");
       }
-        else if(vesiPumppuArvo == 0){
+      else if(ilmaPumppuThingspeakOhjaus == 0){
         digitalWrite(vesiPumppu, LOW);
-        Serial.println("ThingSpeak arvo 0. Vesipumppu on pois päältä. ");
-  }
+        Serial.println("ThingSpeak arvo 0. Ilmapumppu on pois päältä. ");
+      }
      
 
-       anturienArvo = ThingSpeak.readFloatField(channel_id, anturienField);             // Luetaan anturien lahetys ohjausarvo thingspeak
+      anturienArvo = ThingSpeak.readFloatField(channel_id, anturienField);             // Luetaan anturien lahetys ohjausarvo thingspeak
     
        if (anturienArvo == 1) {                                                         // Mikali arvo 1 == luetaan anturit ja tallennetaan
                                                                                         // metodin sisaisiin muuttujiin. Sitten ne lahetetaan Thingspeak
-           int vesiTasoAnturi = vesiTasoAnturiArvo();
-           int kosteusAnturi = kosteusAnturiArvo();
+           int vesiTasoAnturi = PHTasoAnturiArvo();
+           int kosteusAnturi = ECAnturiArvo();
            
         if (wifiClient.connect(server, 80))                                             // api.thingspeak.com
             {                                                                           // Thingspeak tunneli avataan
@@ -262,14 +223,14 @@ void loop() {
            Serial.println(moistureRead);
            Serial.println(" "); 
            
-           int waterLevel = vesiTasoAnturiArvo();                           // Luetaan vesitasoanturin arvo
-           int kosteusAnturi = kosteusAnturiArvo();                             // Luetaan kosteusanturin arvo
+           int PHAnturiArvo = PHTasoAnturiArvo();                           // Luetaan vesitasoanturin arvo
+           int ECAnturiArvo = ECAnturiArvo();                             // Luetaan kosteusanturin arvo
 
            
            
            if (400 < waterLevel){                                           // Jos vesitasoanturin arvo on pienempi kuin 400
               
-               if (kosteusAnturi < moistureRead) {                                      // Jos mullan kosteus on alle 1500 
+               if (kosteusAnturi < moistureRead) {                               // Jos mullan kosteus on alle 1500 
                   digitalWrite(vesiPumppu,HIGH);                                // Vesipumppu päälle
              
                   
