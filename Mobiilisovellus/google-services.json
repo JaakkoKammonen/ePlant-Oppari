@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "641350437844",
+    "firebase_url": "https://eplant-19cd0.firebaseio.com",
+    "project_id": "eplant-19cd0",
+    "storage_bucket": "eplant-19cd0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:641350437844:android:7a28de6b5a44f98d18e441",
+        "android_client_info": {
+          "package_name": "com.ePlant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "641350437844-hl3oi5ctkfgjjsohi8b815vste3unl3k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCS3zDBzO2t0YIOllvZZBsbZekVtYj6cj8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "641350437844-hl3oi5ctkfgjjsohi8b815vste3unl3k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
