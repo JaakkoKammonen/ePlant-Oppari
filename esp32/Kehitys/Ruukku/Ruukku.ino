@@ -44,12 +44,11 @@ int ECAnturi= 35;
  
 int ilmaPumppuThingspeakOhjaus = 4; // Thingpeakin Read-metodilla päivitettävä arvo 0/1
 int anturienArvo = 5;               // Thingspeak Read-metodilla päivitettävä arvo 0/1 
-int automaattiOhjaus = 6;           // Thingspeak Read-metodilla päivitettävä arvo 0/1 
 int moistureRead = 0; 
 
 int moistureField = 2;
-int ThingSpeakFieldIlmaPumppu = 4; // Thingspeak-field numero
-int anturienField = 5;             // Thingspeak field arvo
+int ThingSpeakFieldIlmaPumppu = 3; // Thingspeak-field numero
+int ThingSpeakFieldAnturiDataSend = 5;             // Thingspeak field arvo
 int automaattiOhjausField = 6;     // Thingspeak field arvo
 
 void setup() {
@@ -100,14 +99,14 @@ send_interval_ms = millis();            // ajan aloitus
         int ECTaso5 = analogRead(ECAnturi);
         delay(1000);
 
-        int ECTaso = (ECTaso1 + ECTaso2 + ECTaso3 + ECTaso4 + ECTaso5)/5;
+        int ECArvo = (ECTaso1 + ECTaso2 + ECTaso3 + ECTaso4 + ECTaso5)/5;
         
         Serial.println("EC lukemat:"); 
-        Serial.println(ECTaso);
+        Serial.println(ECArvo);
         Serial.println(""); 
         digitalWrite(ECAnturiVirta,LOW);
       
-       return ECTaso;
+       return ECArvo;
     };
 
   static  int PHTasoAnturiArvo() {
@@ -144,7 +143,7 @@ void loop() {
   if (WiFi.status() != WL_CONNECTED) {            // Wifi ei ole kytketty
       
   // Pidetään ilmapummpua päällä
-  Serial.println("Ei nettiä, ilmapumppu päällä kokoajan.")
+  Serial.println("Ei nettiä, ilmapumppu päällä kokoajan.");
   digitalWrite(ilmaPumppu,HIGH);                  // Ilmapumppu päälle eli Releen pinni aktivoidaan
 
   }
@@ -159,25 +158,25 @@ void loop() {
         Serial.println("ThingSpeak arvo 1. Ilmapumppu on päällä. ");
       }
       else if(ilmaPumppuThingspeakOhjaus == 0){
-        digitalWrite(vesiPumppu, LOW);
+        digitalWrite(ilmaPumppu, LOW);
         Serial.println("ThingSpeak arvo 0. Ilmapumppu on pois päältä. ");
       }
      
 
-      anturienArvo = ThingSpeak.readFloatField(channel_id, anturienField);             // Luetaan anturien lahetys ohjausarvo thingspeak
+      anturienArvo = ThingSpeak.readFloatField(channel_id, ThingSpeakFieldAnturiDataSend);             // Luetaan anturien lahetys ohjausarvo thingspeak
     
        if (anturienArvo == 1) {                                                         // Mikali arvo 1 == luetaan anturit ja tallennetaan
                                                                                         // metodin sisaisiin muuttujiin. Sitten ne lahetetaan Thingspeak
-           int vesiTasoAnturi = PHTasoAnturiArvo();
-           int kosteusAnturi = ECAnturiArvo();
+           int PHarvo = PHTasoAnturiArvo();
+           int ECarvo = ECAnturiArvo();
            
         if (wifiClient.connect(server, 80))                                             // api.thingspeak.com
             {                                                                           // Thingspeak tunneli avataan
               String data_to_send = write_api_key;                                      // Apikey
               data_to_send += "&field1=";
-              data_to_send += kosteusAnturi;
-              data_to_send += "&field3=";
-              data_to_send += vesiTasoAnturi;
+              data_to_send += PHarvo;
+              data_to_send += "&field2=";
+              data_to_send += ECarvo;
               data_to_send += "";
           
               wifiClient.print("POST /update HTTP/1.1\n");
@@ -201,67 +200,7 @@ void loop() {
        }
 
 
-    automaattiOhjaus = ThingSpeak.readFloatField(channel_id, automaattiOhjausField); // Luetaan anturien lähetysarvot ThingSpeakissa
-    
-    
-           
-    if (automaattiOhjaus == 1 ) {                                               // Kun automaattiohjaus on 1
-
-        Serial.println("Intervall is set to 12h. Untill next check... ");
-        Serial.println((INTERVAL - (int)(millis() - send_interval_ms))/(60*1000*60));
-        Serial.println("hours");
-        Serial.println((INTERVAL - (int)(millis() - send_interval_ms))/1000);
-        Serial.println("seconds...");     
-        Serial.println(" ");  
-           
-          if ((int)(millis() - send_interval_ms) >= INTERVAL) {                 // Kun millis on suurempi/yhtä suuri kuin asetettu interval
-
-           
-            
-           moistureRead = ThingSpeak.readFloatField(channel_id, moistureField);
-           Serial.println("laitettu kosteusarvo"); 
-           Serial.println(moistureRead);
-           Serial.println(" "); 
-           
-           int PHAnturiArvo = PHTasoAnturiArvo();                           // Luetaan vesitasoanturin arvo
-           int ECAnturiArvo = ECAnturiArvo();                             // Luetaan kosteusanturin arvo
-
-           
-           
-           if (400 < waterLevel){                                           // Jos vesitasoanturin arvo on pienempi kuin 400
-              
-               if (kosteusAnturi < moistureRead) {                               // Jos mullan kosteus on alle 1500 
-                  digitalWrite(vesiPumppu,HIGH);                                // Vesipumppu päälle
-             
-                  
-                  delay(3000);                                                  // Odotetaan 1 sekunti
-                  Serial.println("Vesipumppu kävi 2 sec");                      // Tulostetaan consoleen
-                           
-                  digitalWrite(vesiPumppu,LOW);                                 // Vesipumppu pois päältä
-                  
-                  Serial.println("Odotellaan 2h");                              
-               } else {
-                                                                                // Jos mullan kosteus yli 1500
-                Serial.println("Mullan kosteus ok, ei kastelua");               // Tulostetaan consoleen
-                Serial.println(" ");   
-                digitalWrite(vesiPumppu,LOW);                                   // Varmistus, että pumppu on pois päältä
-          }
-         
-        } else {                                                                // Muutoin tulostetaan consoleen
-          Serial.println("Täytä vesiastia");                    
-          Serial.println(" ");
-        } 
-        
-        send_interval_ms = millis();                                            // Lähetetään interval
-        }
-
-    }
-       
-       if (automaattiOhjaus == 0 ) {                                            // Kun automaattiohjaus saa arvon 0
-        Serial.println("ThingSpeak arvo 0. Ohjaus toimii manuaalisesti.");      // Tulostetaan consoleen
-        
-        Serial.println("");
-       }
+  
        
   } 
   Serial.println("Loop over");
