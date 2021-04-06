@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Ionicons } from '@expo/vector-icons';
 
 // bottom navigation
-import Home from './src/screens/Home';
+import Home from './src/screens/Koti';
 import Search from './src/screens/Search';
 import Add from './src/screens/SelectPlant';
 import Notifications from './src/screens/Notifications';
