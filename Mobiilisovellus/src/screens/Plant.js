@@ -21,7 +21,7 @@ export default function Plant(props) {
                 <Image style={styles.topimage} source={plantImage} />
             </View>
             <View>
-                <TouchableOpacity onPress={() => navigate('Search')}>
+                <TouchableOpacity onPress={() => navigate('Haku')}>
                     <Ionicons name="md-arrow-round-back" size={30} style={styles.arrow} />
                 </TouchableOpacity>
                 <View style={styles.top}>

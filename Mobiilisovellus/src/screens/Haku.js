@@ -6,7 +6,7 @@ import PlantList from '../components/PlantList';
 
 // search has 2 different search views, card view and list view
 // these views are separate components and only one of these can be visible at the time
-export default function Search({navigation}) {
+export default function Haku({navigation}) {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchPhase, setSearchPhase] = useState('cards');
 
@@ -59,7 +59,7 @@ export default function Search({navigation}) {
     );
 };
 
-Search.navigationOptions = () => ({ title: 'Search' });
+Haku.navigationOptions = () => ({ title: 'Haku' });
 
 const styles = StyleSheet.create({
     container: {

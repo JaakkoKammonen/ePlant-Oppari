@@ -3,13 +3,13 @@ import { StyleSheet, View, Text, Image, FlatList, ScrollView, TouchableOpacity }
 import firebase from '../components/firebase';
 import { Snackbar } from 'react-native-paper';
 
-export default function Home(props) {
+export default function Koti(props) {
     const user = "Jace";
     const [plants, setPlants] = useState([]);
     const [visibility, setVisibility] = useState(false);
     const { navigate } = props.navigation;
 
-    // use these variables if they have all these props (so if user has navigated to Home.js from SelectName.js)
+    // use these variables if they have all these props (so if user has navigated to Koti.js from SelectName.js)
     const showSnackbar = props.navigation && props.navigation.state && props.navigation.state.params && props.navigation.state.params.showSnackbar
     const plantName = props.navigation && props.navigation.state && props.navigation.state.params && props.navigation.state.params.plantName
 
@@ -110,7 +110,7 @@ export default function Home(props) {
     );
 };
 
-Home.navigationOptions = () => ({ title: 'Home' });
+Koti.navigationOptions = () => ({ title: 'Koti' });
 
 const styles = StyleSheet.create({
     button: {
