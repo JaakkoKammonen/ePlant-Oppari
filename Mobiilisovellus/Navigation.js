@@ -4,36 +4,36 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Ionicons } from '@expo/vector-icons';
 
 // bottom navigation
-import Home from './src/screens/Koti';
-import Search from './src/screens/Search';
-import Add from './src/screens/SelectPlant';
+import Koti from './src/screens/Koti';
+import Haku from './src/screens/Haku';
+import Add from './src/screens/01LisaaKasvi';
 import Notifications from './src/screens/Notifications';
 import Settings from './src/screens/Settings';
 
 // switch navigation
 import Plant from './src/screens/Plant';
 import MyPlant from './src/screens/MyPlant';
-import SelectPlant from './src/screens/SelectPlant';
+import LisaaKasvi from './src/screens/01LisaaKasvi';
 import SelectName from './src/screens/SelectName';
 import SelectPot from './src/screens/SelectPot';
 
 //creating bottom navigation
 const BottomNavigator = createBottomTabNavigator(
     {
-        Home: {
-            screen: Home,
+        Koti: {
+            screen: Koti,
             navigationOptions: {
-                tabBarLabel: 'Home',
+                tabBarLabel: 'Koti',
                 tabBarIcon: ({ tintColor }) => (
                     <Ionicons name="ios-home" color={tintColor} size={25} />
                 )
             }
         },
 
-        Search: {
-            screen: Search,
+        Haku: {
+            screen: Haku,
             navigationOptions: {
-                tabBarLabel: 'Search',
+                tabBarLabel: 'Haku',
                 tabBarIcon: ({ tintColor }) => (
                     <Ionicons name="ios-search" color={tintColor} size={25} />
                 )
@@ -94,7 +94,7 @@ const BottomNavigator = createBottomTabNavigator(
 const SwitchNavigation = createSwitchNavigator({ 
     Plant: Plant,
     MyPlant: MyPlant,
-    SelectPlant: SelectPlant, 
+    LisaaKasvi: LisaaKasvi, 
     SelectName: SelectName,
     SelectPot: SelectPot
   })
