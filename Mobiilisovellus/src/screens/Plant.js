@@ -10,10 +10,6 @@ export default function Plant(props) {
 
     console.disableYellowBox = true;
 
-    const add = () => {
-        alert('tää ei tee vielä mitään')
-    }
-
     // returning plant data based on props from Search.js and plantImage from SetBackgroundImg.js
     return (
         <ScrollView style={styles.container}>
@@ -21,7 +17,7 @@ export default function Plant(props) {
                 <Image style={styles.topimage} source={plantImage} />
             </View>
             <View>
-                <TouchableOpacity onPress={() => navigate('Haku')}>
+                <TouchableOpacity onPress={() => navigate('Search')}>
                     <Ionicons name="md-arrow-round-back" size={30} style={styles.arrow} />
                 </TouchableOpacity>
                 <View style={styles.top}>
@@ -69,19 +65,6 @@ export default function Plant(props) {
                     </View>
                 </View>
                 <Text style={styles.description}>{plant.kuvaus}</Text>
-                <Text style={styles.header3}>Oman kasvini</Text>
-                <View style={styles.bottom}>
-                    <View style={styles.border}>
-                        <Text style={styles.bottomtext}>Teuvo</Text>
-                        <Image style={styles.bottomimage} source={require('../assets/flowerpot.png')} />
-                    </View>
-                    <TouchableOpacity style={styles.add}
-                        onPress={add}
-                        title="Add">
-                        <Text style={styles.addtext}>Lisää kasvi</Text>
-                        <Image style={styles.addimage} source={require('../assets/plus.png')} />
-                    </TouchableOpacity>
-                </View>
             </View>
         </ScrollView>
     );

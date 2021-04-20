@@ -21,7 +21,7 @@ export default function SelectPot(props) {
     }, []);
 
     // sending selected items data to next screen and navigating to there
-    handleSelect = (item) => {
+    const handleSelect = (item) => {
         navigate('SelectName', { pot: item.nimi, potId: item.id, plant: plant })
     };
 
@@ -49,7 +49,7 @@ export default function SelectPot(props) {
                     style={styles.border}
                     >
                     <Text style={styles.plantheader}>{item.nimi}</Text>
-                    <Image style={styles.plantimage} source={require('../assets/flowerpot.png')} />
+                    <Image style={styles.plantimage} source={require('../assets/herbs.png')} />
 
                     </TouchableOpacity>
                 ))}
@@ -111,8 +111,8 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         backgroundColor: 'white',
         alignContent:"center",
-        height: 200,
-        width: 150
+        height: 185,
+        width: 170
     },
     plantheader: { 
         textAlign: 'center', 
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     },
     plantimage: { 
         width: 150, 
-        height: 150 
+        height: 150,
     },
     bottom: {
         justifyContent:"center",

@@ -2,8 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Avatar, ListItem, Icon, Button } from 'react-native-elements';
 
-export default function Settings() {
-
+export default function Settings(props) {
+    const { navigate } = props.navigation;
     console.disableYellowBox = true;
 
     // list of listitems headers and icons to make list rendering cleaner
@@ -37,21 +37,21 @@ export default function Settings() {
                     <View>
                         <Avatar
                             size="large"
-                            rounded title="PP"
+                            rounded title="JK"
                             overlayContainerStyle={{
                                 backgroundColor: '#63816D'
                             }}
                         />
                     </View>
                     <View style={styles.profileinfo}>
-                        <Text style={{fontSize: 25, marginBottom: 5}}>Petra</Text>
-                        <Text style={{fontStyle: 'italic', color: '#63816D'}}>@pedrrro123</Text>
+                        <Text style={{fontSize: 25, marginBottom: 5}}>Jace</Text>
+                        <Text style={{fontStyle: 'italic', color: '#63816D'}}>@jace123</Text>
                     </View>
                 </View>
 
                 {listItems.map((item, i) => (
                     <ListItem
-                        onPress={() => alert('En tee vielä mitään')}
+                        onPress={() => navigate('Search')}
                         key={i}
                         title={item.title}
                         leftIcon={<Icon

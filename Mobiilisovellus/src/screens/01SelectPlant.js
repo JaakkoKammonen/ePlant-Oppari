@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { ListItem, SearchBar, Icon } from 'react-native-elements';
 import firebase from '../components/firebase';
 
-export default function LisaaKasvi({navigation}) {
+export default function SelectPlant({navigation}) {
     const [plantList, setPlantlist] = useState([]);
     const [filteredPlantList, setFilteredPlantlist] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -60,7 +60,7 @@ export default function LisaaKasvi({navigation}) {
                     name="close" 
                     size={40} 
                     iconStyle={styles.icon}
-                    onPress={() => navigate('Koti')} 
+                    onPress={() => navigate('Home')} 
                 />
             </View>
 

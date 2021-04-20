@@ -3,9 +3,10 @@ import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity} from 'react-
 import firebase from './firebase';
 
 export default function PlantCards({navigation}) {
-    const [easyPlants, setEasyPlants] = useState([]);
     const [foodPlants, setFoodPlants] = useState([]);
-    const [lowWaterPlants, setlowWaterPlants] = useState([]);
+    const [feature, setFeature] = useState([]);
+    const [feature2, setFeature2] = useState([]);
+    const [feature3, setFeature3] = useState([]);
     const { navigate } = navigation;
 
     console.disableYellowBox = true;
@@ -15,13 +16,15 @@ export default function PlantCards({navigation}) {
     useEffect(() => {
         firebase.database().ref('kasvit/').on('value', snapshot => {
           const plants = Object.values(snapshot.val());
-          const easyPlants = plants.filter(plant => plant.hoito === 'Helppo')
           const foodPlants = plants.filter(plant => plant.tyyppi === 'Ruokakasvi')
-          const lowWaterPlants = plants.filter(plant => plant.vesitarve === 'Niukka')
+          const feature = plants.filter(plant => plant.ominaisuus === 'Yksivuotinen')
+          const feature2 = plants.filter(plant => plant.ominaisuus === 'Kaksivuotinen')
+          const feature3 = plants.filter(plant => plant.ominaisuus === 'Monivuotinen')
         
-          setEasyPlants(easyPlants);
           setFoodPlants(foodPlants);
-          setlowWaterPlants(lowWaterPlants); 
+          setFeature(feature);
+          setFeature2(feature2);
+          setFeature3(feature3);
         });
     }, []);
 
@@ -33,30 +36,70 @@ export default function PlantCards({navigation}) {
     return (
         <View style={styles.container}>
                 <View style={styles.category}>
-                    <Text style={styles.text}>Helppohoitoiset kasvit</Text>
+                    <Text style={styles.text}>Yksivuotinen</Text>
                     <FlatList
                         horizontal={true}
                         contentContainerStyle={{ alignSelf: 'flex-start' }}
                         showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}
                         marginLeft={10}
-                        data={easyPlants}
+                        data={feature}
                         renderItem={({ item }) =>
                             <TouchableOpacity
                                 onPress={() => handleSelect(item)}
-                                title='Plant'
+                                title="Plant"
                                 style={[styles.border]}
                             >
                                 <Text style={[styles.plantheader]}>{item.laji}</Text>
-                                <Image style={[styles.plantimage]} source={require('../assets/plant_img/kaktus.png')} />
+                                <Image style={[styles.plantimage]} source={require('../assets/herbs.png')} />
 
                             </TouchableOpacity>
 
                         }
                     />
-                </View>
-                <View style={styles.category}>
-                    <Text style={styles.text}>Ruokakasvit</Text>
+                    <Text style={styles.text2}>Kaksivuotinen</Text>
+                    <FlatList
+                        horizontal={true}
+                        contentContainerStyle={{ alignSelf: 'flex-start' }}
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
+                        marginLeft={10}
+                        data={feature2}
+                        renderItem={({ item }) =>
+                            <TouchableOpacity
+                                onPress={() => handleSelect(item)}
+                                title="Plant"
+                                style={[styles.border]}
+                            >
+                                <Text style={[styles.plantheader]}>{item.laji}</Text>
+                                <Image style={[styles.plantimage]} source={require('../assets/herbs.png')} />
+
+                            </TouchableOpacity>
+
+                        }
+                    />
+                    <Text style={styles.text3}>Monivuotinen</Text>
+                    <FlatList
+                        horizontal={true}
+                        contentContainerStyle={{ alignSelf: 'flex-start' }}
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
+                        marginLeft={10}
+                        data={feature3}
+                        renderItem={({ item }) =>
+                            <TouchableOpacity
+                                onPress={() => handleSelect(item)}
+                                title="Plant"
+                                style={[styles.border]}
+                            >
+                                <Text style={[styles.plantheader]}>{item.laji}</Text>
+                                <Image style={[styles.plantimage]} source={require('../assets/herbs.png')} />
+
+                            </TouchableOpacity>
+
+                        }
+                    />
+                     <Text style={styles.text3}>Kaikki</Text>
                     <FlatList
                         horizontal={true}
                         contentContainerStyle={{ alignSelf: 'flex-start' }}
@@ -71,36 +114,13 @@ export default function PlantCards({navigation}) {
                                 style={[styles.border]}
                             >
                                 <Text style={[styles.plantheader]}>{item.laji}</Text>
-                                <Image style={[styles.plantimage]} source={require('../assets/flowerpot.png')} />
+                                <Image style={[styles.plantimage]} source={require('../assets/herbs.png')} />
 
                             </TouchableOpacity>
 
                         }
                     />
                 </View>
-                <View style={styles.category}>
-                    <Text style={styles.text}>Kuivuutta kestävät kasvit</Text>
-                    <FlatList
-                        horizontal={true}
-                        contentContainerStyle={{ alignSelf: 'flex-start' }}
-                        showsVerticalScrollIndicator={false}
-                        showsHorizontalScrollIndicator={false}
-                        marginLeft={10}
-                        data={lowWaterPlants}
-                        renderItem={({ item }) =>
-                            <TouchableOpacity
-                                onPress={() => handleSelect(item)}
-                                title="Plant"
-                                style={[styles.border]}
-                            >
-                                <Text style={[styles.plantheader]}>{item.laji}</Text>
-                                <Image style={[styles.plantimage]} source={require('../assets/plant_img/aloe_vera.png')} />
-
-                            </TouchableOpacity>
-                        }
-                    />
-                </View>
-
         </View>
     );
 
@@ -109,8 +129,7 @@ export default function PlantCards({navigation}) {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#FCFCFC',
-        flex: 1
-        
+        flex: 1 
     },
     category: {
         marginTop: 25,
@@ -123,13 +142,27 @@ const styles = StyleSheet.create({
     },
     plantimage: { 
         width: 150, 
-        height: 150 
+        height: 150
     },
     text: {
         fontSize: 14,
         fontWeight: "bold",
         marginLeft: 10,
-        marginBottom: 15,
+        marginBottom: 17,
+    },
+    text2: {
+        fontSize: 14,
+        fontWeight: "bold",
+        marginLeft: 10,
+        marginTop: 17,
+        marginBottom: 17,
+    },
+    text3: {
+        fontSize: 14,
+        fontWeight: "bold",
+        marginLeft: 10,
+        marginTop: 17,
+        marginBottom: 17,
     },
     border: {
         shadowColor: 'rgba(0,0,0, .1)', // IOS
@@ -139,10 +172,9 @@ const styles = StyleSheet.create({
         elevation: 3, // android
         borderRadius: 4,
         margin:5,
-        marginRight: 3,
-        marginLeft: 3,
         backgroundColor: 'white',
-        height: 170
+        height: 185,
+        width: 170
     },
     header: {
         height: 100,
