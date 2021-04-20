@@ -6,16 +6,16 @@ import { Ionicons } from '@expo/vector-icons';
 // bottom navigation
 import Home from './src/screens/Home';
 import Search from './src/screens/Search';
-import Add from './src/screens/01SelectPlant';
+import Lisaa from './src/screens/addPlant/01-lisaaKasvi';
 import Notifications from './src/screens/Notifications';
 import Settings from './src/screens/Settings';
 
 // switch navigation
 import Plant from './src/screens/Plant';
 import MyPlant from './src/screens/MyPlant';
-import SelectPlant from './src/screens/01SelectPlant';
+import LisaaKasvi from './src/screens/addPlant/01-lisaaKasvi';
 import SelectName from './src/screens/03SelectName';
-import SelectPot from './src/screens/02SelectPot';
+import ValitseRuukku from './src/screens/addPlant/02-valitseRuukku';
 import Pots from './src/screens/Pots';
 import Info from './src/screens/Info';
 import Safety from './src/screens/Safety';
@@ -45,9 +45,9 @@ const BottomNavigator = createBottomTabNavigator(
             }
         },
         Add: {
-            screen: Add,
+            screen: Lisaa,
             navigationOptions: {
-                tabBarLabel: 'Add',
+                tabBarLabel: 'Lisaa',
                 tabBarIcon: ({ tintColor }) => (
                     <Ionicons name="ios-add-circle" color={"#63816D"} size={70} />
                 )
@@ -99,9 +99,9 @@ const BottomNavigator = createBottomTabNavigator(
 const SwitchNavigation = createSwitchNavigator({ 
     Plant: Plant,
     MyPlant: MyPlant,
-    SelectPlant: SelectPlant, 
+    LisaaKasvi: LisaaKasvi, 
     SelectName: SelectName,
-    SelectPot: SelectPot,
+    ValitseRuukku: ValitseRuukku,
     Pots: Pots,
     Info: Info,
     Safety: Safety,

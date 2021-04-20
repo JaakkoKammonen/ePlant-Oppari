@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { ListItem, SearchBar, Icon } from 'react-native-elements';
-import firebase from '../components/firebase';
+import firebase from '../../components/firebase';
 
 export default function SelectPlant({navigation}) {
     const [plantList, setPlantlist] = useState([]);
@@ -10,7 +10,7 @@ export default function SelectPlant({navigation}) {
     const { navigate } = navigation;
     
     console.disableYellowBox = true;
-
+    //console.log(filteredPlantList)
     // getting object values from firebase and setting values into two list,
     // one for all plants and one as the filtered list based on search word user uses
     useEffect(() => {
@@ -82,18 +82,21 @@ export default function SelectPlant({navigation}) {
                     onClear={resetPlantList}
                     onCancel={resetPlantList}
                 />
-                {filteredPlantList.map((item, i) => (
+                
+            </View>
+            </ScrollView>
+            <View>
+               {filteredPlantList.map((item, i) => (
                     <ListItem
                         onPress={() => handleSelect(item)}
-                        key={i}
+                        key={item.id}
                         title={item.laji}
                         containerStyle={{
                             backgroundColor: '#FCFCFC'
                         }}
                     />
-                ))}
+                ))} 
             </View>
-            </ScrollView>
         </View>
     );
 };

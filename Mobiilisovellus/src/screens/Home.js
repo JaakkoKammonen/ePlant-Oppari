@@ -12,16 +12,17 @@ export default function Home(props) {
     // use these variables if they have all these props (so if user has navigated to Koti.js from SelectName.js)
     const showSnackbar = props.navigation && props.navigation.state && props.navigation.state.params && props.navigation.state.params.showSnackbar
     const plantName = props.navigation && props.navigation.state && props.navigation.state.params && props.navigation.state.params.plantName
-
+    console.log(plants)
     // change snackbar visibility opposite to current status
     const toggleSnackBar = () => setVisibility(!visibility);
 
     console.disableYellowBox = true;
-
+    
     // retrieving firebase data and inserting it to "plants" list
     useEffect(() => {
         firebase.database().ref('omatkasvit/').on('value', snapshot => {
             const plants = Object.values(snapshot.val());
+            //console.log(snapshot.val())
             setPlants(plants);
         });
 

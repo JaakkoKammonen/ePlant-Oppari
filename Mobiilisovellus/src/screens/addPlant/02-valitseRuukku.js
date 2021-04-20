@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { Button , Icon } from 'react-native-elements';
-import firebase from '../components/firebase';
+import { Button } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
+import firebase from '../../components/firebase';
+import kuva from '../../assets/herbs.png'
 
 export default function SelectPot(props) {
     const [potList, setPotList] = useState([]);
@@ -48,7 +50,7 @@ export default function SelectPot(props) {
                     style={styles.border}
                     >
                     <Text style={styles.plantheader}>{item.nimi}</Text>
-                    <Image style={styles.plantimage} source={require('../assets/herbs.png')} />
+                    <Image style={styles.plantimage} source={kuva} />
 
                     </TouchableOpacity>
                 ))}
