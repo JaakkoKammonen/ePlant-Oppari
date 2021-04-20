@@ -40,7 +40,7 @@ export default function Home(props) {
         <View style={styles.container}>    
             <ScrollView style={styles.container}>
                 <View style={styles.top} >
-                    <Text style={styles.top}>Huomenta {user}!</Text>
+                    <Text style={styles.toptext}>Huomenta {user}!</Text>
                 </View>
                 
                 <View style={styles.middle}>
@@ -53,6 +53,7 @@ export default function Home(props) {
                         showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}
                         data={plants}
+                        keyExtractor={(item, index) => index.toString()}
                         renderItem={({ item }) =>
                             <TouchableOpacity style={styles.border}
                                 onPress={() => handleSelect(item)}
@@ -64,7 +65,7 @@ export default function Home(props) {
                     />
                 </View>
                 <View style={styles.bottomheader}>
-                    <Text style={styles.header}>Viimeisimmät tapahtumat</Text>
+                    <Text style={styles.header2}>Viimeisimmät tapahtumat</Text>
                     <TouchableOpacity
                         onPress={() => navigate('Notifications', { plants })}
                     >
@@ -74,6 +75,7 @@ export default function Home(props) {
                 <View style={styles.bottom}>
                     <FlatList data={plants}
                         marginLeft={15}
+                        keyExtractor={(item, index) => index.toString()}
                         renderItem={({ item }) =>
                             <View style={styles.bottomitem}>
                                 <View>
@@ -84,6 +86,7 @@ export default function Home(props) {
                                     <Text style={styles.bottomtext2}>{item.nimi} kasteltu.</Text>
                                 </View>
                             </View>
+                            
 
                         }
                     />
@@ -119,21 +122,24 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#FCFCFC',
         flex: 1,
-
     },
     top: {
-        fontSize: 26,
         marginLeft: 10,
         flex: 1,
         marginTop: 40,
         marginBottom: 30
     },
+    toptext: {
+        fontSize: 26,
+    },
     middle: {
+        flex: 2,
+        shadowColor: "#000",
+    },
+    middletext: {
+        fontWeight: 'bold',
         fontSize: 14,
         marginLeft: 10,
-        flex: 2,
-        fontWeight: 'bold',
-        shadowColor: "#000",
     },
     middleheader: {
         justifyContent:"space-between",
@@ -141,12 +147,17 @@ const styles = StyleSheet.create({
     },
     header: {
         fontSize: 14,
-        fontWeight: "bold",
-        marginLeft: 5,
+        fontWeight: 'bold',
+        marginLeft: 10,
+        marginBottom: 15
+    },
+    header2: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginLeft: 10,
         marginBottom: 15
     },
     border: {
-        shadowColor: 'rgba(0,0,0, .1)', // IOS
         shadowOffset: { height: 3, width: 2 }, // IOS
         shadowOpacity: 3, // IOS
         shadowRadius: 1, //IOS
@@ -162,7 +173,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 16,
         marginTop: 10,
-        fontWeight: "bold"
+        fontWeight: 'bold'
     },
     middleimage: {
         width: 150,
@@ -177,7 +188,7 @@ const styles = StyleSheet.create({
     showmore: {
         color: '#63816D',
         fontSize: 12,
-        fontWeight: "bold",
+        fontWeight: 'bold',
         marginRight: 20
     },
     bottom: {
@@ -185,8 +196,6 @@ const styles = StyleSheet.create({
         marginRight: 15,
         marginBottom: 10,
         flex: 2,
-        fontWeight: 'bold',
-        fontSize: 14,
         shadowColor: 'rgba(0,0,0, .1)', // IOS
         shadowOffset: { height: 3, width: 2 }, // IOS
         shadowOpacity: 3, // IOS
@@ -215,7 +224,7 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         fontSize: 12,
         color: "#ACACAC",
-        fontWeight: "bold"
+        fontWeight: 'bold'
     },
     bottomtext2: {
         marginLeft: 5,

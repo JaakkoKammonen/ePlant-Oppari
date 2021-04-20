@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 import firebase from '../components/firebase';
 
 export default function Notifications() {

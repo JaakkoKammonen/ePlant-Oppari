@@ -4,6 +4,7 @@ import { Avatar, ListItem, Icon, Button } from 'react-native-elements';
 
 export default function Settings(props) {
     const { navigate } = props.navigation;
+
     console.disableYellowBox = true;
 
     // list of listitems headers and icons to make list rendering cleaner

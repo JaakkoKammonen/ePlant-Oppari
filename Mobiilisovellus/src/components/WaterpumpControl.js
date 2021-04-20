@@ -1,5 +1,5 @@
 // importing all necessary components
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Button, StyleSheet } from 'react-native';
 import { DotIndicator } from 'react-native-indicators';
 
@@ -9,6 +9,8 @@ export default function waterpumpControl(props) {
 
   // define ThingSpeak API-key
   const apikey = props.apikey;
+
+  console.disableYellowBox = true;
  
   const waterOn = () => {
     let url = 'https://api.thingspeak.com/update?api_key=' + apikey + '&field4=1';

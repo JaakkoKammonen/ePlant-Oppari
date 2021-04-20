@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
-import { StackedBarChart } from 'react-native-chart-kit';
 import ProgressCircle from 'react-native-progress-circle';
 import { Ionicons } from '@expo/vector-icons';
 import Moment from 'moment';
@@ -40,12 +39,6 @@ export default function MyPlant(props) {
             });
     }
 
-    const barData = {
-        labels: ["Test1"],
-        data: [[ec * 0.1, (100 - ec * 0.1)]],
-        barColors: ["#6896BE", "#E8E7E2"]
-    };
-
     return (
         <ScrollView style={styles.container}>
             <View style={styles.top}>
@@ -63,9 +56,9 @@ export default function MyPlant(props) {
             </View>
             <View style={styles.container2}>
                 <View style={styles.date}>
-                    <Text style={styles.datetext1}>{Moment(plant.paivays).format('D.M.Y')}</Text>
+                    <Text style={styles.datetext1}>{Moment(plant.paivays).format("DD.MM.YYYY")}</Text>
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: "center", alignContent: "center" }}>
+                <View style={styles.progress}>
                     <View style={styles.ph}>
                         <Text style={styles.phtext}>pH-arvo</Text>
                         <ProgressCircle
@@ -81,28 +74,20 @@ export default function MyPlant(props) {
                             <Text style={styles.phtext2}>{(ph / 2500 * 100).toFixed(1)}</Text>
                         </ProgressCircle>
                     </View>
-                    <View>
-                        <Text style={styles.ec}>EC-arvo</Text>
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text style={styles.ec2}>{(ec * 0.1).toFixed(0)}</Text>
-                            <StackedBarChart
+                    <View style={styles.ec}>
+                        <Text style={styles.ectext}>EC-arvo</Text>
+                        <ProgressCircle
+                            percent={(ph / 2500 * 100).toFixed(0)}
+                            radius={50}
+                            borderWidth={4}
+                            color="#63816D"
+                            shadowColor="#E8E7E2"
+                            bgColor="#fff"
+                            outerCircleStyle={{ marginTop: 15, marginBottom: 15 }}
 
-                                data={barData}
-                                width={100}
-                                height={200}
-                                withHorizontalLabels={true}
-                                withVerticalLabels={true}
-                                hideLegend={true}
-                                chartConfig={{
-                                    backgroundGradientFrom: '#FFFFFF',
-                                    backgroundGradientTo: '#FFFFFF',
-                                    color: (opacity = 0) => `rgb(255, 255, 255, ${opacity})`
-
-                                }}
-
-                            />
-                        </View>
-
+                        >
+                            <Text style={styles.ectext2}>{(ph / 2500 * 100).toFixed(1)}</Text>
+                        </ProgressCircle>
                     </View>
                 </View>
                 <View>
@@ -160,6 +145,11 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         fontStyle: 'italic'
     },
+    progress: {
+        flexDirection: 'row',
+        justifyContent: "center",
+        alignContent: "center"
+    },
     topimage: {
         width: 50,
         height: 50,
@@ -200,7 +190,8 @@ const styles = StyleSheet.create({
     },
     ph: {
         borderRightColor: 'lightgrey',
-        borderRightWidth: 1
+        borderRightWidth: 1,
+        marginRight: 20
     },
     phtext: {
         fontSize: 16,
@@ -212,33 +203,15 @@ const styles = StyleSheet.create({
         fontSize: 22,
         color: '#63816D'
     },
-    phtext3: {
-        fontSize: 14,
-        color: '#63816D',
-        fontWeight: '600'
-    },
-    phtext4: {
-        fontSize: 12,
-        color: '#555555',
-        marginLeft: 5
-    },
-    ec: {
+    ectext: {
         fontSize: 16,
-        marginLeft: 40,
         marginTop: 20,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginRight: 50
     },
-    ec2: {
-        fontSize: 15,
-        marginLeft: 40,
-        marginTop: 20,
-    },
-    eclevel2: {
-        color: '#51799B',
-        fontSize: 14,
-        marginLeft: 30,
-        marginTop: 145,
-        fontWeight: 'bold'
+    ectext2: {
+        fontSize: 22,
+        color: '#63816D'
     },
     header: {
         fontSize: 14,
@@ -263,8 +236,8 @@ const styles = StyleSheet.create({
         flex: 2,
         fontWeight: 'bold',
         fontSize: 14,
-        shadowColor: '#DEDDDD',
-        shadowOpacity: 2,
+        boxShadow: 2,
+        color: '#DEDDDD',
         shadowOffset: {
             height: 2,
             width: 2

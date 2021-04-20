@@ -1,5 +1,5 @@
 import React from 'react';
-import { View,Text, StyleSheet, Switch, Alert } from "react-native"
+import { View, Text, StyleSheet, Switch, Alert } from 'react-native';
 
 export default function AutomaticControl(props) {
 
@@ -9,7 +9,8 @@ export default function AutomaticControl(props) {
   // define ThingSpeak API-key
   const apikey = props.apikey;
 
-  
+  console.disableYellowBox = true;
+
     // goes through the conditional statement until the desired value is obtained from ThingSpeak
     // after this AutomaticOn -function launched
     const AutomaticOn = () => {

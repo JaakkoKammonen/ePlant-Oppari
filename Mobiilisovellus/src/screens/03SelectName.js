@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, KeyboardAvoidingView } from 'react-native';
-import { Input } from 'react-native-elements';
-import { Icon } from 'react-native-elements';
+import { Input, Icon } from 'react-native-elements';
 import firebase from '../components/firebase';
 
 export default function SelectName(props) {

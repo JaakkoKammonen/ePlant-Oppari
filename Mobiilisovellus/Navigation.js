@@ -21,6 +21,7 @@ import Info from './src/screens/Info';
 import Safety from './src/screens/Safety';
 import UserNotification from './src/screens/UserNotification';
 
+
 //creating bottom navigation
 const BottomNavigator = createBottomTabNavigator(
     {

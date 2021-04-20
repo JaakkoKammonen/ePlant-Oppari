@@ -10,6 +10,7 @@ export default function SignIn(props) {
 
     console.disableYellowBox = true;
 
+
     // returning plant data based on props from Search.js and plantImage from SetBackgroundImg.js
     return (
         <ScrollView style={styles.container}>
