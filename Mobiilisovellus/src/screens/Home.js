@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, Image, FlatList, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 import firebase from '../components/firebase';
 import { Snackbar } from 'react-native-paper';
 
@@ -161,6 +162,7 @@ const styles = StyleSheet.create({
     border: {
         shadowOffset: { height: 3, width: 2 }, // IOS
         shadowOpacity: 3, // IOS
+        shadowColor: '#A9A9A9',
         shadowRadius: 1, //IOS
         elevation: 3, // android
         borderRadius: 4,
