@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { StackedBarChart } from 'react-native-chart-kit';
 import ProgressCircle from 'react-native-progress-circle';
-import WaterPump from '../components/WaterpumpControl';
-import AutomaticControl from '../components/AutomaticControl';
 import { Ionicons } from '@expo/vector-icons';
 import Moment from 'moment';
 
 export default function MyPlant(props) {
     const plant = props.navigation.state.params.plant;
     const channelId = plant.ruukkuid;
-    const [humidity, setHumidity] = useState(0);
-    const [waterLevel, setWaterLevel] = useState(0);
+    const [ph, setPh] = useState(0);
+    const [ec, setEc] = useState(0);
     const { navigate } = props.navigation;
 
     console.disableYellowBox = true;
@@ -27,14 +25,14 @@ export default function MyPlant(props) {
             .then((response) => response.json())
             .then((responseJson) => {
                 if (responseJson.feeds[99].field1 != null) {
-                    setHumidity(responseJson.feeds[99].field1);
+                    setPh(responseJson.feeds[99].field1);
                 } else {
-                    setHumidity('0')
+                    setPh('0')
                 }
                 if (responseJson.feeds[99].field2 != null) {
-                    setWaterLevel(responseJson.feeds[99].field2);
+                    setEc(responseJson.feeds[99].field2);
                 } else {
-                    setWaterLevel('0')
+                    setEc('0')
                 }
             })
             .catch((error) => {
@@ -44,7 +42,7 @@ export default function MyPlant(props) {
 
     const barData = {
         labels: ["Test1"],
-        data: [[waterLevel * 0.1, (100 - waterLevel * 0.1)]],
+        data: [[ec * 0.1, (100 - ec * 0.1)]],
         barColors: ["#6896BE", "#E8E7E2"]
     };
 
@@ -60,19 +58,18 @@ export default function MyPlant(props) {
                     <Image style={styles.topimage} source={require('../assets/smile.png')} />
                 </View>
                 <View>
-                    <Image style={styles.topimage2} source={require('../assets/flowerpot.png')} />
+                    <Image style={styles.topimage2} source={require('../assets/herbs.png')} />
                 </View>
             </View>
             <View style={styles.container2}>
                 <View style={styles.date}>
                     <Text style={styles.datetext1}>{Moment(plant.paivays).format('D.M.Y')}</Text>
-                    <AutomaticControl apikey={plant.ruukkukey}/>
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: "center", alignContent: "center" }}>
-                    <View style={styles.humidity}>
-                        <Text style={styles.humiditytext}>Mullan kosteus</Text>
+                    <View style={styles.ph}>
+                        <Text style={styles.phtext}>pH-arvo</Text>
                         <ProgressCircle
-                            percent={(humidity / 2500 * 100).toFixed(0)}
+                            percent={(ph / 2500 * 100).toFixed(0)}
                             radius={50}
                             borderWidth={4}
                             color="#63816D"
@@ -81,15 +78,13 @@ export default function MyPlant(props) {
                             outerCircleStyle={{ marginTop: 15, marginBottom: 15 }}
 
                         >
-                            <Text style={styles.humiditytext2}>{(humidity / 2500 * 100).toFixed(0)}%</Text>
+                            <Text style={styles.phtext2}>{(ph / 2500 * 100).toFixed(1)}</Text>
                         </ProgressCircle>
-                        <Text style={styles.humiditytext3}>Seuraava kastelu</Text>
-                        <Text style={styles.humiditytext4}>0.5 päivän kuluttua</Text>
                     </View>
                     <View>
-                        <Text style={styles.waterlevel}>Vesitaso</Text>
+                        <Text style={styles.ec}>EC-arvo</Text>
                         <View style={{ flexDirection: 'row' }}>
-                            <Text style={styles.waterlevel2}>{(waterLevel * 0.1).toFixed(0)}%</Text>
+                            <Text style={styles.ec2}>{(ec * 0.1).toFixed(0)}</Text>
                             <StackedBarChart
 
                                 data={barData}
@@ -111,7 +106,6 @@ export default function MyPlant(props) {
                     </View>
                 </View>
                 <View>
-                    <WaterPump apikey={plant.ruukkukey}/>
                 </View>
                 <View style={styles.bottomheader}>
                     <Text style={styles.header}>Viimeisimmät tapahtumat</Text>
@@ -134,7 +128,6 @@ export default function MyPlant(props) {
                                     <Text style={styles.bottomtext2}>{item} kasteltu.</Text>
                                 </View>
                             </View>
-
                         }
                     />*/}
                 </View>
@@ -199,37 +192,48 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         fontWeight: 'bold'
     },
-    humidity: {
+    detailstext: {
+        fontSize: 12,
+        color: '#63816D',
+        marginRight: 20,
+        fontWeight: 'bold'
+    },
+    ph: {
         borderRightColor: 'lightgrey',
         borderRightWidth: 1
     },
-    humiditytext: {
+    phtext: {
         fontSize: 16,
         marginTop: 20,
         fontWeight: 'bold',
         marginRight: 50
     },
-    humiditytext2: {
+    phtext2: {
         fontSize: 22,
         color: '#63816D'
     },
-    humiditytext3: {
+    phtext3: {
         fontSize: 14,
         color: '#63816D',
         fontWeight: '600'
     },
-    humiditytext4: {
+    phtext4: {
         fontSize: 12,
         color: '#555555',
         marginLeft: 5
     },
-    waterlevel: {
+    ec: {
         fontSize: 16,
         marginLeft: 40,
         marginTop: 20,
         fontWeight: 'bold'
     },
-    waterlevel2: {
+    ec2: {
+        fontSize: 15,
+        marginLeft: 40,
+        marginTop: 20,
+    },
+    eclevel2: {
         color: '#51799B',
         fontSize: 14,
         marginLeft: 30,

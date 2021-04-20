@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Image, FlatList, ScrollView, TouchableOpacity }
 import firebase from '../components/firebase';
 import { Snackbar } from 'react-native-paper';
 
-export default function Koti(props) {
+export default function Home(props) {
     const user = "Jace";
     const [plants, setPlants] = useState([]);
     const [visibility, setVisibility] = useState(false);
@@ -58,7 +58,7 @@ export default function Koti(props) {
                                 onPress={() => handleSelect(item)}
                             >
                                 <Text style={styles.middletext}>{item.nimi}</Text>
-                                <Image style={styles.middleimage} source={require('../assets/flowerpot.png')} />
+                                <Image style={styles.middleimage} source={require('../assets/herbs.png')} />
                             </TouchableOpacity>
                         }
                     />
@@ -110,7 +110,7 @@ export default function Koti(props) {
     );
 };
 
-Koti.navigationOptions = () => ({ title: 'Koti' });
+Home.navigationOptions = () => ({ title: 'Home' });
 
 const styles = StyleSheet.create({
     button: {
@@ -153,11 +153,10 @@ const styles = StyleSheet.create({
         elevation: 3, // android
         borderRadius: 4,
         margin:5,
-        marginRight: 3,
-        marginLeft: 3,
+        height: 185,
+        width: 170,
         marginTop: 10,
         backgroundColor: 'white',
-        height: 170
     },
     middletext: {
         textAlign: 'center',

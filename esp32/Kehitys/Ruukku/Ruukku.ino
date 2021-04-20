@@ -33,18 +33,18 @@ int PHAnturi= 32;
 int ECAnturiVirta = 18;
 int ECAnturi= 35;
  
-int ilmaPumppuThingspeakOhjaus = 4;                                             // Thingpeakin Read-metodilla päivitettävä arvo 0/1
-int anturienArvo = 5;                                                           // Thingspeak Read-metodilla päivitettävä arvo 0/1 
+int ilmaPumppuThingspeakOhjaus = 4;                                             // ThingSpeakin Read-metodilla päivitettävä arvo 0/1
+int anturienArvo = 5;                                                           // ThingSpeakin Read-metodilla päivitettävä arvo 0/1 
 int moistureRead = 0; 
 
 int moistureField = 2;
-int ThingSpeakFieldIlmaPumppu = 3;                                              // Thingspeak-field numero
-int ThingSpeakFieldAnturiDataSend = 5;                                          // Thingspeak field arvo
-int automaattiOhjausField = 6;                                                  // Thingspeak field arvo
+int ThingSpeakFieldIlmaPumppu = 3;                                              // ThingSpeak-field numero
+int ThingSpeakFieldAnturiDataSend = 5;                                          // ThingSpeak-field arvo
+int automaattiOhjausField = 6;                                                  // ThingSpeak-field arvo
 
 void setup() {
 
-  pinMode(ilmaPumppu,OUTPUT);                                                   // Pin-Output anturien pinneille
+  pinMode(ilmaPumppu,OUTPUT);                                                   // Pin-output anturien pinneille
   pinMode(PHTasoAnturiVirta,OUTPUT);                                            // Relay anturien pinneille
   pinMode(ECAnturiVirta,OUTPUT);
 
@@ -133,12 +133,11 @@ void loop() {
 
   if (WiFi.status() != WL_CONNECTED) {                                           // Wifi ei ole kytketty
       
-  // Pidetään ilmapummpua päällä
-  Serial.println("Ei nettiä, ilmapumppu päällä kokoajan.");
-  digitalWrite(ilmaPumppu,HIGH);                                                 // Ilmapumppu päälle -> Releen pinni aktivoidaan
-
+  // Pidetään ilmapumppua päällä
+  Serial.println("Ei nettiä, ilmapumppu päällä koko ajan.");
+  // HIGH = pois päältä, LOW = päällä
+  digitalWrite(ilmaPumppu, LOW);                                                 // Ilmapumppu päälle -> Releen pinni aktivoidaan
   }
-
   
    if (WiFi.status() == WL_CONNECTED) {                                          // Wifi kytkettynä
  
