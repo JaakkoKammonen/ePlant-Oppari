@@ -55,14 +55,15 @@ export default function MyPlant(props) {
                 </View>
             </View>
             <View style={styles.container2}>
-                <View style={styles.date}>
+                <View style={styles.date}>    
                     <Text style={styles.datetext1}>{Moment(plant.paivays).format("DD.MM.YYYY")}</Text>
                 </View>
                 <View style={styles.progress}>
                     <View style={styles.ph}>
                         <Text style={styles.phtext}>pH-arvo</Text>
                         <ProgressCircle
-                            percent={(ph / 2500 * 100).toFixed(0)}
+                            percent={20}
+                            //percent={(ph / 2500 * 100).toFixed(0)}
                             radius={50}
                             borderWidth={4}
                             color="#63816D"
@@ -77,7 +78,8 @@ export default function MyPlant(props) {
                     <View style={styles.ec}>
                         <Text style={styles.ectext}>EC-arvo</Text>
                         <ProgressCircle
-                            percent={(ph / 2500 * 100).toFixed(0)}
+                            //percent={(ph / 2500 * 100).toFixed(0)}
+                            percent={20}
                             radius={50}
                             borderWidth={4}
                             color="#63816D"
@@ -234,10 +236,8 @@ const styles = StyleSheet.create({
     bottom: {
         marginLeft: 10,
         flex: 2,
-        fontWeight: 'bold',
-        fontSize: 14,
-        boxShadow: 2,
-        color: '#DEDDDD',
+        boxShadow: '2',
+        shadowColor: '#A9A9A9',
         shadowOffset: {
             height: 2,
             width: 2

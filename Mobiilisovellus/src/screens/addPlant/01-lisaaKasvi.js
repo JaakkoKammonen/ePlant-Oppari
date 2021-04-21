@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { ListItem, SearchBar, Icon } from 'react-native-elements';
 import firebase from '../../components/firebase';
 
-export default function SelectPlant({navigation}) {
+export default function LisaaKasvi({navigation}) {
     const [plantList, setPlantlist] = useState([]);
     const [filteredPlantList, setFilteredPlantlist] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -33,7 +33,7 @@ export default function SelectPlant({navigation}) {
 
     // sending selected items data to next screen and navigating to there
     const handleSelect = (item) => {
-        navigate('SelectPot', { plant: item.laji })
+        navigate('ValitseRuukku', { plant: item.laji })
     };
 
     // handles change of the search word
@@ -64,16 +64,16 @@ export default function SelectPlant({navigation}) {
                 />
             </View>
 
-        <ScrollView>
+      
             <View style={styles.content}>
                 <Text style={styles.title}>Valitse kasvi</Text>
+             <ScrollView>
                 <SearchBar
                     onChangeText={handleChange}
                     placeholder='Hae kasveja'
                     onSubmitEditing={handleSubmit}
                     value={searchTerm}
                     platform='ios'
-                    lightTheme={true}
                     showCancel={true}
                     cancelButtonTitle='Peruuta'
                     containerStyle={styles.searchcontainer}
@@ -82,9 +82,9 @@ export default function SelectPlant({navigation}) {
                     onClear={resetPlantList}
                     onCancel={resetPlantList}
                 />
-                
+               </ScrollView>
             </View>
-            </ScrollView>
+          
             <View>
                {filteredPlantList.map((item, i) => (
                     <ListItem

@@ -13,7 +13,7 @@ export default function Home(props) {
     // use these variables if they have all these props (so if user has navigated to Koti.js from SelectName.js)
     const showSnackbar = props.navigation && props.navigation.state && props.navigation.state.params && props.navigation.state.params.showSnackbar
     const plantName = props.navigation && props.navigation.state && props.navigation.state.params && props.navigation.state.params.plantName
-    console.log(plants)
+    //console.log(plants)
     // change snackbar visibility opposite to current status
     const toggleSnackBar = () => setVisibility(!visibility);
 
@@ -34,7 +34,7 @@ export default function Home(props) {
 
     // sending selected items data to next screen and navigating to there
     const handleSelect = (item) => {
-        console.log(item)
+        //console.log(item)
         navigate('MyPlant', { plant: item })
     };
 

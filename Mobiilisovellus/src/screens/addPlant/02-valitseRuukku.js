@@ -5,7 +5,7 @@ import { Icon } from 'react-native-elements';
 import firebase from '../../components/firebase';
 import kuva from '../../assets/herbs.png'
 
-export default function SelectPot(props) {
+export default function ValitseRuukku(props) {
     const [potList, setPotList] = useState([]);
     const { navigate } = props.navigation;
     const plant = props.navigation.state.params.plant;

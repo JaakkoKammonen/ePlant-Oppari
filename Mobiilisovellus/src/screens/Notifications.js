@@ -21,6 +21,7 @@ export default function Notifications() {
                 <Text style={styles.headerText}>Ilmoitukset</Text>
             </View>
             <View style={styles.bottom}>
+            <Text style={styles.bottom2}>
                 <FlatList
                     data={myPlants}
                     marginLeft={15}
@@ -36,6 +37,7 @@ export default function Notifications() {
                         </View>
                     }
                 />
+                </Text>
             </View>
 
         </View>
@@ -69,10 +71,10 @@ const styles = StyleSheet.create({
     bottom: {
         marginLeft: 10,
         flex: 2,
-        fontWeight: 'bold',
-        fontSize: 14,
         marginTop:  20
-
+    },
+    bottom2: {
+        fontSize: 14,
     },
     notification: {
         flexDirection: "row", 

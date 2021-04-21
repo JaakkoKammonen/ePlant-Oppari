@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import firebase from '../components/firebase';
+import firebase from './firebase';
 
 export default function SelectPlant({searchTerm, navigation}) {
     const [plantList, setPlantlist] = useState([]);
