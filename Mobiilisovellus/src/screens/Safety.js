@@ -9,6 +9,11 @@ export default function Safety(props) {
     const { navigate } = props.navigation;
 
     console.disableYellowBox = true;
+
+    console.ignoredYellowBox = [
+        'Animated: `useNativeDriver` is not',
+      ];
+      
     // returning plant data based on props from Search.js and plantImage from SetBackgroundImg.js
     return (
         <ScrollView style={styles.container}>

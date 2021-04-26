@@ -41,7 +41,6 @@ export default function Search({navigation}) {
                         onSubmitEditing={handleSubmit}
                         value={searchTerm}
                         platform='ios'
-                        lightTheme={true}
                         showCancel={true}
                         cancelButtonTitle='Peruuta'
                         containerStyle={styles.searchcontainer}
