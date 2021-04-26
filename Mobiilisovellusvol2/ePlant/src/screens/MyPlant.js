@@ -42,7 +42,7 @@ export default function MyPlant(props) {
             <View style={styles.top}>
                 <View>
                     <TouchableOpacity onPress={() => navigate('Home')}>
-                        <Ionicons name="md-arrow-round-back" size={30} style={styles.icon}/>
+                        <Ionicons name="arrow-back-outline" size={30} style={styles.icon}/>
                     </TouchableOpacity>
                     <Text style={styles.plantname}>{plant.nimi}</Text>
                     <Text style={styles.plantheader}>{plant.laji}</Text>

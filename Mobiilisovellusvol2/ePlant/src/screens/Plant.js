@@ -16,7 +16,7 @@ export default function Plant(props) {
             </View>
             <View>
                 <TouchableOpacity onPress={() => navigate('Search')}>
-                    <Ionicons name="md-arrow-round-back" size={30} style={styles.arrow} />
+                    <Ionicons name="arrow-back-outline" size={30} style={styles.arrow} />
                 </TouchableOpacity>
                 <View style={styles.top}>
                     <Text style={styles.header}>{plant.laji}</Text>

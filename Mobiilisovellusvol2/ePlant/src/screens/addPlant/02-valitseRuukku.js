@@ -10,10 +10,6 @@ export default function ValitseRuukku(props) {
     const { navigate } = props.navigation;
     const plant = props.navigation.state.params.plant;
 
-    console.ignoredYellowBox = [
-        'Animated: `useNativeDriver` is not',
-      ];
-
     // getting object values from firebase and setting values to potList
     useEffect(() => {
         firebase.database().ref('ruukut/').on('value', snapshot => {

@@ -16,7 +16,7 @@ export default function Pots(props) {
             </View>
             <View>
                 <TouchableOpacity onPress={() => navigate('Search')}>
-                    <Ionicons name="md-arrow-round-back" size={30} style={styles.arrow} />
+                    <Ionicons name="arrow-back-outline" size={30} style={styles.arrow} />
                 </TouchableOpacity>
                 <Text style={styles.description}>Tähän kaikki omat ruukut</Text>
             </View>

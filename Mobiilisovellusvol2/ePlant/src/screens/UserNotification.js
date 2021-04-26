@@ -16,7 +16,7 @@ export default function UserNotification(props) {
             </View>
             <View>
                 <TouchableOpacity onPress={() => navigate('Search')}>
-                    <Ionicons name="md-arrow-round-back" size={30} style={styles.arrow} />
+                    <Ionicons name="arrow-back-outline" size={30} style={styles.arrow} />
                 </TouchableOpacity>
                 <Text style={styles.description}>Tähän käyttäjän omat ilmoitusasetukset</Text>
             </View>

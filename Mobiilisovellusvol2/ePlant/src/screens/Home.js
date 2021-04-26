@@ -16,8 +16,6 @@ export default function Home(props) {
     //console.log(plants)
     // change snackbar visibility opposite to current status
     const toggleSnackBar = () => setVisibility(!visibility);
-
-    console.disableYellowBox = true;
     
     // retrieving firebase data and inserting it to "plants" list
     useEffect(() => {

@@ -16,7 +16,7 @@ export default function SignIn(props) {
             </View>
             <View>
                 <TouchableOpacity onPress={() => navigate('Search')}>
-                    <Ionicons name="md-arrow-round-back" size={30} style={styles.arrow} />
+                    <Ionicons name="arrow-back-outline" size={30} style={styles.arrow} />
                 </TouchableOpacity>
                 <Text style={styles.description}>Tähän formi, jossa käyttäjä täyttää tietonsa</Text>
             </View>
