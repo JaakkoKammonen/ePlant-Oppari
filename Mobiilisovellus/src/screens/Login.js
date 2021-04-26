@@ -22,7 +22,7 @@ export default function Login(props) {
             </View>
             <View>
                 <TouchableOpacity onPress={() => navigate('Search')}>
-                    <Ionicons name="md-arrow-round-back" size={30} style={styles.arrow} />
+              <Ionicons name="md-arrow-round-back" size={30} style={styles.arrow} />
                 </TouchableOpacity>
                 <Text style={styles.description}>Tähän kirjaudu sisään / input fields</Text>
             </View>

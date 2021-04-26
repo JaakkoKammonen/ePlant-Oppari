@@ -31,7 +31,7 @@ export default function Search({navigation}) {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <View style={{alignItems: 'center'}}>
+                <View style={styles.container2}>
                     <Text style={styles.text}>Haku</Text>
                 </View>
                 <View style={styles.searchbar}>
@@ -65,6 +65,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#FCFCFC',
         flex: 1
         
+    },
+    container2: {
+        marginLeft: 10
     },
     text: {
         fontSize: 14,
