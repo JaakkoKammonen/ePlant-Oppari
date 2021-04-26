@@ -9,7 +9,6 @@ export default function LisaaKasvi({navigation}) {
     const [searchTerm, setSearchTerm] = useState('');
     const { navigate } = navigation;
     
-    console.disableYellowBox = true;
     //console.log(filteredPlantList)
     // getting object values from firebase and setting values into two list,
     // one for all plants and one as the filtered list based on search word user uses

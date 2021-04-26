@@ -10,10 +10,6 @@ export default function Home(props) {
     const [visibility, setVisibility] = useState(false);
     const { navigate } = props.navigation;
 
-    console.ignoredYellowBox = [
-        'Animated: `useNativeDriver` is not',
-      ];
-
     // use these variables if they have all these props (so if user has navigated to Koti.js from SelectName.js)
     const showSnackbar = props.navigation && props.navigation.state && props.navigation.state.params && props.navigation.state.params.showSnackbar
     const plantName = props.navigation && props.navigation.state && props.navigation.state.params && props.navigation.state.params.plantName

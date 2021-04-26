@@ -9,8 +9,6 @@ export default function PlantCards({navigation}) {
     const [feature3, setFeature3] = useState([]);
     const { navigate } = navigation;
 
-    console.disableYellowBox = true;
-
     // retrieving and filtering data from firebase db
     // setting filtered data to differend lists
     useEffect(() => {

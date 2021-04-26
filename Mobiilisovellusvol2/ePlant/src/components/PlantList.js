@@ -7,8 +7,6 @@ export default function SelectPlant({searchTerm, navigation}) {
     const [plantList, setPlantlist] = useState([]);
     const [filteredPlantList, setFilteredPlantlist] = useState([]);
     const { navigate } = navigation;
-    
-    console.disableYellowBox = true;
 
     // getting object values from firebase and setting values into two list,
     // one for all plants and one as the filtered list based on search word user uses

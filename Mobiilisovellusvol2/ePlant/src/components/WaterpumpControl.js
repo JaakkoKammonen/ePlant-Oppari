@@ -9,8 +9,6 @@ export default function waterpumpControl(props) {
 
   // define ThingSpeak API-key
   const apikey = props.apikey;
-
-  console.disableYellowBox = true;
  
   const waterOn = () => {
     let url = 'https://api.thingspeak.com/update?api_key=' + apikey + '&field4=1';

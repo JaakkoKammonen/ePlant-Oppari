@@ -5,8 +5,6 @@ import firebase from "../components/firebase";
 export default function Notifications() {
   const [myPlants, setMyPlants] = useState([]);
 
-  console.disableYellowBox = true;
-
   // retrieving firebase data and inserting it to "plants" list
   useEffect(() => {
     firebase

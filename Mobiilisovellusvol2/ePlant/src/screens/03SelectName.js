@@ -10,8 +10,6 @@ export default function SelectName(props) {
     const pot = props.navigation.state.params.pot;
     const potId = props.navigation.state.params.potId;
 
-    console.disableYellowBox = true;
-
     // adds new plants data to firebase database table "own plants"
     // data are received with props from previous screens SelectPlant.js and SelectPot.js
     // user is taken back to Home.js screen, and two props are send with navigation

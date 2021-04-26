@@ -10,8 +10,6 @@ export default function Search({navigation}) {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchPhase, setSearchPhase] = useState('cards');
 
-    console.disableYellowBox = true;
-
     // handles change of the search word
     const handleChange = (text) => {
         setSearchPhase('list')

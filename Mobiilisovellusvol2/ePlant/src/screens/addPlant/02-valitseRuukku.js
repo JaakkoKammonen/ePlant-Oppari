@@ -10,8 +10,6 @@ export default function ValitseRuukku(props) {
     const { navigate } = props.navigation;
     const plant = props.navigation.state.params.plant;
 
-    console.disableYellowBox = true;
-
     console.ignoredYellowBox = [
         'Animated: `useNativeDriver` is not',
       ];

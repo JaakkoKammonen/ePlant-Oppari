@@ -11,12 +11,6 @@ export default function MyPlant(props) {
     const [ec, setEc] = useState(0);
     const { navigate } = props.navigation;
 
-    console.disableYellowBox = true;
-
-    console.ignoredYellowBox = [
-        'Animated: `useNativeDriver` is not',
-      ];
-
     useEffect(() => {
         getData();
     }, []);
@@ -243,7 +237,7 @@ const styles = StyleSheet.create({
     bottom: {
         marginLeft: 10,
         flex: 2,
-        boxShadow: '2',
+        //boxShadow: '2',
         shadowColor: '#A9A9A9',
         shadowOffset: {
             height: 2,

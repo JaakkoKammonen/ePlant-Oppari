@@ -9,8 +9,6 @@ export default function AutomaticControl(props) {
   // define ThingSpeak API-key
   const apikey = props.apikey;
 
-  console.disableYellowBox = true;
-
     // goes through the conditional statement until the desired value is obtained from ThingSpeak
     // after this AutomaticOn -function launched
     const AutomaticOn = () => {
