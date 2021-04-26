@@ -42,6 +42,7 @@ export default function PlantCards({navigation}) {
                         contentContainerStyle={{ alignSelf: 'flex-start' }}
                         showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}
+                        keyExtractor={(item, index) => index.toString()}
                         marginLeft={10}
                         data={feature}
                         renderItem={({ item }) =>
@@ -63,6 +64,7 @@ export default function PlantCards({navigation}) {
                         contentContainerStyle={{ alignSelf: 'flex-start' }}
                         showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}
+                        keyExtractor={(item, index) => index.toString()}
                         marginLeft={10}
                         data={feature2}
                         renderItem={({ item }) =>
@@ -84,6 +86,7 @@ export default function PlantCards({navigation}) {
                         contentContainerStyle={{ alignSelf: 'flex-start' }}
                         showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}
+                        keyExtractor={(item, index) => index.toString()}
                         marginLeft={10}
                         data={feature3}
                         renderItem={({ item }) =>
@@ -105,6 +108,7 @@ export default function PlantCards({navigation}) {
                         contentContainerStyle={{ alignSelf: 'flex-start' }}
                         showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}
+                        keyExtractor={(item, index) => index.toString()}
                         marginLeft={10}
                         data={foodPlants}
                         renderItem={({ item }) =>

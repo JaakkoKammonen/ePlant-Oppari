@@ -10,10 +10,14 @@ export default function Home(props) {
     const [visibility, setVisibility] = useState(false);
     const { navigate } = props.navigation;
 
+    console.ignoredYellowBox = [
+        'Animated: `useNativeDriver` is not',
+      ];
+
     // use these variables if they have all these props (so if user has navigated to Koti.js from SelectName.js)
     const showSnackbar = props.navigation && props.navigation.state && props.navigation.state.params && props.navigation.state.params.showSnackbar
     const plantName = props.navigation && props.navigation.state && props.navigation.state.params && props.navigation.state.params.plantName
-    console.log(plants)
+    //console.log(plants)
     // change snackbar visibility opposite to current status
     const toggleSnackBar = () => setVisibility(!visibility);
 
@@ -34,7 +38,7 @@ export default function Home(props) {
 
     // sending selected items data to next screen and navigating to there
     const handleSelect = (item) => {
-        console.log(item)
+        //console.log(item)
         navigate('MyPlant', { plant: item })
     };
 
@@ -44,7 +48,6 @@ export default function Home(props) {
                 <View style={styles.top} >
                     <Text style={styles.toptext}>Huomenta {user}!</Text>
                 </View>
-                
                 <View style={styles.middle}>
                     <View style={styles.middleheader}>
                         <Text style={styles.header}>Omat kasvini</Text>
@@ -88,8 +91,6 @@ export default function Home(props) {
                                     <Text style={styles.bottomtext2}>{item.nimi} kasteltu.</Text>
                                 </View>
                             </View>
-                            
-
                         }
                     />
                 </View>
@@ -114,6 +115,7 @@ export default function Home(props) {
         </View>
     );
 };
+
 
 Home.navigationOptions = () => ({ title: 'Home' });
 
