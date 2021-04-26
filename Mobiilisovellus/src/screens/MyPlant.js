@@ -13,6 +13,10 @@ export default function MyPlant(props) {
 
     console.disableYellowBox = true;
 
+    console.ignoredYellowBox = [
+        'Animated: `useNativeDriver` is not',
+      ];
+
     useEffect(() => {
         getData();
     }, []);

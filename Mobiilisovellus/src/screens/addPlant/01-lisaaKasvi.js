@@ -53,6 +53,7 @@ export default function LisaaKasvi({navigation}) {
 
     return (
         <View style={styles.container}>
+               <ScrollView>
             <View style={styles.header}>
                 <Text style={{width:"14%"}}></Text>
                 <Text style={styles.headertitle}>Lisää kasvi</Text>
@@ -67,7 +68,6 @@ export default function LisaaKasvi({navigation}) {
       
             <View style={styles.content}>
                 <Text style={styles.title}>Valitse kasvi</Text>
-             <ScrollView>
                 <SearchBar
                     onChangeText={handleChange}
                     placeholder='Hae kasveja'
@@ -82,7 +82,6 @@ export default function LisaaKasvi({navigation}) {
                     onClear={resetPlantList}
                     onCancel={resetPlantList}
                 />
-               </ScrollView>
             </View>
           
             <View>
@@ -97,6 +96,7 @@ export default function LisaaKasvi({navigation}) {
                     />
                 ))} 
             </View>
+            </ScrollView>
         </View>
     );
 };

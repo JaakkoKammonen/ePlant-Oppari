@@ -12,6 +12,10 @@ export default function ValitseRuukku(props) {
 
     console.disableYellowBox = true;
 
+    console.ignoredYellowBox = [
+        'Animated: `useNativeDriver` is not',
+      ];
+
     // getting object values from firebase and setting values to potList
     useEffect(() => {
         firebase.database().ref('ruukut/').on('value', snapshot => {
