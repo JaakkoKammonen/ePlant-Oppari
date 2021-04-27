@@ -8,27 +8,31 @@ export default function Settings(props) {
   // list of listitems headers and icons to make list rendering cleaner
   const list = [
     {
-      name: "Ruukut",
+      name: "Plant pots",
       icon: "local-drink",
+      navigate: "Pots"
     },
     {
-      name: "Turvallisuus",
+      name: "Safety",
       icon: "security",
+      navigate: "Safety"
     },
     {
-      name: "Ilmoitukset",
+      name: "UserNotification",
       icon: "notifications",
+      navigate: "UserNotification"
     },
     {
-      name: "Tietoja",
+      name: "Info",
       icon: "info",
+      navigate: "Info"
     },
   ];
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Asetukset</Text>
+        <Text style={styles.headerText}>Settings</Text>
       </View>
 
       <View style={styles.content}>
@@ -55,7 +59,7 @@ export default function Settings(props) {
           <ListItem
             key={i}
             bottomDivider
-            onPress={() => navigate("Search")}
+            onPress={() => navigate(l.navigate)}
           >
             <Icon name={l.icon} color="#555555" />
               <ListItem.Title>{l.name}</ListItem.Title>

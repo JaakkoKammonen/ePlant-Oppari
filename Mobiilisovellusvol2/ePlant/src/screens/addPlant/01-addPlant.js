@@ -1,26 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { ListItem, SearchBar, Icon } from 'react-native-elements';
-import firebase from '../../components/firebase';
+import { useSelector } from 'react-redux';
 
 export default function LisaaKasvi({navigation}) {
-    const [plantList, setPlantlist] = useState([]);
-    const [filteredPlantList, setFilteredPlantlist] = useState([]);
+
+    const plantList = useSelector(state => state.firebase.plants)
+    const [filteredPlantList, setFilteredPlantlist] = useState(plantList);
+    //console.log(filteredPlantList)
     const [searchTerm, setSearchTerm] = useState('');
     const { navigate } = navigation;
     
-    //console.log(filteredPlantList)
-    // getting object values from firebase and setting values into two list,
-    // one for all plants and one as the filtered list based on search word user uses
-    useEffect(() => {
-        firebase.database().ref('kasvit/').on('value', snapshot => {
-            const plantList = Object.values(snapshot.val());
-
-            setPlantlist(plantList);
-            setFilteredPlantlist(plantList);
-        });
-    }, []);
-
+  
     // updates filtered plant list when search word changes, and returns filtered list
     useEffect(() => {
         const results = plantList.filter(plant => 
@@ -32,7 +23,7 @@ export default function LisaaKasvi({navigation}) {
 
     // sending selected items data to next screen and navigating to there
     const handleSelect = (item) => {
-        navigate('ValitseRuukku', { plant: item.laji })
+        navigate('SelectPot', { plant: item.laji })
     };
 
     // handles change of the search word
@@ -84,7 +75,7 @@ export default function LisaaKasvi({navigation}) {
             </View>
           
             <View>
-               {filteredPlantList.map((item, i) => (
+               {filteredPlantList.map((item) => (
                     <ListItem
                         onPress={() => handleSelect(item)}
                         key={item.id}
@@ -92,7 +83,9 @@ export default function LisaaKasvi({navigation}) {
                         containerStyle={{
                             backgroundColor: '#FCFCFC'
                         }}
-                    />
+                    >
+                     <ListItem.Title>{item.laji}</ListItem.Title>   
+                    </ListItem>
                 ))} 
             </View>
             </ScrollView>
@@ -134,7 +127,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FCFCFC',
         borderBottomColor: 'transparent',
         borderTopColor: 'transparent',
-        marginBottom: 20
+        marginBottom: 5
     }
 
 });

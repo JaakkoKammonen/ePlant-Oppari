@@ -1,20 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { View, Text, StyleSheet, FlatList, ScrollView } from "react-native";
-import firebase from "../components/firebase";
+import { useSelector } from "react-redux";
 
 export default function Notifications() {
-  const [myPlants, setMyPlants] = useState([]);
 
-  // retrieving firebase data and inserting it to "plants" list
-  useEffect(() => {
-    firebase
-      .database()
-      .ref("omatkasvit/")
-      .on("value", (snapshot) => {
-        const plants = Object.values(snapshot.val());
-        setMyPlants(plants);
-      });
-  }, []);
+  const myPlants = useSelector(state => state.firebase.myPlants)
+
 
   return (
     <View style={styles.container}>

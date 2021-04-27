@@ -1,31 +1,25 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, KeyboardAvoidingView } from 'react-native';
 import { Input, Icon } from 'react-native-elements';
-import firebase from '../components/firebase';
+import FireBase from "../../components/Redux/03-middleware/FireBasemiddleware"
+import AloeVera from "../../assets/plant_img/aloe_vera.png"
 
 export default function SelectName(props) {
+    
     const [plantName, setPlantName] = useState('');
     const { navigate } = props.navigation;
-    const plant = props.navigation.state.params.plant;
-    const pot = props.navigation.state.params.pot;
+    const species = props.navigation.state.params.plant;
+    const potName = props.navigation.state.params.pot;
     const potId = props.navigation.state.params.potId;
 
     // adds new plants data to firebase database table "own plants"
     // data are received with props from previous screens SelectPlant.js and SelectPot.js
     // user is taken back to Home.js screen, and two props are send with navigation
     // props are used to show a snackbar in Home.js to inform the user that plant has been added to db
-    const addPlantToDatabase = () => {
-        firebase.database().ref('omatkasvit/').push(
-            {
-                'laji': plant,
-                'ruukku': pot,
-                'nimi': plantName,
-                'paivays': Date(),
-                'ruukkuid': potId 
-            }
-        )
-        navigate('Home', {showSnackbar: true, plantName: plantName})
-    }
+   const AddPlantDb = (event) => {
+     event.preventDefault();
+     FireBase.AddPlantToDatabase(species,plantName, potName, potId, navigate)
+   }
 
     return (
         <View style={{flex: 1}}>
@@ -48,14 +42,14 @@ export default function SelectName(props) {
                         <Text style={styles.title}>Melkein valmista!</Text>
                         <Text style={styles.text}>Anna vielä kasvillesi nimi</Text>
                     </View>
-                    <Image style={styles.middleimage} source={require('../assets/plant_img/aloe_vera.png')} />
+                    <Image style={styles.middleimage} source={AloeVera} />
                     <Input
                         placeholder='Anna kasville nimi'
                         inputContainerStyle={styles.textinput}
                         clearButtonMode='always'
                         onChangeText={text => setPlantName(text)}
                         returnKeyType='done'
-                        onSubmitEditing={addPlantToDatabase}
+                        onSubmitEditing={AddPlantDb}
                     />
                 </View>
             </KeyboardAvoidingView>

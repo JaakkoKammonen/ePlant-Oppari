@@ -2,12 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { FlatList } from 'react-native-gesture-handler';
-import firebase from '../components/firebase';
 import { Snackbar } from 'react-native-paper';
+import { useDispatch, useSelector } from "react-redux";
+import Firebase from "../components/Redux/03-middleware/FireBasemiddleware"
 
 export default function Home(props) {
+
+    const dispatch = useDispatch();
+
+    let plants = useSelector(state => state.firebase.myPlants)
+
     const user = "Jace";
-    const [plants, setPlants] = useState([]);
+    
+    
     const [visibility, setVisibility] = useState(false);
     const { navigate } = props.navigation;
 
@@ -20,11 +27,9 @@ export default function Home(props) {
     
     // retrieving firebase data and inserting it to "plants" list
     useEffect(() => {
-        firebase.database().ref('omatkasvit/').on('value', snapshot => {
-            const plants = Object.values(snapshot.val());
-            //console.log(snapshot.val())
-            setPlants(plants);
-        });
+    Firebase.UpdateMyPlants(dispatch);
+    Firebase.UpdatePlants(dispatch);
+    Firebase.UpdatePots(dispatch);
 
         if (showSnackbar === true) {
             toggleSnackBar();

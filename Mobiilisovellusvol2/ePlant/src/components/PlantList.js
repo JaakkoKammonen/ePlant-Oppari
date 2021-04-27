@@ -1,23 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import firebase from './firebase';
+import { useSelector } from 'react-redux';
 
 export default function SelectPlant({searchTerm, navigation}) {
-    const [plantList, setPlantlist] = useState([]);
-    const [filteredPlantList, setFilteredPlantlist] = useState([]);
+    
+    const plantList = useSelector(state => state.firebase.plants)
+    const [filteredPlantList, setFilteredPlantlist] = useState(plantList);
     const { navigate } = navigation;
-
-    // getting object values from firebase and setting values into two list,
-    // one for all plants and one as the filtered list based on search word user uses
-    useEffect(() => {
-        firebase.database().ref('kasvit/').on('value', snapshot => {
-            const plantList = Object.values(snapshot.val());
-
-            setPlantlist(plantList);
-            setFilteredPlantlist(plantList);
-        });
-    }, []);
 
     // updates filtered plant list when search word changes, and returns filtered list
     useEffect(() => {

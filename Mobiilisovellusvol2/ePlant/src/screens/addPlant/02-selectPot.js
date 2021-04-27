@@ -1,22 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
-import firebase from '../../components/firebase';
+import { useSelector } from 'react-redux';
 import kuva from '../../assets/herbs.png'
 
 export default function ValitseRuukku(props) {
-    const [potList, setPotList] = useState([]);
+
+
+    const potList = useSelector(state => state.firebase.pots)
+
     const { navigate } = props.navigation;
+    
     const plant = props.navigation.state.params.plant;
-
-    // getting object values from firebase and setting values to potList
-    useEffect(() => {
-        firebase.database().ref('ruukut/').on('value', snapshot => {
-            const potList = Object.values(snapshot.val());
-
-            setPotList(potList);
-        });
-    }, []);
 
     // sending selected items data to next screen and navigating to there
     const handleSelect = (item) => {

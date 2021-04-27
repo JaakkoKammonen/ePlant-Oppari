@@ -1,24 +1,18 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
-import SetBackgroundImage from '../components/SetBackgroundImg.js';
 import { Ionicons } from '@expo/vector-icons';
 
-export default function Info(props) {
-    const plant = props.navigation.state.params.plant;
-    const plantImage = SetBackgroundImage(plant.laji);
+export default function Safety(props) {
     const { navigate } = props.navigation;
 
     // returning plant data based on props from Search.js and plantImage from SetBackgroundImg.js
     return (
         <ScrollView style={styles.container}>
-            <View style={{ flex: 1 }}>
-                <Image style={styles.topimage} source={plantImage} />
-            </View>
             <View>
-                <TouchableOpacity onPress={() => navigate('Search')}>
+                <TouchableOpacity onPress={() => navigate('Settings')}>
                     <Ionicons name="arrow-back-outline" size={30} style={styles.arrow} />
                 </TouchableOpacity>
-                <Text style={styles.description}>Tähän infotekstiä</Text>
+                <Text style={styles.description}>Tähän turvallisuus</Text>
             </View>
         </ScrollView>
     );

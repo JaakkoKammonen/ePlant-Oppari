@@ -1,30 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import firebase from './firebase';
+import { useSelector } from 'react-redux';
 
 export default function PlantCards({navigation}) {
-    const [foodPlants, setFoodPlants] = useState([]);
-    const [feature, setFeature] = useState([]);
-    const [feature2, setFeature2] = useState([]);
-    const [feature3, setFeature3] = useState([]);
+    
+    const plants = useSelector(state => state.firebase.plants)
+    //console.log(plants)
+    const foodPlants = plants.filter(plant => plant.tyyppi === 'Ruokakasvi')
+    const feature = plants.filter(plant => plant.ominaisuus === 'Yksivuotinen')
+    const feature2 = plants.filter(plant => plant.ominaisuus === 'Kaksivuotinen')
+    const feature3 = plants.filter(plant => plant.ominaisuus === 'Monivuotinen')
+
+    
     const { navigate } = navigation;
 
-    // retrieving and filtering data from firebase db
-    // setting filtered data to differend lists
-    useEffect(() => {
-        firebase.database().ref('kasvit/').on('value', snapshot => {
-          const plants = Object.values(snapshot.val());
-          const foodPlants = plants.filter(plant => plant.tyyppi === 'Ruokakasvi')
-          const feature = plants.filter(plant => plant.ominaisuus === 'Yksivuotinen')
-          const feature2 = plants.filter(plant => plant.ominaisuus === 'Kaksivuotinen')
-          const feature3 = plants.filter(plant => plant.ominaisuus === 'Monivuotinen')
-        
-          setFoodPlants(foodPlants);
-          setFeature(feature);
-          setFeature2(feature2);
-          setFeature3(feature3);
-        });
-    }, []);
 
     // sending selected items data to next screen and navigating to there
     const handleSelect = (item) => {
