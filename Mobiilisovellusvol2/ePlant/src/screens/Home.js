@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import SafeAreaView from 'react-native-safe-area-view';
 import { FlatList } from 'react-native-gesture-handler';
 import firebase from '../components/firebase';
 import { Snackbar } from 'react-native-paper';
@@ -38,7 +39,7 @@ export default function Home(props) {
 
     return (
         <View style={styles.container}>    
-            <ScrollView style={styles.container}>
+            <SafeAreaView>
                 <View style={styles.top} >
                     <Text style={styles.toptext}>Huomenta {user}!</Text>
                 </View>
@@ -63,6 +64,7 @@ export default function Home(props) {
                         }
                     />
                 </View>
+                </SafeAreaView>
                 <View style={styles.bottomheader}>
                     <Text style={styles.header2}>Viimeisimmät tapahtumat</Text>
                     <TouchableOpacity
@@ -88,7 +90,6 @@ export default function Home(props) {
                         }
                     />
                 </View>
-            </ScrollView>
             <View>
                 <Snackbar
                     visible={visibility}
@@ -119,7 +120,7 @@ const styles = StyleSheet.create({
     },
     container: {
         backgroundColor: '#FCFCFC',
-        flex: 1,
+        flex: 2,
     },
     top: {
         marginLeft: 10,

@@ -61,8 +61,7 @@ Search.navigationOptions = () => ({ title: 'Search' });
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#FCFCFC',
-        flex: 1
-        
+        flex: 1  
     },
     text: {
         fontSize: 14,

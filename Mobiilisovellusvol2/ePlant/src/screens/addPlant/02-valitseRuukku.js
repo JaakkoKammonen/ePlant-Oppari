@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { Button } from 'react-native-elements';
-import { Icon } from 'react-native-elements';
+import { Button, Icon } from 'react-native-elements';
 import firebase from '../../components/firebase';
 import kuva from '../../assets/herbs.png'
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
 //import ProgressCircle from 'react-native-progress-circle';
 import { Ionicons } from '@expo/vector-icons';
-import Moment from 'moment';
+//import moment from 'moment';
 
 export default function MyPlant(props) {
     const plant = props.navigation.state.params.plant;
@@ -54,7 +54,7 @@ export default function MyPlant(props) {
             </View>
             <View style={styles.container2}>
                 <View style={styles.date}>    
-                    <Text style={styles.datetext1}>{Moment(plant.paivays).format("DD.MM.YYYY")}</Text>
+                  {/*}  <Text style={styles.datetext1}>{moment(plant.paivays).format("DD.MM.YYYY")}</Text>{*/}
                 </View>
                 <View style={styles.progress}>
                     <View style={styles.ph}>
