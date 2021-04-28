@@ -1,8 +1,10 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Avatar, ListItem, Icon, Button } from "react-native-elements";
+import LogginMiddleware from "../../components/Redux/03-middleware/LogginMiddleware";
 
 export default function Settings(props) {
+  
   const { navigate } = props.navigation;
 
   // list of listitems headers and icons to make list rendering cleaner
@@ -52,6 +54,10 @@ export default function Settings(props) {
             <Text style={{ fontStyle: "italic", color: "#63816D" }}>
               @jace123
             </Text>
+            <Button 
+            title="Logout"
+            onPress={() => LogginMiddleware.LogOut(navigate)}
+            />
           </View>
         </View>
 

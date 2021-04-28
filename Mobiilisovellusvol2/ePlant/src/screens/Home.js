@@ -5,15 +5,14 @@ import { FlatList } from 'react-native-gesture-handler';
 import { Snackbar } from 'react-native-paper';
 import { useDispatch, useSelector } from "react-redux";
 import Firebase from "../components/Redux/03-middleware/FireBasemiddleware"
+import LogginMiddleware from '../components/Redux/03-middleware/LogginMiddleware';
 
 export default function Home(props) {
 
     const dispatch = useDispatch();
 
     let plants = useSelector(state => state.firebase.myPlants)
-
-    const user = "Jace";
-    
+    const user = LogginMiddleware.GetUser()
     
     const [visibility, setVisibility] = useState(false);
     const { navigate } = props.navigation;
@@ -24,13 +23,16 @@ export default function Home(props) {
     //console.log(plants)
     // change snackbar visibility opposite to current status
     const toggleSnackBar = () => setVisibility(!visibility);
-    
+
+   
+
     // retrieving firebase data and inserting it to "plants" list
     useEffect(() => {
     Firebase.UpdateMyPlants(dispatch);
     Firebase.UpdatePlants(dispatch);
     Firebase.UpdatePots(dispatch);
-
+    LogginMiddleware.CheckIfLoggedIn(navigate);
+   
         if (showSnackbar === true) {
             toggleSnackBar();
         }
@@ -116,8 +118,6 @@ export default function Home(props) {
     );
 };
 
-
-Home.navigationOptions = () => ({ title: 'Home' });
 
 const styles = StyleSheet.create({
     button: {

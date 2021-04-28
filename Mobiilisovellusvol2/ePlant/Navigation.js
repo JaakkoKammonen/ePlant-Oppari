@@ -27,6 +27,11 @@ import Safety from './src/screens/settings/Safety';
 import UserNotification from './src/screens/settings/UserNotification';
 import Pots from './src/screens/settings/Pots';
 
+//UserLogin
+import Login from "./src/screens/UserLogin/Login"
+import Logout from "./src/screens/UserLogin/Logout"
+
+
 //creating bottom navigation
 const BottomNavigator = createBottomTabNavigator(
     {
@@ -101,7 +106,9 @@ const BottomNavigator = createBottomTabNavigator(
 );
 
 // creating switch navigation for screens without bottom navigation
-const SwitchNavigation = createSwitchNavigator({ 
+const SwitchNavigation = createSwitchNavigator({
+    Logout: Logout,
+    Login: Login, 
     Plant: Plant,
     MyPlant: MyPlant,
     SelectPlant: SelectPlant, 
