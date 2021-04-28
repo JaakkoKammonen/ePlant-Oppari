@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
-//import ProgressCircle from 'react-native-progress-circle';
 import { Ionicons } from '@expo/vector-icons';
-//import moment from 'moment';
 
 export default function MyPlant(props) {
     const plant = props.navigation.state.params.plant;
@@ -17,10 +15,11 @@ export default function MyPlant(props) {
 
     // retrieving sensor statistics from the IoT device
     const getData = () => {
-        const url = 'https://thingspeak.com/channels/' + channelId + '/feed.json';
+        const url = 'https://api.thingspeak.com/channels/' + channelId + '/feeds.json';
         fetch(url)
             .then((response) => response.json())
             .then((responseJson) => {
+                console.log(responseJson)
                 if (responseJson.feeds[99].field1 != null) {
                     setPh(responseJson.feeds[99].field1);
                 } else {
