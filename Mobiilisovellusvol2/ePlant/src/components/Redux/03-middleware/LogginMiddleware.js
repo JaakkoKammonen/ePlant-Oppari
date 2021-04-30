@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { Alert } from "react-native";
 import firebase from "../../firebaseConfig"
 
 function CheckIfLoggedIn(navigate) {
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-            console.log(user)
+            //console.log(user)
             navigate("Home")
         } else {
             navigate("Login", {navigate})
@@ -36,7 +35,32 @@ function LogIn(navigate, userEmail, UserPassword) {
         navigate("Login");
         
     });
-}    
+}   
+
+function Signup(navigate, userEmail, UserPassword, displayName) {
+    firebase.auth()
+    .createUserWithEmailAndPassword(userEmail, UserPassword)
+    .then((userCredential) => {
+      // Signed in
+      console.log(userCredential)
+      console.log(firebase.auth().currentUser)
+      var user = userCredential.user;
+
+        user.updateProfile({
+        displayName: displayName
+        }).then(function() {
+            navigate("Home")
+        }).catch(function(error) {
+         alert(error)
+        });
+    })
+    .catch((error) => {
+      alert(error.code,error.message);
+      alert();
+    });
+
+    
+}  
 
 function LogOut(navigate) {
 firebase.auth()
@@ -48,23 +72,24 @@ firebase.auth()
 }
 
 
-function GetUser() {
-   const [user, setUser] = useState("") 
-
-    firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-            setUser(user.providerData[0].email)
-        } else {
-            setUser("Not logged in!")
-        }
-
-    })
-    return user
+function GetUserData() {
+    const [user, setUser] = useState("") 
+     firebase.auth().onAuthStateChanged((user) => {
+         if (user) {
+            
+             setUser(user.providerData[0])
+         } else {
+             setUser("error")
+         }
+ 
+     })
+     return user
 }
 
 export default {
     CheckIfLoggedIn,
     LogIn,
     LogOut,
-    GetUser
+    GetUserData,
+    Signup
 }

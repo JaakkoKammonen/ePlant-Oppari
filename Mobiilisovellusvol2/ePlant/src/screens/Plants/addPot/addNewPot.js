@@ -1,31 +1,20 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, KeyboardAvoidingView } from 'react-native';
 import { Input, Icon } from 'react-native-elements';
-import FireBase from "../../components/Redux/03-middleware/FireBasemiddleware"
-import AloeVera from "../../assets/plant_img/aloe_vera.png"
+import FireBase from "../../../components/Redux/03-middleware/FireBasemiddleware"
+import AloeVera from "../../../assets/plant_img/aloe_vera.png"
 
 export default function SelectName(props) {
     
     const [plantName, setPlantName] = useState('');
     const { navigate } = props.navigation;
-    const species = props.navigation.state.params.plant;
-    const potName = props.navigation.state.params.pot;
-    const potId = props.navigation.state.params.potId;
 
-    // adds new plants data to firebase database table "own plants"
-    // data are received with props from previous screens SelectPlant.js and SelectPot.js
-    // user is taken back to Home.js screen, and two props are send with navigation
-    // props are used to show a snackbar in Home.js to inform the user that plant has been added to db
-   const AddPlantDb = (event) => {
-     event.preventDefault();
-     FireBase.AddPlantToDatabase(species,plantName, potName, potId, navigate)
-   }
 
     return (
         <View style={{flex: 1}}>
             <View style={styles.header}>
                 <Text style={{width:"14%"}}></Text>
-                <Text style={styles.headertitle}>Lisää kasvi</Text>
+                <Text style={styles.headertitle}>Add new plant pot</Text>
                 <Icon 
                     name="close" 
                     size={40} 
@@ -39,8 +28,8 @@ export default function SelectName(props) {
             >
                 <View style={styles.container}>
                     <View>
-                        <Text style={styles.title}>Melkein valmista!</Text>
-                        <Text style={styles.text}>Anna vielä kasvillesi nimi</Text>
+                        <Text style={styles.title}>Select your ePlant model</Text>
+                        
                     </View>
                     <Image style={styles.middleimage} source={AloeVera} />
                     <Input
@@ -49,7 +38,7 @@ export default function SelectName(props) {
                         clearButtonMode='always'
                         onChangeText={text => setPlantName(text)}
                         returnKeyType='done'
-                        onSubmitEditing={AddPlantDb}
+                        //onSubmitEditing={}
                     />
                 </View>
             </KeyboardAvoidingView>
