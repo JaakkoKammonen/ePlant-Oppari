@@ -6,6 +6,7 @@ import LogginMiddleware from "../../components/Redux/03-middleware/LogginMiddlew
 export default function Settings(props) {
   
   const { navigate } = props.navigation;
+  let user = LogginMiddleware.GetUserData();
 
   // list of listitems headers and icons to make list rendering cleaner
   const list = [
@@ -50,9 +51,9 @@ export default function Settings(props) {
             />
           </View>
           <View style={styles.profileinfo}>
-            <Text style={{ fontSize: 25, marginBottom: 5 }}>Jace</Text>
-            <Text style={{ fontStyle: "italic", color: "#63816D" }}>
-              @jace123
+            <Text style={{ fontSize: 25, marginBottom: 5 }}>{user.displayName}</Text>
+            <Text style={{ fontStyle: "italic", color: "#63816D", marginBottom:5 }}>
+              {user.uid}
             </Text>
             <Button 
             title="Logout"

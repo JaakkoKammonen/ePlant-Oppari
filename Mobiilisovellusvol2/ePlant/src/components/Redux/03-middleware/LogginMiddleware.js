@@ -32,6 +32,7 @@ function LogIn(navigate, userEmail, UserPassword) {
         alert('That email address is invalid!')
         navigate("Login");
         }
+        alert("Invalid password")
         navigate("Login");
         
     });
@@ -42,7 +43,7 @@ function Signup(navigate, userEmail, UserPassword, displayName) {
     .createUserWithEmailAndPassword(userEmail, UserPassword)
     .then((userCredential) => {
       // Signed in
-      console.log(userCredential)
+      console.log(userCredential.user)
       console.log(firebase.auth().currentUser)
       var user = userCredential.user;
 
@@ -56,7 +57,6 @@ function Signup(navigate, userEmail, UserPassword, displayName) {
     })
     .catch((error) => {
       alert(error.code,error.message);
-      alert();
     });
 
     
@@ -81,7 +81,6 @@ function GetUserData() {
          } else {
              setUser("error")
          }
- 
      })
      return user
 }
