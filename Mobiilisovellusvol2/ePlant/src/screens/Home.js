@@ -12,7 +12,9 @@ export default function Home(props) {
     const dispatch = useDispatch();
 
     let plants = useSelector(state => state.firebase.myPlants)
-    const user = LogginMiddleware.GetUser()
+    let userData = LogginMiddleware.GetUserData()
+    let user = userData.displayName
+    console.log(LogginMiddleware.GetUserData())
     
     const [visibility, setVisibility] = useState(false);
     const { navigate } = props.navigation;
@@ -24,13 +26,12 @@ export default function Home(props) {
     // change snackbar visibility opposite to current status
     const toggleSnackBar = () => setVisibility(!visibility);
 
-   
-
     // retrieving firebase data and inserting it to "plants" list
     useEffect(() => {
     Firebase.UpdateMyPlants(dispatch);
     Firebase.UpdatePlants(dispatch);
     Firebase.UpdatePots(dispatch);
+    Firebase.UpdateEPlantModels(dispatch);
     LogginMiddleware.CheckIfLoggedIn(navigate);
    
         if (showSnackbar === true) {
@@ -62,8 +63,9 @@ export default function Home(props) {
                         data={plants}
                         keyExtractor={(item, index) => index.toString()}
                         renderItem={({ item }) =>
-                            <TouchableOpacity style={styles.border}
-                                onPress={() => handleSelect(item)}
+                            <TouchableOpacity 
+                            style={styles.border}
+                            onPress={() => handleSelect(item)}
                             >
                                 <Text style={styles.middletext}>{item.nimi}</Text>
                                 <Image style={styles.middleimage} source={require('../assets/herbs.png')} />

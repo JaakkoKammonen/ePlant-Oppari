@@ -2,10 +2,9 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, Button } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { useSelector } from 'react-redux';
-import kuva from '../../assets/herbs.png'
+import kuva from '../../../assets/herbs.png'
 
-export default function ValitseRuukku(props) {
-
+export default function SelectPot(props) {
 
     const potList = useSelector(state => state.firebase.pots)
 

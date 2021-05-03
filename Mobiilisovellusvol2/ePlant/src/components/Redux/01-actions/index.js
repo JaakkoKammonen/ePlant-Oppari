@@ -21,3 +21,9 @@ export const setPots  = (payload) => {
         payload: payload
     }
 }
+export const setePlantModels  = (payload) => {
+    return {
+        type: "setePlantModels",
+        payload: payload
+    }
+}

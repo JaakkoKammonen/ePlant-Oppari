@@ -6,7 +6,6 @@ import { Ionicons } from '@expo/vector-icons';
 // bottom navigation
 import Home from './src/screens/Home';
 import Search from './src/screens/Search';
-import AddPlant from './src/screens/addPlant/01-addPlant';
 import Notifications from './src/screens/Notifications';
 
 
@@ -15,10 +14,13 @@ import Plant from './src/screens/Plant';
 import MyPlant from './src/screens/MyPlant';
 
 // AddPlant
-import SelectPlant from './src/screens/addPlant/01-addPlant';
-import SelectPot from './src/screens/addPlant/02-selectPot';
-import SelectName from './src/screens/addPlant/03-selectName';
-
+import PlantOrPot from "./src/screens/Plants/01-plantOrpot"
+//Addplant
+import SelectPlant from './src/screens/Plants/addPlant/01-selectPlant';
+import SelectPot from './src/screens/Plants/addPlant/02-selectPot';
+import SelectName from './src/screens/Plants/addPlant/03-selectName';
+//AddPot
+import AddNewPot from "./src/screens/Plants/addPot/addNewPot"
 
 // Settings
 import Settings from './src/screens/settings/01-Settings';
@@ -30,7 +32,7 @@ import Pots from './src/screens/settings/Pots';
 //UserLogin
 import Login from "./src/screens/UserLogin/Login"
 import Logout from "./src/screens/UserLogin/Logout"
-
+import Singup from "./src/screens/UserLogin/Signup"
 
 //creating bottom navigation
 const BottomNavigator = createBottomTabNavigator(
@@ -55,7 +57,7 @@ const BottomNavigator = createBottomTabNavigator(
             }
         },
         Add: {
-            screen: AddPlant,
+            screen: PlantOrPot,
             navigationOptions: {
                 tabBarLabel: 'AddPlant',
                 tabBarIcon: ({ tintColor }) => (
@@ -108,12 +110,19 @@ const BottomNavigator = createBottomTabNavigator(
 // creating switch navigation for screens without bottom navigation
 const SwitchNavigation = createSwitchNavigator({
     Logout: Logout,
-    Login: Login, 
+    Login: Login,
+    Singup: Singup, 
+
     Plant: Plant,
     MyPlant: MyPlant,
+    
+
     SelectPlant: SelectPlant, 
     SelectName: SelectName,
     SelectPot: SelectPot,
+
+    AddNewPot: AddNewPot,
+    
     Pots: Pots,
     Info: Info,
     Safety: Safety,

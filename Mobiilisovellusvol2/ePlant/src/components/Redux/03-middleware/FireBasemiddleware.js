@@ -2,7 +2,8 @@ import firebase from "../../firebaseConfig"
 import {
   setMyPlants,
   setPlants,
-  setPots
+  setPots,
+  setePlantModels
 } from "../01-actions"
 
 // Get my plants
@@ -27,6 +28,15 @@ firebase.database().ref('ruukut/').on('value', snapshot => {
 });
 }
 
+function UpdateEPlantModels(dispatch) {
+  firebase.database().ref('/ePlant-models').on('value', snapshot => {
+    const ePlantModels = Object.values(snapshot.val());
+    console.log(ePlantModels)
+    dispatch(setePlantModels(ePlantModels))
+  
+  });
+  }
+
 // Sisään lajike, omakeksimä nimi, ruukun nimi ja id sekä navigate
 function AddPlantToDatabase(species, plantName,potName,potId,navigate) {
   firebase.database().ref('omatkasvit/').push(
@@ -45,5 +55,6 @@ export default {
   UpdateMyPlants,
   UpdatePlants,
   UpdatePots,
-  AddPlantToDatabase
+  AddPlantToDatabase,
+  UpdateEPlantModels
 }
