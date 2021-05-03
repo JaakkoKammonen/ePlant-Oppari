@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, Button, TextInput } from 'react-native';
 import LogginMiddleware from "../../components/Redux/03-middleware/LogginMiddleware"
 
