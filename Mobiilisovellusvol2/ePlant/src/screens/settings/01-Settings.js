@@ -1,6 +1,6 @@
 import React from "react";
-import { View, Text, StyleSheet,  } from "react-native";
-import {  ListItem, Icon, Button, Image } from "react-native-elements";
+import { View, Text, StyleSheet, Image} from "react-native";
+import {  ListItem, Icon, Button, Avatar } from "react-native-elements";
 import LogginMiddleware from "../../components/Redux/03-middleware/LogginMiddleware";
 import logo from "../../assets/logo_ePlant.png"
 
@@ -42,7 +42,7 @@ export default function Settings(props) {
       <View style={styles.content}>
         <View style={styles.profilecontainer}>
           <View>
-            <Image src={logo} />
+            <Avatar source={logo} />
           </View>
           <View style={styles.profileinfo}>
             <Text style={{ fontSize: 25, marginBottom: 5 }}>{user.displayName}</Text>
@@ -50,6 +50,7 @@ export default function Settings(props) {
               {user.uid}
             </Text>
             <Button 
+            style={styles.btn}
             title="Logout"
             onPress={() => LogginMiddleware.LogOut(navigate)}
             />
