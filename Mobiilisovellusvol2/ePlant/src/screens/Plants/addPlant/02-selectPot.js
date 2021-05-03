@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { Button, Icon } from 'react-native-elements';
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Button } from 'react-native';
+import { Icon } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 import kuva from '../../../assets/herbs.png'
 
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     bottom: {
         justifyContent:"center",
         flexDirection:"row",
-        flex:1
+        flex:1,
     },
     btn: {
         backgroundColor: "#F0F0F0",

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Button, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Button, TextInput } from 'react-native';
 import LogginMiddleware from "../../components/Redux/03-middleware/LogginMiddleware"
 
 export default function Login(props) {
@@ -25,6 +25,7 @@ export default function Login(props) {
       />
       <TextInput
         placeholder="Password"
+        secureTextEntry={true}
         //style={styles.input}
         onChangeText={ text => setUserPassword(text)}
       />
