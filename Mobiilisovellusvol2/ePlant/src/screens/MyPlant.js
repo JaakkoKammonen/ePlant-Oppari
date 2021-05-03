@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import moment from "moment"
 
 export default function MyPlant(props) {
     const plant = props.navigation.state.params.plant;
@@ -8,7 +9,7 @@ export default function MyPlant(props) {
     const [ph, setPh] = useState(0);
     const [ec, setEc] = useState(0);
     const { navigate } = props.navigation;
-
+    console.log(Date())
     useEffect(() => {
         getData();
     }, []);
@@ -53,7 +54,7 @@ export default function MyPlant(props) {
             </View>
             <View style={styles.container2}>
                 <View style={styles.date}>    
-                  {/*}  <Text style={styles.datetext1}>{moment(plant.paivays).format("DD.MM.YYYY")}</Text>{*/}
+                    <Text style={styles.datetext1}>{moment(plant.paivays).format("DD.MM.YYYY")}</Text>
                 </View>
                 <View style={styles.progress}>
                     <View style={styles.ph}>

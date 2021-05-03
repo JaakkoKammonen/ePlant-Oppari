@@ -32,7 +32,7 @@ function LogIn(navigate, userEmail, UserPassword) {
         alert('That email address is invalid!')
         navigate("Login");
         }
-        alert("Invalid password")
+        alert("Invalid email or password")
         navigate("Login");
         
     });

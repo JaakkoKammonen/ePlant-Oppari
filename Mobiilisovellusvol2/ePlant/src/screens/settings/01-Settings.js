@@ -1,7 +1,8 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { Avatar, ListItem, Icon, Button } from "react-native-elements";
+import { View, Text, StyleSheet,  } from "react-native";
+import {  ListItem, Icon, Button, Image } from "react-native-elements";
 import LogginMiddleware from "../../components/Redux/03-middleware/LogginMiddleware";
+import logo from "../../assets/logo_ePlant.png"
 
 export default function Settings(props) {
   
@@ -41,14 +42,7 @@ export default function Settings(props) {
       <View style={styles.content}>
         <View style={styles.profilecontainer}>
           <View>
-            <Avatar
-              size="large"
-              rounded
-              title="JK"
-              overlayContainerStyle={{
-                backgroundColor: "#63816D",
-              }}
-            />
+            <Image src={logo} />
           </View>
           <View style={styles.profileinfo}>
             <Text style={{ fontSize: 25, marginBottom: 5 }}>{user.displayName}</Text>

@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
-import SetBackgroundImage from '../components/SetBackgroundImg.js';
+import SetImage from '../components/SetImage';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function Plant(props) {
     const plant = props.navigation.state.params.plant;
-    const plantImage = SetBackgroundImage(plant.laji);
+    const plantImage = SetImage(plant.laji);
     const { navigate } = props.navigation;
 
     // returning plant data based on props from Search.js and plantImage from SetBackgroundImg.js
