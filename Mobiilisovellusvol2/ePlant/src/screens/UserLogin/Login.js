@@ -25,6 +25,7 @@ export default function Login(props) {
       />
       <TextInput
         placeholder="Password"
+        secureTextEntry={true}
         //style={styles.input}
         onChangeText={ text => setUserPassword(text)}
       />
