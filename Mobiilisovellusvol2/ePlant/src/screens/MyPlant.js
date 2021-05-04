@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
-import moment from "moment"
+import moment from "moment";
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 export default function MyPlant(props) {
     const plant = props.navigation.state.params.plant;
@@ -14,6 +16,7 @@ export default function MyPlant(props) {
         getData();
     }, []);
 
+    
     // retrieving sensor statistics from the IoT device
     const getData = () => {
         const url = 'https://api.thingspeak.com/channels/' + channelId + '/feeds.json';
@@ -59,38 +62,41 @@ export default function MyPlant(props) {
                 <View style={styles.progress}>
                     <View style={styles.ph}>
                         <Text style={styles.phtext}>pH-arvo</Text>
-                        {/*}
-                        <ProgressCircle
-                            percent={20}
-                            //percent={(ph / 2500 * 100).toFixed(0)}
-                            radius={50}
-                            borderWidth={4}
-                            color="#63816D"
-                            shadowColor="#E8E7E2"
-                            bgColor="#fff"
-                            outerCircleStyle={{ marginTop: 15, marginBottom: 15 }}
-
-                        >
-                            <Text style={styles.phtext2}>{(ph / 2500 * 100).toFixed(1)}</Text>
-                        </ProgressCircle>
-                        {*/} 
+                        <AnimatedCircularProgress
+                        size={100}
+                        width={10}
+                        fill={(ph * 0.1).toFixed(0)}
+                        tintColor="#00e0ff"
+                        onAnimationComplete={() => console.log('onAnimationComplete')}
+                        backgroundColor="#3d5875">
+                            {
+                                (fill) => (
+                                <Text>
+                                   3.0
+                                </Text>
+                                )
+                            }
+                            </AnimatedCircularProgress>
                     </View>
                     <View style={styles.ec}>
                         <Text style={styles.ectext}>EC-arvo</Text>
-                      {/*}  <ProgressCircle
-                            //percent={(ph / 2500 * 100).toFixed(0)}
-                            percent={20}
-                            radius={50}
-                            borderWidth={4}
-                            color="#63816D"
-                            shadowColor="#E8E7E2"
-                            bgColor="#fff"
-                            outerCircleStyle={{ marginTop: 15, marginBottom: 15 }}
-
-                        >
-                            <Text style={styles.ectext2}>{(ph / 2500 * 100).toFixed(1)}</Text>
-                        </ProgressCircle>
-    {*/} 
+                        <View>
+                        <AnimatedCircularProgress
+                        size={100}
+                        width={10}
+                        fill={90}
+                        tintColor="#00e0ff"
+                        onAnimationComplete={() => console.log('onAnimationComplete')}
+                        backgroundColor="#3d5875">
+                            {
+                                (fill) => (
+                                <Text>
+                                   6.0
+                                </Text>
+                                )
+                            }
+                            </AnimatedCircularProgress>
+                    </View>
                     </View>
                 </View>
                 <View>
@@ -104,20 +110,21 @@ export default function MyPlant(props) {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.bottom}>
-                    {/*<FlatList data={plant}
+                    {/*}<FlatList data={plants}
                         marginLeft={15}
+                        keyExtractor={(item, index) => index.toString()}
                         renderItem={({ item }) =>
                             <View style={styles.bottomitem}>
                                 <View>
-                                    <View style={styles.circle} />
+                                   <View style={styles.circle}/>
                                 </View>
                                 <View style={styles.bottomtext}>
                                     <Text style={styles.bottomtext1}>Tänään klo 8.20</Text>
-                                    <Text style={styles.bottomtext2}>{item} kasteltu.</Text>
+                                    <Text style={styles.bottomtext2}>{item.nimi} kasteltu.</Text>
                                 </View>
                             </View>
                         }
-                    />*/}
+                    />{*/}
                 </View>
             </View>
         </ScrollView>
@@ -194,11 +201,14 @@ const styles = StyleSheet.create({
     ph: {
         borderRightColor: 'lightgrey',
         borderRightWidth: 1,
-        marginRight: 20
+        marginRight: 30,
+        paddingLeft: 30,
+        paddingRight: 30
     },
     phtext: {
         fontSize: 16,
         marginTop: 20,
+        marginBottom: 10,
         fontWeight: 'bold',
         marginRight: 50
     },
@@ -209,6 +219,7 @@ const styles = StyleSheet.create({
     ectext: {
         fontSize: 16,
         marginTop: 20,
+        marginBottom: 10,
         fontWeight: 'bold',
         marginRight: 50
     },
@@ -235,20 +246,17 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     bottom: {
-        marginLeft: 10,
+        marginLeft: 15,
+        marginRight: 15,
+        marginBottom: 10,
         flex: 2,
-        //boxShadow: '2',
-        shadowColor: '#A9A9A9',
-        shadowOffset: {
-            height: 2,
-            width: 2
-        },
-        elevation: 4,
-        borderRadius: 4,
+        shadowColor: 'rgba(0,0,0, .1)', // IOS
+        shadowOffset: { height: 3, width: 2 }, // IOS
+        shadowOpacity: 3, // IOS
+        shadowRadius: 1, //IOS
+        elevation: 3, // android
         backgroundColor: 'white',
-        marginRight: 10,
-        marginTop: 10,
-        marginBottom: 10
+        borderRadius: 4
     },
     bottomitem: {
         flexDirection: "row",
