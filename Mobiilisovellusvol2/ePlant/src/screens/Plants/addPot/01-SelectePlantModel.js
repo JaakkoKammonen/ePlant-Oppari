@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, KeyboardAvoidingView } from 'react-native';
+import { View, Text, StyleSheet, Image, KeyboardAvoidingView, Button } from 'react-native';
 import { Input, Icon } from 'react-native-elements';
-import FireBase from "../../../components/Redux/03-middleware/FireBasemiddleware"
-import AloeVera from "../../../assets/plant_img/aloe_vera.png"
+import { useSelector } from 'react-redux';
 
 export default function SelectName(props) {
     
     const [plantName, setPlantName] = useState('');
     const { navigate } = props.navigation;
-
+    const ePlantModels = useSelector(state => state.firebase.ePlantModels)
+    //console.log(ePlantModels)
 
     return (
         <View style={{flex: 1}}>
@@ -31,15 +31,16 @@ export default function SelectName(props) {
                         <Text style={styles.title}>Select your ePlant model</Text>
                         
                     </View>
-                    <Image style={styles.middleimage} source={AloeVera} />
-                    <Input
-                        placeholder='Anna kasville nimi'
-                        inputContainerStyle={styles.textinput}
-                        clearButtonMode='always'
-                        onChangeText={text => setPlantName(text)}
-                        returnKeyType='done'
-                        //onSubmitEditing={}
-                    />
+                    <Button
+                    title={ePlantModels[0].Hydroponic.Version1.hydroponic}
+                    onPress={navigate("ePlantInputThingSpeakID", {navigation:{navigate},  } )}>
+                    </Button>
+
+                    <Button
+                    title={ePlantModels[1].Soil.Version1.soil}
+                    onPress={navigate("ePlantInputThingSpeakID", {navigation:{navigate}, } )}>
+                    </Button>
+                   
                 </View>
             </KeyboardAvoidingView>
         </View>

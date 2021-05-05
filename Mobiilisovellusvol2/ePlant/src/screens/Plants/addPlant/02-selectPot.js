@@ -11,7 +11,7 @@ export default function SelectPot(props) {
     const { navigate } = props.navigation;
     
     const plant = props.navigation.state.params.plant;
-
+    //console.log(plant)
     // sending selected items data to next screen and navigating to there
     const handleSelect = (item) => {
         navigate('SelectName', { pot: item.nimi, potId: item.id, plant: plant })
@@ -21,7 +21,7 @@ export default function SelectPot(props) {
         <View style={styles.container}>
             <View style={styles.bordertop}>
                 <Text style={{width:"14%"}}></Text>
-                <Text style={styles.text}>Lisää kasvi</Text>
+                <Text style={styles.text}>Select ePlant</Text>
                 <Icon 
                     name="close" 
                     size={40} 
@@ -30,7 +30,7 @@ export default function SelectPot(props) {
                 />
             </View>
             <View>
-                <Text style={styles.top}>Valitse ruukku</Text>
+                <Text style={styles.top}>Select ePlant</Text>
             </View>
             <View style={styles.middle}>
                 {potList.map((item, i) => (
@@ -46,6 +46,9 @@ export default function SelectPot(props) {
                     </TouchableOpacity>
                 ))}
             </View>
+            <View>
+                <Text> or add new!</Text>
+            </View>
             <View style={styles.bottom}>
                 <Button
                     icon={{
@@ -56,6 +59,7 @@ export default function SelectPot(props) {
                     title="Lisää uusi ruukku"
                     titleStyle={{marginLeft:15, color:"black"}}
                     buttonStyle={styles.btn}
+                    onPress={() =>  navigate("AddNewPot")}
                 /> 
             </View>
         </View>

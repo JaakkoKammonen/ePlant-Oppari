@@ -12,6 +12,7 @@ export default function Login(props) {
 
 
     const Signup = () => {
+        //console.log(userEmail, userPassword, displayName)
         LogginMiddleware.Signup(navigate, userEmail, userPassword, displayName)   
     }   
   

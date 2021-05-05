@@ -14,8 +14,9 @@ export default function Home(props) {
     let plants = useSelector(state => state.firebase.myPlants)
     let userData = LogginMiddleware.GetUserData()
     let user = userData.displayName
-    console.log(LogginMiddleware.GetUserData())
+    //console.log(userData.uid)
     
+
     const [visibility, setVisibility] = useState(false);
     const { navigate } = props.navigation;
 
@@ -26,14 +27,21 @@ export default function Home(props) {
     // change snackbar visibility opposite to current status
     const toggleSnackBar = () => setVisibility(!visibility);
 
-    // retrieving firebase data and inserting it to "plants" list
+    
+    //console.log(userData)
+    if(userData.uid !== undefined) {
+       Firebase.AddePlantPot(userData.uid) 
+    }
+    
+    
+
     useEffect(() => {
     Firebase.UpdateMyPlants(dispatch);
     Firebase.UpdatePlants(dispatch);
     Firebase.UpdatePots(dispatch);
     Firebase.UpdateEPlantModels(dispatch);
     LogginMiddleware.CheckIfLoggedIn(navigate);
-   
+    
         if (showSnackbar === true) {
             toggleSnackBar();
         }

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import firebase from "../../firebaseConfig"
+import FireBasemiddleware from "./FireBasemiddleware";
 
 function CheckIfLoggedIn(navigate) {
     firebase.auth().onAuthStateChanged((user) => {
@@ -47,13 +48,10 @@ function Signup(navigate, userEmail, UserPassword, displayName) {
       console.log(firebase.auth().currentUser)
       var user = userCredential.user;
 
-        user.updateProfile({
-        displayName: displayName
-        }).then(function() {
-            navigate("Home")
-        }).catch(function(error) {
-         alert(error)
-        });
+        user.updateProfile({displayName: displayName});
+
+        FireBasemiddleware.AddUserToDatabase(user.uid, user.email, displayName)
+    navigate("Home")
     })
     .catch((error) => {
       alert(error.code,error.message);
@@ -73,11 +71,11 @@ firebase.auth()
 
 
 function GetUserData() {
-    const [user, setUser] = useState("") 
+    const [user, setUser] = useState("")
      firebase.auth().onAuthStateChanged((user) => {
          if (user) {
-            
-             setUser(user.providerData[0])
+             //console.log(user)
+             setUser(user)
          } else {
              setUser("error")
          }

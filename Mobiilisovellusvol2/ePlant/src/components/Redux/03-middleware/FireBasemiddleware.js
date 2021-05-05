@@ -31,7 +31,7 @@ firebase.database().ref('ruukut/').on('value', snapshot => {
 function UpdateEPlantModels(dispatch) {
   firebase.database().ref('/ePlant-models').on('value', snapshot => {
     const ePlantModels = Object.values(snapshot.val());
-    console.log(ePlantModels)
+    //console.log(ePlantModels)
     dispatch(setePlantModels(ePlantModels))
   
   });
@@ -51,10 +51,44 @@ function AddPlantToDatabase(species, plantName,potName,potId,navigate) {
   navigate('Home', {showSnackbar: true, plantName: plantName})
 }
 
+function AddUserToDatabase(userUid, userEmail, userDisplayName) {
+  firebase.database().ref('users/' + userUid).set(
+    {
+      uid: userUid, 
+      name: userDisplayName,
+      email: userEmail,
+    }
+)
+}
+
+
+function DBUserData() {
+  let userdb;
+  firebase.database().ref('Users/').on('value', snapshot => {
+      userdb = Object.values(snapshot.val());
+  });
+  return userdb
+  }
+
+function AddePlantPot(userUid, thingspeakId, version) {
+
+  firebase.database().ref('users/' + userUid + '/ePlant').set(
+    {
+      uid: userUid, 
+     
+    }
+)
+
+//console.log(userCheck)
+
+}  
 export default {
   UpdateMyPlants,
   UpdatePlants,
   UpdatePots,
   AddPlantToDatabase,
-  UpdateEPlantModels
+  UpdateEPlantModels,
+  AddUserToDatabase,
+  DBUserData,
+  AddePlantPot
 }

@@ -46,7 +46,7 @@ export default function LisaaKasvi({navigation}) {
                <ScrollView>
             <View style={styles.header}>
                 <Text style={{width:"14%"}}></Text>
-                <Text style={styles.headertitle}>Lisää kasvi</Text>
+                <Text style={styles.headertitle}>Select plant</Text>
                 <Icon 
                     name="close" 
                     size={40} 
@@ -57,15 +57,15 @@ export default function LisaaKasvi({navigation}) {
 
       
             <View style={styles.content}>
-                <Text style={styles.title}>Valitse kasvi</Text>
+                <Text style={styles.title}>Select plant</Text>
                 <SearchBar
                     onChangeText={handleChange}
-                    placeholder='Hae kasveja'
+                    placeholder='Search plants'
                     onSubmitEditing={handleSubmit}
                     value={searchTerm}
                     platform='ios'
                     showCancel={true}
-                    cancelButtonTitle='Peruuta'
+                    cancelButtonTitle='Return'
                     containerStyle={styles.searchcontainer}
                     inputContainerStyle={{backgroundColor: '#F0F0F0'}}
                     returnKeyType='search'
