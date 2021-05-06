@@ -3,11 +3,12 @@ import { View, Text, StyleSheet, Image} from "react-native";
 import {  ListItem, Icon, Button, Avatar } from "react-native-elements";
 import LogginMiddleware from "../../components/Redux/03-middleware/LogginMiddleware";
 import logo from "../../assets/logo_ePlant.png"
+import { useSelector } from "react-redux";
 
 export default function Settings(props) {
   
   const { navigate } = props.navigation;
-  let user = LogginMiddleware.GetUserData();
+  let user = useSelector(state => state.user)
 
   // list of listitems headers and icons to make list rendering cleaner
   const list = [

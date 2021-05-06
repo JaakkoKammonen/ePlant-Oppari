@@ -6,15 +6,14 @@ import { Snackbar } from 'react-native-paper';
 import { useDispatch, useSelector } from "react-redux";
 import Firebase from "../components/Redux/03-middleware/FireBasemiddleware"
 import LogginMiddleware from '../components/Redux/03-middleware/LogginMiddleware';
-
+import setImage from "../components/SetImage" 
 export default function Home(props) {
 
     const dispatch = useDispatch();
 
-    let plants = useSelector(state => state.firebase.myPlants)
-    let userData = LogginMiddleware.GetUserData()
-    let user = userData.displayName
-    //console.log(userData.uid)
+    let plants = useSelector(state => state.firebase.my_Plants)
+    const user = useSelector(state => state.user)
+    //console.log(user.uid)
     
 
     const [visibility, setVisibility] = useState(false);
@@ -28,23 +27,19 @@ export default function Home(props) {
     const toggleSnackBar = () => setVisibility(!visibility);
 
     
-    //console.log(userData)
-    if(userData.uid !== undefined) {
-       Firebase.AddePlantPot(userData.uid) 
-    }
-    
-    
 
     useEffect(() => {
-    Firebase.UpdateMyPlants(dispatch);
-    Firebase.UpdatePlants(dispatch);
-    Firebase.UpdatePots(dispatch);
-    Firebase.UpdateEPlantModels(dispatch);
     LogginMiddleware.CheckIfLoggedIn(navigate);
-    
+    LogginMiddleware.UpdateUserData(dispatch)
+    Firebase.UpdatePlants(dispatch);
+    Firebase.UpdateEPlantModels(dispatch);
+ 
         if (showSnackbar === true) {
             toggleSnackBar();
         }
+
+    Firebase.UpdateMyePlantPots(dispatch);
+    Firebase.UpdateMyPlants(dispatch);
     }, []);
 
     // sending selected items data to next screen and navigating to there
@@ -57,7 +52,7 @@ export default function Home(props) {
         <View style={styles.container}>    
             <SafeAreaView>
                 <View style={styles.top} >
-                    <Text style={styles.toptext}>Huomenta {user}!</Text>
+                    <Text style={styles.toptext}>Huomenta {user.displayName}!</Text>
                 </View>
                 <View style={styles.middle}>
                     <View style={styles.middleheader}>
@@ -75,8 +70,8 @@ export default function Home(props) {
                             style={styles.border}
                             onPress={() => handleSelect(item)}
                             >
-                                <Text style={styles.middletext}>{item.nimi}</Text>
-                                <Image style={styles.middleimage} source={require('../assets/herbs.png')} />
+                                <Text style={styles.middletext}>{item.plantName}</Text>
+                                <Image style={styles.middleimage} source={setImage(item.species.toLowerCase())} />
                             </TouchableOpacity>
                         }
                     />
@@ -101,7 +96,7 @@ export default function Home(props) {
                                 </View>
                                 <View style={styles.bottomtext}>
                                     <Text style={styles.bottomtext1}>Tänään klo 8.20</Text>
-                                    <Text style={styles.bottomtext2}>{item.nimi} kasteltu.</Text>
+                                    <Text style={styles.bottomtext2}>{item.plantName} kasteltu.</Text>
                                 </View>
                             </View>
                         }
@@ -121,7 +116,7 @@ export default function Home(props) {
                         onPress: () => {toggleSnackBar},
                     }}
                 >
-                    {plantName} lisätty omiin kasveihin!
+                    {plantName} added!
                 </Snackbar>
             </View>
         </View>

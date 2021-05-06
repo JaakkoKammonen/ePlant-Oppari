@@ -8,13 +8,71 @@ export default function SelectName(props) {
     const [plantName, setPlantName] = useState('');
     const { navigate } = props.navigation;
     const ePlantModels = useSelector(state => state.firebase.ePlantModels)
-    //console.log(ePlantModels)
+    //console.log(ePlantModels[0].Hydroponic)
+
+    const handleSubmit = (eplantModel) => {
+      // console.log(eplantModel)
+       navigate("ePlantInputThingSpeakID", {ePlantModel:eplantModel, navigation:navigate})
+    }
+
+    const HydroponicsVersions = () => {
+        //console.log(ePlantModels[0].Hydroponic)
+        let hydroponic = ePlantModels[0].Hydroponic;
+
+        let hydroponicVersions = Object.keys(hydroponic).map((item, i) =>{
+            //console.log(hydroponic[item])
+                return(
+                    <View key={i}>
+                        
+                        <Text >
+                            Version: {hydroponic[item].version}
+                        </Text> 
+                        <Text >
+                            Type: {hydroponic[item].type}
+                        </Text> 
+                        <Button 
+                        title={"Submit"}
+                        style={{paddingBottom: 10}}
+                        onPress={() => handleSubmit(hydroponic[item])}
+                        />
+                    </View>
+                )
+            })
+            //console.log(hydroponic)
+        return hydroponicVersions
+    }
+
+    const SoilVersions = () => {
+        //console.log(ePlantModels[0].Hydroponic)
+        let soil = ePlantModels[1].Soil;
+
+        let soilVersions = Object.keys(soil).map((item, i) =>{
+            //console.log(hydroponic[item])
+                return(
+                    <View key={i}>
+                        <Text>
+                            Version: {soil[item].version}
+                        </Text> 
+                        <Text>
+                            Type: {soil[item].type}
+                        </Text> 
+                        <Button 
+                        title={"Submit"}
+                        style={{paddingBottom: 10}}
+                        onPress={() => handleSubmit(soil[item])}
+                        />
+                    </View>
+                )
+            })
+            //console.log(hydroponic)
+        return soilVersions
+    }
 
     return (
         <View style={{flex: 1}}>
             <View style={styles.header}>
                 <Text style={{width:"14%"}}></Text>
-                <Text style={styles.headertitle}>Add new plant pot</Text>
+                <Text style={styles.headertitle}>Select your ePlant model</Text>
                 <Icon 
                     name="close" 
                     size={40} 
@@ -31,15 +89,10 @@ export default function SelectName(props) {
                         <Text style={styles.title}>Select your ePlant model</Text>
                         
                     </View>
-                    <Button
-                    title={ePlantModels[0].Hydroponic.Version1.hydroponic}
-                    onPress={navigate("ePlantInputThingSpeakID", {navigation:{navigate},  } )}>
-                    </Button>
 
-                    <Button
-                    title={ePlantModels[1].Soil.Version1.soil}
-                    onPress={navigate("ePlantInputThingSpeakID", {navigation:{navigate}, } )}>
-                    </Button>
+                    {HydroponicsVersions()}
+                    {SoilVersions()}
+                
                    
                 </View>
             </KeyboardAvoidingView>

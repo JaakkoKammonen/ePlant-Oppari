@@ -1,6 +1,7 @@
 import { useState } from "react";
 import firebase from "../../firebaseConfig"
 import FireBasemiddleware from "./FireBasemiddleware";
+import {setUser} from "../01-actions"
 
 function CheckIfLoggedIn(navigate) {
     firebase.auth().onAuthStateChanged((user) => {
@@ -70,23 +71,22 @@ firebase.auth()
 }
 
 
-function GetUserData() {
-    const [user, setUser] = useState("")
+function UpdateUserData(dispatch) {
      firebase.auth().onAuthStateChanged((user) => {
          if (user) {
-             //console.log(user)
-             setUser(user)
+             dispatch(setUser(user))
          } else {
              setUser("error")
          }
      })
-     return user
+
+     
 }
 
 export default {
     CheckIfLoggedIn,
     LogIn,
     LogOut,
-    GetUserData,
+    UpdateUserData,
     Signup
 }

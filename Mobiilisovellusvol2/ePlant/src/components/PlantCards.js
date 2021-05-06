@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import { useSelector } from 'react-redux';
-
+import setImage from "../components/SetImage"
 export default function PlantCards({navigation}) {
     
     const plants = useSelector(state => state.firebase.plants)
@@ -39,7 +39,7 @@ export default function PlantCards({navigation}) {
                                 style={[styles.border]}
                             >
                                 <Text style={[styles.plantheader]}>{item.laji}</Text>
-                                <Image style={[styles.plantimage]} source={require('../assets/herbs.png')} />
+                                <Image style={[styles.plantimage]} source={setImage(item.laji.toLowerCase())} />
 
                             </TouchableOpacity>
 
@@ -61,7 +61,7 @@ export default function PlantCards({navigation}) {
                                 style={[styles.border]}
                             >
                                 <Text style={[styles.plantheader]}>{item.laji}</Text>
-                                <Image style={[styles.plantimage]} source={require('../assets/herbs.png')} />
+                                <Image style={[styles.plantimage]} source={setImage(item.laji.toLowerCase())} />
 
                             </TouchableOpacity>
 
@@ -83,7 +83,7 @@ export default function PlantCards({navigation}) {
                                 style={[styles.border]}
                             >
                                 <Text style={[styles.plantheader]}>{item.laji}</Text>
-                                <Image style={[styles.plantimage]} source={require('../assets/herbs.png')} />
+                                <Image style={[styles.plantimage]} source={setImage(item.laji.toLowerCase())} />
 
                             </TouchableOpacity>
 
@@ -105,7 +105,7 @@ export default function PlantCards({navigation}) {
                                 style={[styles.border]}
                             >
                                 <Text style={[styles.plantheader]}>{item.laji}</Text>
-                                <Image style={[styles.plantimage]} source={require('../assets/herbs.png')} />
+                                <Image style={[styles.plantimage]} source={setImage(item.laji.toLowerCase())} />
 
                             </TouchableOpacity>
 

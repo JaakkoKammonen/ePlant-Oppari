@@ -1,9 +1,9 @@
 
-const firebase = { 
-    myPlants:"",
+const firebase = {
     plants:"",
-    pots: "",
-    ePlantModels: ""
+    ePlantModels: "",
+    my_Plants:"",
+    my_ePlants: ""
  };
 
 const Database = ( state = firebase, action) => {
@@ -12,9 +12,9 @@ const Database = ( state = firebase, action) => {
     switch(action.type) { 
         
         // Asetaan minun kasvit
-        case "setMyPlants":
+        case "setUser_Plants":
             //console.log(payload)
-            return { ...state, myPlants : payload}
+            return { ...state, my_Plants : payload}
 
         // Asetaan info-kasvit
         case "setPlants":
@@ -27,7 +27,11 @@ const Database = ( state = firebase, action) => {
             
         case "setePlantModels":
             //console.log(payload)
-            return { ...state,  ePlantModels: payload}  
+            return { ...state,  ePlantModels: payload} 
+        case "setUser_ePlants":
+        //console.log(payload)
+            return { ...state,  my_ePlants: payload} 
+            
         default: 
             return state
     }
