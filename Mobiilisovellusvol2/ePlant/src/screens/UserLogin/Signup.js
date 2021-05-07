@@ -4,7 +4,7 @@ import { Input, Button } from "react-native-elements";
 import LogginMiddleware from "../../components/Redux/03-middleware/LogginMiddleware";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 
-export default function Login(props) {
+export default function Signup(props) {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
@@ -12,7 +12,7 @@ export default function Login(props) {
   const navigate = props.navigation.navigate;
   //console.log(props.navigation.state.params.errorAlert.title)
 
-  const Signup = () => {
+  const Signup2 = () => {
     LogginMiddleware.Signup(navigate, userEmail, userPassword, displayName);
   };
 
@@ -73,7 +73,7 @@ export default function Login(props) {
         <Button
           title="Sign Up"
           buttonStyle={styles.buttonsignup}
-          onPress={Signup}
+          onPress={Signup2}
         />
       </View>
   );

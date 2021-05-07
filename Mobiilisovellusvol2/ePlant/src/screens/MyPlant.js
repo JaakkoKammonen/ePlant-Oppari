@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+//import { FlatList } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import moment from "moment";
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
@@ -67,14 +67,14 @@ export default function MyPlant(props) {
                         <AnimatedCircularProgress
                         size={100}
                         width={10}
-                        fill={50}
+                        fill={ph}
                         tintColor="#00e0ff"
                         onAnimationComplete={() => console.log('onAnimationComplete')}
                         backgroundColor="#3d5875">
                             {
                                 (fill) => (
                                 <Text>
-                                   3.0
+                                   {ph}
                                 </Text>
                                 )
                             }
@@ -86,14 +86,14 @@ export default function MyPlant(props) {
                         <AnimatedCircularProgress
                         size={100}
                         width={10}
-                        fill={90}
+                        fill={ec}
                         tintColor="#00e0ff"
                         onAnimationComplete={() => console.log('onAnimationComplete')}
                         backgroundColor="#3d5875">
                             {
                                 (fill) => (
                                 <Text>
-                                   6.0
+                                   {ec}
                                 </Text>
                                 )
                             }
