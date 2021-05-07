@@ -1,4 +1,5 @@
 import React from "react";
+import SafeAreaView from 'react-native-safe-area-view';
 import { View, Text, StyleSheet, FlatList, ScrollView } from "react-native";
 import { useSelector } from "react-redux";
 
@@ -9,7 +10,6 @@ export default function Notifications() {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
         <View style={styles.header}>
           <Text style={styles.headerText}>Ilmoitukset</Text>
         </View>
@@ -18,7 +18,7 @@ export default function Notifications() {
             <FlatList
               data={myPlants}
               keyExtractor={(item, index) => index.toString()}
-              marginLeft={15}
+              marginLeft={230}
               renderItem={({ item }) => (
                 <View style={styles.notification}>
                   <View>
@@ -33,7 +33,6 @@ export default function Notifications() {
             />
           </Text>
         </View>
-      </ScrollView>
     </View>
   );
 }

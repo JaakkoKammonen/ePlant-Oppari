@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
-import SafeAreaView from 'react-native-safe-area-view';
-import { FlatList } from 'react-native-gesture-handler';
+import { StyleSheet, View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 import { Snackbar } from 'react-native-paper';
 import { useDispatch, useSelector } from "react-redux";
 import Firebase from "../components/Redux/03-middleware/FireBasemiddleware"
@@ -47,7 +45,6 @@ export default function Home(props) {
 
     return (
         <View style={styles.container}>    
-            <SafeAreaView>
                 <View style={styles.top} >
                     <Text style={styles.toptext}>Huomenta {user}!</Text>
                 </View>
@@ -73,7 +70,6 @@ export default function Home(props) {
                         }
                     />
                 </View>
-                </SafeAreaView>
                 <View style={styles.bottomheader}>
                     <Text style={styles.header2}>Viimeisimmät tapahtumat</Text>
                     <TouchableOpacity
@@ -128,15 +124,15 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#FCFCFC',
         flex: 2,
+        padding: 3,
     },
     top: {
         marginLeft: 10,
         flex: 1,
-        marginTop: 40,
-        marginBottom: 30
+        marginTop: 70,
     },
     toptext: {
-        fontSize: 26,
+        fontSize: 26
     },
     middle: {
         flex: 2,
@@ -190,7 +186,6 @@ const styles = StyleSheet.create({
         justifyContent:"space-between",
         flexDirection: 'row',
         marginLeft: 10,
-        marginTop: 30
     },
     showmore: {
         color: '#63816D',
@@ -215,7 +210,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         marginBottom: 5,
         marginTop: 10
-
     },
     bottomimage: {
         width: 30,

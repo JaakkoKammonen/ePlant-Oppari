@@ -65,7 +65,7 @@ export default function MyPlant(props) {
                         <AnimatedCircularProgress
                         size={100}
                         width={10}
-                        fill={(ph * 0.1).toFixed(0)}
+                        fill={50}
                         tintColor="#00e0ff"
                         onAnimationComplete={() => console.log('onAnimationComplete')}
                         backgroundColor="#3d5875">

@@ -32,7 +32,7 @@ import Pots from './src/screens/settings/Pots';
 //UserLogin
 import Login from "./src/screens/UserLogin/Login"
 import Logout from "./src/screens/UserLogin/Logout"
-import Singup from "./src/screens/UserLogin/Signup"
+import Signup from "./src/screens/UserLogin/Signup"
 
 //creating bottom navigation
 const BottomNavigator = createBottomTabNavigator(
@@ -111,7 +111,7 @@ const BottomNavigator = createBottomTabNavigator(
 const SwitchNavigation = createSwitchNavigator({
     Logout: Logout,
     Login: Login,
-    Singup: Singup, 
+    Signup: Signup, 
 
     Plant: Plant,
     MyPlant: MyPlant,

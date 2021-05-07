@@ -1,11 +1,10 @@
 import React from "react";
-import { View, Text, StyleSheet, Image} from "react-native";
-import {  ListItem, Icon, Button, Avatar } from "react-native-elements";
+import { View, Text, StyleSheet, Image } from "react-native";
+import { ListItem, Icon, Button } from "react-native-elements";
 import LogginMiddleware from "../../components/Redux/03-middleware/LogginMiddleware";
-import logo from "../../assets/logo_ePlant.png"
+import logo from "../../assets/eP_transparent.png";
 
 export default function Settings(props) {
-  
   const { navigate } = props.navigation;
   let user = LogginMiddleware.GetUserData();
 
@@ -14,22 +13,26 @@ export default function Settings(props) {
     {
       name: "Plant pots",
       icon: "local-drink",
-      navigate: "Pots"
+      navigate: "Pots",
     },
     {
       name: "Safety",
       icon: "security",
-      navigate: "Safety"
+      navigate: "Safety",
     },
     {
-      name: "UserNotification",
+      name: "User",
       icon: "notifications",
-      navigate: "UserNotification"
+      navigate: "UserNotification",
     },
     {
       name: "Info",
       icon: "info",
-      navigate: "Info"
+      navigate: "Info",
+    },
+    {
+      name: "Logout",
+      icon: "logout",
     },
   ];
 
@@ -38,42 +41,37 @@ export default function Settings(props) {
       <View style={styles.header}>
         <Text style={styles.headerText}>Settings</Text>
       </View>
-
       <View style={styles.content}>
         <View style={styles.profilecontainer}>
           <View>
-            <Avatar source={logo} />
+            <Image
+              style={styles.logo}
+              source={require("../../assets/eP_transparent.png")}
+            />
           </View>
           <View style={styles.profileinfo}>
-            <Text style={{ fontSize: 25, marginBottom: 5 }}>{user.displayName}</Text>
-            <Text style={{ fontStyle: "italic", color: "#63816D", marginBottom:5 }}>
+            <Text style={{ fontSize: 20, marginBottom: 5 }}>
+              {user.displayName}
+            </Text>
+            <Text
+              style={{ fontStyle: "italic", color: "#63816D", marginBottom: 5 }}
+            >
               {user.uid}
             </Text>
-            <Button 
-            style={styles.btn}
-            title="Logout"
-            onPress={() => LogginMiddleware.LogOut(navigate)}
-            />
           </View>
         </View>
 
         {list.map((l, i) => (
-          <ListItem
-            key={i}
-            bottomDivider
-            onPress={() => navigate(l.navigate)}
-          >
+          <ListItem key={i} bottomDivider onPress={() => navigate(l.navigate)}>
             <Icon name={l.icon} color="#555555" />
-              <ListItem.Title>{l.name}</ListItem.Title>
+            <ListItem.Title>{l.name}</ListItem.Title>
           </ListItem>
         ))}
       </View>
-
       <Button
-        title="Kirjaudu ulos"
-        type="clear"
-        titleStyle={{ color: "#63816D" }}
-        buttonStyle={styles.logout}
+        buttonStyle={styles.buttonlogout}
+        title="Logout"
+        onPress={() => LogginMiddleware.LogOut(navigate)}
       />
     </View>
   );
@@ -96,11 +94,6 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
   },
-  logout: {
-    position: "absolute",
-    bottom: 10,
-    left: 10,
-  },
   profileinfo: {
     marginLeft: 20,
     flex: 2,
@@ -121,5 +114,19 @@ const styles = StyleSheet.create({
     },
     elevation: 4,
     backgroundColor: "#FAFAFA",
+  },
+  buttonlogout: {
+    backgroundColor: "#63816D",
+    borderRadius: 3,
+    marginRight: 3,
+    marginTop: 10,
+    fontSize: 12,
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  logo: {
+    width: 90,
+    height: 90,
   },
 });
