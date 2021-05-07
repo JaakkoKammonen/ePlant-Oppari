@@ -1,9 +1,9 @@
 // Actions 
 
 
-export const setMyPlants  = (payload) => {
+export const setUser_Plants = (payload) => {
     return {
-        type: "setMyPlants",
+        type: "setUser_Plants",
         payload: payload
     }
 }
@@ -24,6 +24,19 @@ export const setPots  = (payload) => {
 export const setePlantModels  = (payload) => {
     return {
         type: "setePlantModels",
+        payload: payload
+    }
+}
+
+export const setUser  = (payload) => {
+    return {
+        type: "setUser",
+        payload: payload
+    }
+}
+export const setUser_ePlants  = (payload) => {
+    return {
+        type: "setUser_ePlants",
         payload: payload
     }
 }

@@ -21,6 +21,12 @@ export default function Login(props) {
     console.log(passwordShown);
   };
 
+    const Signup = () => {
+        //console.log(userEmail, userPassword, displayName)
+        LogginMiddleware.Signup(navigate, userEmail, userPassword, displayName)   
+    }   
+  
+
   return (
       <View style={styles.container}>
       <TouchableOpacity onPress={() => navigate("Login")}>

@@ -21,7 +21,7 @@ export default function PlantOrPot({navigation}) {
 
                 <Button
                 title="Add new pot"
-                onPress={() => navigate("AddNewPot")}
+                onPress={() => navigate("SelectePlantModel")}
                 titleStyle={{marginLeft:15, color:"black"}}
                 buttonStyle={styles.btn}
                 /> 

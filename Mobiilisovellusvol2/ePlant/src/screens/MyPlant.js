@@ -4,14 +4,16 @@ import { FlatList } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import moment from "moment";
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import setImage from "../components/SetImage"
 
 export default function MyPlant(props) {
     const plant = props.navigation.state.params.plant;
-    const channelId = plant.ruukkuid;
+    //console.log(plant)
+    const channelId = plant.ePlantPot.channel_id;
     const [ph, setPh] = useState(0);
     const [ec, setEc] = useState(0);
     const { navigate } = props.navigation;
-    console.log(Date())
+
     useEffect(() => {
         getData();
     }, []);
@@ -23,7 +25,7 @@ export default function MyPlant(props) {
         fetch(url)
             .then((response) => response.json())
             .then((responseJson) => {
-                console.log(responseJson)
+                //console.log(responseJson)
                 if (responseJson.feeds[99].field1 != null) {
                     setPh(responseJson.feeds[99].field1);
                 } else {
@@ -47,12 +49,12 @@ export default function MyPlant(props) {
                     <TouchableOpacity onPress={() => navigate('Home')}>
                         <Ionicons name="arrow-back-outline" size={30} style={styles.icon}/>
                     </TouchableOpacity>
-                    <Text style={styles.plantname}>{plant.nimi}</Text>
-                    <Text style={styles.plantheader}>{plant.laji}</Text>
+                    <Text style={styles.plantname}>{plant.plantName}</Text>
+                    <Text style={styles.plantheader}>{plant.species}</Text>
                     <Image style={styles.topimage} source={require('../assets/smile.png')} />
                 </View>
                 <View>
-                    <Image style={styles.topimage2} source={require('../assets/herbs.png')} />
+                    <Image style={styles.topimage2} source={setImage(plant.species.toLowerCase())} />
                 </View>
             </View>
             <View style={styles.container2}>

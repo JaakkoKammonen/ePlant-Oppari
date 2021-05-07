@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 export default function Plant(props) {
     const plant = props.navigation.state.params.plant;
-    const plantImage = SetImage(plant.laji);
+    const plantImage = SetImage(plant.laji.toLowerCase());
     const { navigate } = props.navigation;
 
     // returning plant data based on props from Search.js and plantImage from SetBackgroundImg.js

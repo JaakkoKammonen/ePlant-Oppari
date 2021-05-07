@@ -6,22 +6,22 @@ import kuva from '../../../assets/herbs.png'
 
 export default function SelectPot(props) {
 
-    const potList = useSelector(state => state.firebase.pots)
+    const my_ePlants = useSelector(state => state.firebase.my_ePlants)
 
     const { navigate } = props.navigation;
     
     const plant = props.navigation.state.params.plant;
-
+    //console.log(plant)
     // sending selected items data to next screen and navigating to there
-    const handleSelect = (item) => {
-        navigate('SelectName', { pot: item.nimi, potId: item.id, plant: plant })
+    const handleSelect = (eplant) => {
+        navigate('SelectName', { eplant: eplant, plant: plant })
     };
 
     return (
         <View style={styles.container}>
             <View style={styles.bordertop}>
                 <Text style={{width:"14%"}}></Text>
-                <Text style={styles.text}>Lisää kasvi</Text>
+                <Text style={styles.text}>Select ePlant</Text>
                 <Icon 
                     name="close" 
                     size={40} 
@@ -30,21 +30,24 @@ export default function SelectPot(props) {
                 />
             </View>
             <View>
-                <Text style={styles.top}>Valitse ruukku</Text>
+                <Text style={styles.top}>Select ePlant</Text>
             </View>
             <View style={styles.middle}>
-                {potList.map((item, i) => (
+                {my_ePlants.map((eplant, i) => (
                     <TouchableOpacity
-                    onPress={() => handleSelect(item)}
+                    onPress={() => handleSelect(eplant)}
                     key={i}
                     title={"choosePot"}
                     style={styles.border}
                     >
-                    <Text style={styles.plantheader}>{item.nimi}</Text>
+                    <Text style={styles.plantheader}>{eplant.ePlantModel.type}</Text>
                     <Image style={styles.plantimage} source={kuva} />
 
                     </TouchableOpacity>
                 ))}
+            </View>
+            <View>
+                <Text> or add new!</Text>
             </View>
             <View style={styles.bottom}>
                 <Button
@@ -56,6 +59,7 @@ export default function SelectPot(props) {
                     title="Lisää uusi ruukku"
                     titleStyle={{marginLeft:15, color:"black"}}
                     buttonStyle={styles.btn}
+                    onPress={() =>  navigate("SelectePlantModel")}
                 /> 
             </View>
         </View>

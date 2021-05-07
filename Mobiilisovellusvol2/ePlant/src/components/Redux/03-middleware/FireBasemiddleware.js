@@ -1,19 +1,39 @@
+import { useSelector } from "react-redux";
 import firebase from "../../firebaseConfig"
 import {
-  setMyPlants,
   setPlants,
-  setPots,
-  setePlantModels
+  setePlantModels,
+  setUser_ePlants,
+  setUser_Plants
 } from "../01-actions"
 
 // Get my plants
-function UpdateMyPlants(dispatch) {
-firebase.database().ref('omatkasvit/').on('value', snapshot => {
+function UpdateMyPlants(dispatch) { 
+
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    firebase.database().ref('users/' + user.uid + "/myPlants/").on('value', snapshot => {
     const plants = Object.values(snapshot.val());
     //console.log(snapshot.val())
-    dispatch(setMyPlants(plants))
+    dispatch(setUser_Plants(plants))
+    })
+  } 
+})
+
+}
+
+function UpdateMyePlantPots(dispatch) {
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      firebase.database().ref('users/' + user.uid + "/ePlant/").on('value', snapshot => {
+        const userePlants = Object.values(snapshot.val());
+        dispatch(setUser_ePlants(userePlants))
+      });
+    }
 });
 }
+
+
 
 function UpdatePlants(dispatch) {
   firebase.database().ref('kasvit/').on('value', snapshot => {
@@ -21,40 +41,64 @@ function UpdatePlants(dispatch) {
     dispatch(setPlants(plantList))
 });
 }
-function UpdatePots(dispatch) {
-firebase.database().ref('ruukut/').on('value', snapshot => {
-  const potList = Object.values(snapshot.val());
-  dispatch(setPots(potList))
-});
-}
+
 
 function UpdateEPlantModels(dispatch) {
   firebase.database().ref('/ePlant-models').on('value', snapshot => {
     const ePlantModels = Object.values(snapshot.val());
-    console.log(ePlantModels)
+    //console.log(ePlantModels)
     dispatch(setePlantModels(ePlantModels))
   
   });
   }
 
-// Sisään lajike, omakeksimä nimi, ruukun nimi ja id sekä navigate
-function AddPlantToDatabase(species, plantName,potName,potId,navigate) {
-  firebase.database().ref('omatkasvit/').push(
+
+
+function AddUserToDatabase(userUid, userEmail, userDisplayName) {
+  firebase.database().ref('users/' + userUid).set(
+    {
+      uid: userUid, 
+      name: userDisplayName,
+      email: userEmail,
+    }
+)
+}
+
+
+function AddPlantToUser(userUid,species, plantName, ePlant, navigate) {
+  firebase.database().ref('users/' + userUid + "/myPlants").push(
       {
-          'laji': species,
-          'nimi': plantName,
-          'paivays': Date(),
-          'ruukku': potName,
-          'ruukkuid': potId 
+          'species': species,
+          'plantName': plantName,
+          'date': Date(),
+          "ePlantPot": ePlant
       }
   )
   navigate('Home', {showSnackbar: true, plantName: plantName})
 }
 
+
+function AddePlantToUser(userUid, ePlant, navigate) {
+
+  //console.log(ePlant)
+     firebase.database().ref('users/' + userUid + '/ePlant').push(
+    { 
+      channel_id: ePlant.channel_id,
+      write_apikey: ePlant.write_apikey,
+      ePlantModel: ePlant.ePlantModel
+    }
+  )
+
+  navigate('Home', {showSnackbar: true, plantName: "New ePlant"})
+}  
+
+
 export default {
   UpdateMyPlants,
   UpdatePlants,
-  UpdatePots,
-  AddPlantToDatabase,
-  UpdateEPlantModels
+  AddPlantToUser,
+  UpdateEPlantModels,
+  AddUserToDatabase,
+  AddePlantToUser,
+  UpdateMyePlantPots
 }

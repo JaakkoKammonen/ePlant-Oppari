@@ -1,20 +1,33 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, KeyboardAvoidingView } from 'react-native';
+import { View, Text, StyleSheet, Image, KeyboardAvoidingView, Button } from 'react-native';
 import { Input, Icon } from 'react-native-elements';
-import FireBase from "../../../components/Redux/03-middleware/FireBasemiddleware"
-import AloeVera from "../../../assets/plant_img/aloe_vera.png"
+import { useSelector } from 'react-redux';
+import FireBasemiddleware from '../../../components/Redux/03-middleware/FireBasemiddleware';
 
 export default function SelectName(props) {
-    
-    const [plantName, setPlantName] = useState('');
-    const { navigate } = props.navigation;
 
+    const navigate = props.navigation.state.params.navigation;
+
+    const [ePlant, setePlant] = useState({
+        channel_id: 0,
+        write_apikey: "",
+        ePlantModel: props.navigation.state.params.ePlantModel
+    });
+    const userUid = useSelector(item => item.user.uid)
+    //console.log(user)
+    const handleSubmit = (event) => {
+
+        event.preventDefault();
+
+        FireBasemiddleware.AddePlantToUser(userUid,ePlant, navigate)
+    }
+    //console.log(props.navigation.state.params)
 
     return (
         <View style={{flex: 1}}>
             <View style={styles.header}>
                 <Text style={{width:"14%"}}></Text>
-                <Text style={styles.headertitle}>Add new plant pot</Text>
+                <Text style={styles.headertitle}>Input ThingSpeak info</Text>
                 <Icon 
                     name="close" 
                     size={40} 
@@ -27,19 +40,30 @@ export default function SelectName(props) {
                 style={styles.container}
             >
                 <View style={styles.container}>
-                    <View>
-                        <Text style={styles.title}>Select your ePlant model</Text>
-                        
-                    </View>
-                    <Image style={styles.middleimage} source={AloeVera} />
-                    <Input
-                        placeholder='Anna kasville nimi'
-                        inputContainerStyle={styles.textinput}
-                        clearButtonMode='always'
-                        onChangeText={text => setPlantName(text)}
-                        returnKeyType='done'
-                        //onSubmitEditing={}
-                    />
+                    <Text>
+                        Input ThingSpeak Channel ID
+                    </Text>
+                   <Input
+                    placeholder="ThingsPeak Channel ID" 
+                    clearButtonMode='always'
+                    onChangeText={text => setePlant({
+                        ...ePlant, channel_id: text})}
+                    returnKeyType='done'
+                   />
+                   <Text>
+                        Input ThingSpeak Write apikey
+                    </Text>
+                   <Input
+                    placeholder="ThingsPeak Write apikey" 
+                    clearButtonMode='always'
+                    onChangeText={text => setePlant({
+                    ...ePlant, write_apikey: text})}
+                   />
+                
+                <Button
+                title={"Submit"}
+                onPress={ () => handleSubmit(event)} />
+                   
                 </View>
             </KeyboardAvoidingView>
         </View>

@@ -3,22 +3,20 @@ import { View, Text, StyleSheet, Image, KeyboardAvoidingView } from 'react-nativ
 import { Input, Icon } from 'react-native-elements';
 import FireBase from "../../../components/Redux/03-middleware/FireBasemiddleware"
 import AloeVera from "../../../assets/plant_img/aloe_vera.png"
+import { useSelector } from 'react-redux';
 
 export default function SelectName(props) {
     
     const [plantName, setPlantName] = useState('');
     const { navigate } = props.navigation;
-    const species = props.navigation.state.params.plant;
-    const potName = props.navigation.state.params.pot;
-    const potId = props.navigation.state.params.potId;
+    let species = props.navigation.state.params.plant;
+    let ePlant = props.navigation.state.params.eplant
 
-    // adds new plants data to firebase database table "own plants"
-    // data are received with props from previous screens SelectPlant.js and SelectPot.js
-    // user is taken back to Home.js screen, and two props are send with navigation
-    // props are used to show a snackbar in Home.js to inform the user that plant has been added to db
+    let userUid = useSelector(state => state.user.uid)
+    
    const AddPlantDb = (event) => {
      event.preventDefault();
-     FireBase.AddPlantToDatabase(species,plantName, potName, potId, navigate)
+     FireBase.AddPlantToUser(userUid,species,plantName, ePlant, navigate)
    }
 
     return (

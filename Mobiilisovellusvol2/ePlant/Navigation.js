@@ -20,7 +20,8 @@ import SelectPlant from './src/screens/Plants/addPlant/01-selectPlant';
 import SelectPot from './src/screens/Plants/addPlant/02-selectPot';
 import SelectName from './src/screens/Plants/addPlant/03-selectName';
 //AddPot
-import AddNewPot from "./src/screens/Plants/addPot/addNewPot"
+import SelectePlantModel from "./src/screens/Plants/addPot/01-SelectePlantModel"
+import ePlantInputThingSpeakID from "./src/screens/Plants/addPot/02-inputThingspeakID";
 
 // Settings
 import Settings from './src/screens/settings/01-Settings';
@@ -121,7 +122,8 @@ const SwitchNavigation = createSwitchNavigator({
     SelectName: SelectName,
     SelectPot: SelectPot,
 
-    AddNewPot: AddNewPot,
+    SelectePlantModel: SelectePlantModel,
+    ePlantInputThingSpeakID: ePlantInputThingSpeakID,
     
     Pots: Pots,
     Info: Info,
