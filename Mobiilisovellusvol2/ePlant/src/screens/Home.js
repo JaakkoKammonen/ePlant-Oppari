@@ -12,7 +12,6 @@ export default function Home(props) {
     let plants = useSelector(state => state.firebase.my_Plants)
     const user = useSelector(state => state.user)
     //console.log(user.uid)
-    
 
     const [visibility, setVisibility] = useState(false);
     const { navigate } = props.navigation;
@@ -183,7 +182,7 @@ const styles = StyleSheet.create({
     },
     middleimage: {
         width: 150,
-        height: 150
+        height: 150,
     },
     bottomheader: {
         justifyContent:"space-between",

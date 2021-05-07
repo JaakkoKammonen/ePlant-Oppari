@@ -20,6 +20,15 @@ const char* server = "api.thingspeak.com";
 #define INTERVAL 43200000                                                       // 12h Vesipumpun millis() interval
 static uint64_t send_interval_ms;                                               // Määritelty millis-formaatti
 
+//#define ECAnturi 35
+#define VREF 5.0 // analog reference voltage(Volt) of the ADC
+#define SCOUNT 30 // sum of sample point
+
+int analogBuffer[SCOUNT]; // store the analog value in the array, read from ADC
+int analogBufferTemp[SCOUNT];
+int analogBufferIndex = 0,copyIndex = 0;
+float averageVoltage = 3.3,tdsValue = 0,temperature = 25;
+
 WebServer Server;
 AutoConnect Portal(Server);
 AutoConnectConfig config;
@@ -31,7 +40,7 @@ int PHTasoAnturiVirta = 5;                                                      
 int PHAnturi= 32;
 
 int ECAnturiVirta = 18;
-int ECAnturi= 35;
+int ECAnturi= A0;
  
 int ilmaPumppuThingspeakOhjaus = 4;                                             // ThingSpeakin Read-metodilla päivitettävä arvo 0/1
 int anturienArvo = 5;                                                           // ThingSpeakin Read-metodilla päivitettävä arvo 0/1 
@@ -47,7 +56,8 @@ void setup() {
   pinMode(ilmaPumppu,OUTPUT);                                                   // Pin-output anturien pinneille
   pinMode(PHTasoAnturiVirta,OUTPUT);                                            // Relay anturien pinneille
   pinMode(ECAnturiVirta,OUTPUT);
-
+  //pinMode(ECAnturi,INPUT);
+  
   delay(1000);
   config.apid = "ePlantVol2";                                                   // Hotspot-nimi
   config.psk  = "ePlantVersion";                                                // Salasana
@@ -74,30 +84,57 @@ send_interval_ms = millis();                                                    
 
 }
 
+ int getMedianNum(int bArray[], int iFilterLen)
+            {
+            int bTab[iFilterLen];
+            for (byte i = 0; i<iFilterLen; i++)
+            bTab[i] = bArray[i];
+            int i, j, bTemp;
+            for (j = 0; j < iFilterLen - 1; j++)
+            {
+            for (i = 0; i < iFilterLen - j - 1; i++)
+            {
+            if (bTab[i] > bTab[i + 1])
+            {
+            bTemp = bTab[i];
+            bTab[i] = bTab[i + 1];
+            bTab[i + 1] = bTemp;
+            }
+            }
+            }
+            if ((iFilterLen & 1) > 0)
+            bTemp = bTab[(iFilterLen - 1) / 2];
+            else
+            bTemp = (bTab[iFilterLen / 2] + bTab[iFilterLen / 2 - 1]) / 2;
+            return bTemp;
+            }
+            
  static int ECAnturiArvo() {
 
         digitalWrite(ECAnturiVirta, HIGH);                                      // Virrat päälle -> odotus -> luetaan -> tallennetaan muuttujaan tieto -> virrat pois
         delay(5000);
         
-        int ECTaso1 = analogRead(ECAnturi);
-        delay(1000);
-        int ECTaso2 = analogRead(ECAnturi);
-        delay(1000);
-        int ECTaso3 = analogRead(ECAnturi);
-        delay(1000);
-        int ECTaso4 = analogRead(ECAnturi);
-        delay(1000);
-        int ECTaso5 = analogRead(ECAnturi);
-        delay(1000);
+          analogBuffer[analogBufferIndex] = analogRead(ECAnturi); //read the analog value and store into the buffer
+          analogBufferIndex++;
+          if(analogBufferIndex == SCOUNT)
+          analogBufferIndex = 0;
 
-        int ECArvo = (ECTaso1 + ECTaso2 + ECTaso3 + ECTaso4 + ECTaso5)/5;
-        
-        Serial.println("EC lukemat:"); 
-        Serial.println(ECArvo);
-        Serial.println(""); 
+          for(copyIndex=0;copyIndex<SCOUNT;copyIndex++)
+          analogBufferTemp[copyIndex]= analogBuffer[copyIndex];
+          averageVoltage = getMedianNum(analogBufferTemp,SCOUNT) * (float)VREF/ 1024.0; // read the analog value more stable by the median filtering algorithm, and convert to voltage value
+          float compensationCoefficient=1.0+0.02*(temperature-25.0); //temperature compensation formula: fFinalResult(25^C) = fFinalResult(current)/(1.0+0.02*(fTP-25.0));
+          float compensationVolatge=averageVoltage/compensationCoefficient; //temperature compensation
+          tdsValue=(133.42*compensationVolatge*compensationVolatge*compensationVolatge - 255.86*compensationVolatge*compensationVolatge + 857.39*compensationVolatge)*0.5; //convert voltage value to tds value
+          //Serial.print("voltage:");
+          //Serial.print(averageVoltage,2);
+          //Serial.print("V ");
+          Serial.print("TDS Value:");
+          Serial.print(tdsValue,0);
+          Serial.println("ppm");
+
         digitalWrite(ECAnturiVirta,LOW);
       
-       return ECArvo;
+       return tdsValue;
     };
 
   static  int PHTasoAnturiArvo() {
