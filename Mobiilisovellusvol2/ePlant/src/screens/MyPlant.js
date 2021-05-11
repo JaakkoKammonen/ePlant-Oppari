@@ -12,6 +12,7 @@ export default function MyPlant(props) {
     const channelId = plant.ePlantPot.channel_id;
     const [ph, setPh] = useState(0);
     const [ec, setEc] = useState(0);
+    const [updateDate, setUpdateDate] = useState(0);
     const { navigate } = props.navigation;
 
     useEffect(() => {
@@ -27,8 +28,11 @@ export default function MyPlant(props) {
             .then((responseJson) => {
                 //console.log(responseJson)
                 if (responseJson.feeds[99].field1 != null) {
+                    //console.log(responseJson.feeds[99])
+                    setUpdateDate(responseJson.feeds[99].created_at)
                     setPh(responseJson.feeds[99].field1);
                 } else {
+                    
                     setPh('0')
                 }
                 if (responseJson.feeds[99].field2 != null) {
@@ -69,7 +73,7 @@ export default function MyPlant(props) {
                         width={10}
                         fill={ph}
                         tintColor="#00e0ff"
-                        onAnimationComplete={() => console.log('onAnimationComplete')}
+                        //onAnimationComplete={() => console.log('onAnimationComplete')}
                         backgroundColor="#3d5875">
                             {
                                 (fill) => (
@@ -88,7 +92,7 @@ export default function MyPlant(props) {
                         width={10}
                         fill={ec}
                         tintColor="#00e0ff"
-                        onAnimationComplete={() => console.log('onAnimationComplete')}
+                        //onAnimationComplete={() => console.log('onAnimationComplete')}
                         backgroundColor="#3d5875">
                             {
                                 (fill) => (
@@ -103,6 +107,10 @@ export default function MyPlant(props) {
                 </View>
                 <View>
                 </View>
+
+                <Text>Values were updated in {updateDate} </Text>
+
+
                 <View style={styles.bottomheader}>
                     <Text style={styles.header}>Viimeisimmät tapahtumat</Text>
                     <TouchableOpacity
@@ -111,23 +119,7 @@ export default function MyPlant(props) {
                         <Text style={styles.showmore}>Näytä lisää</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={styles.bottom}>
-                    {/*}<FlatList data={plants}
-                        marginLeft={15}
-                        keyExtractor={(item, index) => index.toString()}
-                        renderItem={({ item }) =>
-                            <View style={styles.bottomitem}>
-                                <View>
-                                   <View style={styles.circle}/>
-                                </View>
-                                <View style={styles.bottomtext}>
-                                    <Text style={styles.bottomtext1}>Tänään klo 8.20</Text>
-                                    <Text style={styles.bottomtext2}>{item.nimi} kasteltu.</Text>
-                                </View>
-                            </View>
-                        }
-                    />{*/}
-                </View>
+            
             </View>
         </ScrollView>
     );

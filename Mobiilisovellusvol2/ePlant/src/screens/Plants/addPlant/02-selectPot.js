@@ -17,6 +17,32 @@ export default function SelectPot(props) {
         navigate('SelectName', { eplant: eplant, plant: plant })
     };
 
+    const renderePlants = () => {
+        if(my_ePlants !== "No ePlants yet") {
+            return(
+                <View style={styles.middle}>
+                {my_ePlants.map((eplant, i) => (
+                    <TouchableOpacity
+                    onPress={() => handleSelect(eplant)}
+                    key={i}
+                    title={"choosePot"}
+                    style={styles.border}
+                    >
+                    <Text style={styles.plantheader}>{eplant.ePlantModel.type}</Text>
+                    <Image style={styles.plantimage} source={kuva} />
+
+                    </TouchableOpacity>
+                ))}
+            </View>
+            )
+        } else {
+            return(
+                <View style={styles.middle}>
+                    <Text>No ePlants yet! Add them first</Text>
+                </View>
+            )
+        }
+    }
     return (
         <View style={styles.container}>
             <View style={styles.bordertop}>
@@ -32,23 +58,10 @@ export default function SelectPot(props) {
             <View>
                 <Text style={styles.top}>Select ePlant</Text>
             </View>
-            <View style={styles.middle}>
-                {my_ePlants.map((eplant, i) => (
-                    <TouchableOpacity
-                    onPress={() => handleSelect(eplant)}
-                    key={i}
-                    title={"choosePot"}
-                    style={styles.border}
-                    >
-                    <Text style={styles.plantheader}>{eplant.ePlantModel.type}</Text>
-                    <Image style={styles.plantimage} source={kuva} />
+            
+        {renderePlants()}
 
-                    </TouchableOpacity>
-                ))}
-            </View>
-            <View>
-                <Text> or add new!</Text>
-            </View>
+            
             <View style={styles.bottom}>
                 <Button
                     icon={{

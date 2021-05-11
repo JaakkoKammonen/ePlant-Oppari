@@ -9,6 +9,7 @@ export default function Pots(props) {
     let ePlantPots = useSelector(state => state.firebase.my_ePlants)
 
     const ePlants = () => {
+        if(ePlantPots !== "No ePlants yet") {
        let pots = Object.keys(ePlantPots).map((item, i) => {
             //console.log(ePlantPots[item])
                     return(
@@ -22,6 +23,15 @@ export default function Pots(props) {
                 })
                 
                 return pots
+        } else {
+            return(
+            <View>
+                <Text>
+                    No ePlants yet
+                </Text>
+            </View> 
+            )
+        }
     }
     // returning plant data based on props from Search.js and plantImage from SetBackgroundImg.js
     return (

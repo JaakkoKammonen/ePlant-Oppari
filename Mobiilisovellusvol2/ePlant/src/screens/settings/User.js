@@ -1,12 +1,45 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useSelector } from 'react-redux';
+import { Button } from "react-native-elements";
+import LogginMiddleware from '../../components/Redux/03-middleware/LogginMiddleware';
 
 export default function UserNotification(props) {
    
     const { navigate } = props.navigation;
+    let user = useSelector(state => state.user)
 
-    // returning plant data based on props from Search.js and plantImage from SetBackgroundImg.js
+    const DeleteUser = (event) => {
+        event.preventDefault();
+        LogginMiddleware.DeleteUser(user)
+    }
+    const UserInfo = () => {
+        return (
+            <View>
+               <Text>
+                   User name: {user.displayName}
+                </Text> 
+                <Button>
+
+                </Button>
+                <Text>
+                   User email: {user.email}
+                </Text>
+
+                <Text>
+                   Reset password: {user.displayName}
+                </Text>
+                
+                <Button
+                title="Delete all user data"
+                onPress={DeleteUser}
+                />
+
+
+            </View>
+        )
+    }
     return (
         <ScrollView style={styles.container}>
             
@@ -15,6 +48,8 @@ export default function UserNotification(props) {
                     <Ionicons name="arrow-back-outline" size={30} style={styles.arrow} />
                 </TouchableOpacity>
                 <Text style={styles.description}>Tähän käyttäjän omat ilmoitusasetukset</Text>
+                
+                {UserInfo()}
             </View>
         </ScrollView>
     );

@@ -23,7 +23,7 @@ export default function Settings(props) {
     {
       name: "User",
       icon: "notifications",
-      navigate: "UserNotification",
+      navigate: "User",
     },
     {
       name: "Info",

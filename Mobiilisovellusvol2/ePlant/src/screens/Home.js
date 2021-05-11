@@ -45,57 +45,96 @@ export default function Home(props) {
         navigate('MyPlant', { plant: item })
     };
 
+
+    const PlantsRender = () => {
+            if (plants === "No plants yet") {
+                return(
+                    <View>
+                        <Text>
+                        No plants yet    
+                        </Text>
+                    </View>
+                )
+            }   else {
+                return(
+
+                    <FlatList
+                    horizontal={true}
+                    contentContainerStyle={{ alignSelf: 'flex-start' }}
+                    showsVerticalScrollIndicator={false}
+                    showsHorizontalScrollIndicator={false}
+                    data={plants}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={({ item }) =>
+                        <TouchableOpacity 
+                        style={styles.border}
+                        onPress={() => handleSelect(item)}
+                        >
+                            <Text style={styles.middletext}>{item.plantName}</Text>
+                            <Image style={styles.middleimage} source={setImage(item.species.toLowerCase())} />
+                        </TouchableOpacity>
+                    }
+                />
+                )
+            }
+        }
+
+
+    const NotificationsRender = () => {
+        if (plants === "No plants yet") {
+            return(
+                <View>
+                    <Text>
+                    No notifications yet    
+                    </Text>
+                </View>
+            )
+        }   else {
+            return(
+                <FlatList data={plants}
+                marginLeft={15}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({ item }) =>
+                    <View style={styles.bottomitem}>
+                        <View>
+                           <View style={styles.circle}/>
+                        </View>
+                        <View style={styles.bottomtext}>
+                            <Text style={styles.bottomtext1}>Tänään klo 8.20</Text>
+                            <Text style={styles.bottomtext2}>{item.plantName} kasteltu.</Text>
+                        </View>
+                    </View>
+                }
+            />
+            )
+
+        }
+    }
     return (
         <View style={styles.container}>    
                 <View style={styles.top} >
-                    <Text style={styles.toptext}>Huomenta {user.displayName}!</Text>
+                    <Text style={styles.toptext}>Howdy {user.displayName}!</Text>
                 </View>
                 <View style={styles.middle}>
                     <View style={styles.middleheader}>
-                        <Text style={styles.header}>Omat kasvini</Text>
+                        <Text style={styles.header}>My plants</Text>
                     </View>
-                    <FlatList
-                        horizontal={true}
-                        contentContainerStyle={{ alignSelf: 'flex-start' }}
-                        showsVerticalScrollIndicator={false}
-                        showsHorizontalScrollIndicator={false}
-                        data={plants}
-                        keyExtractor={(item, index) => index.toString()}
-                        renderItem={({ item }) =>
-                            <TouchableOpacity 
-                            style={styles.border}
-                            onPress={() => handleSelect(item)}
-                            >
-                                <Text style={styles.middletext}>{item.plantName}</Text>
-                                <Image style={styles.middleimage} source={setImage(item.species.toLowerCase())} />
-                            </TouchableOpacity>
-                        }
-                    />
+
+                    {PlantsRender()}
+
                 </View>
                 <View style={styles.bottomheader}>
-                    <Text style={styles.header2}>Viimeisimmät tapahtumat</Text>
+                    <Text style={styles.header2}>Notifications</Text>
                     <TouchableOpacity
                         onPress={() => navigate('Notifications', { plants })}
                     >
-                        <Text style={styles.showmore}>Näytä lisää</Text>
+                        <Text style={styles.showmore}>Show more</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.bottom}>
-                    <FlatList data={plants}
-                        marginLeft={15}
-                        keyExtractor={(item, index) => index.toString()}
-                        renderItem={({ item }) =>
-                            <View style={styles.bottomitem}>
-                                <View>
-                                   <View style={styles.circle}/>
-                                </View>
-                                <View style={styles.bottomtext}>
-                                    <Text style={styles.bottomtext1}>Tänään klo 8.20</Text>
-                                    <Text style={styles.bottomtext2}>{item.plantName} kasteltu.</Text>
-                                </View>
-                            </View>
-                        }
-                    />
+                   
+                   {NotificationsRender()}
+                   
                 </View>
             <View>
                 <Snackbar

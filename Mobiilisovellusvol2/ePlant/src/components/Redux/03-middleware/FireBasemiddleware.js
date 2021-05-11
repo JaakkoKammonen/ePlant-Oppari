@@ -13,9 +13,14 @@ function UpdateMyPlants(dispatch) {
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     firebase.database().ref('users/' + user.uid + "/myPlants/").on('value', snapshot => {
+      //console.log(snapshot.val())
+    if (snapshot.val() !== null) {
     const plants = Object.values(snapshot.val());
     //console.log(snapshot.val())
     dispatch(setUser_Plants(plants))
+  } else {
+    dispatch(setUser_Plants("No plants yet"))
+  }
     })
   } 
 })
@@ -26,13 +31,16 @@ function UpdateMyePlantPots(dispatch) {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       firebase.database().ref('users/' + user.uid + "/ePlant/").on('value', snapshot => {
+        if(snapshot.val() !== null) {
         const userePlants = Object.values(snapshot.val());
         dispatch(setUser_ePlants(userePlants))
+      } else {
+        dispatch(setUser_ePlants("No ePlants yet"))
+      }
       });
     }
 });
 }
-
 
 
 function UpdatePlants(dispatch) {

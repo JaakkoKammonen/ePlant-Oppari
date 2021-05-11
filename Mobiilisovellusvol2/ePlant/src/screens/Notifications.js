@@ -1,21 +1,18 @@
 import React from "react";
 import SafeAreaView from 'react-native-safe-area-view';
-import { View, Text, StyleSheet, FlatList, ScrollView } from "react-native";
+import { View, Text, StyleSheet, FlatList} from "react-native";
 import { useSelector } from "react-redux";
 
 export default function Notifications() {
 
-  const myPlants = useSelector(state => state.firebase.myPlants)
+  const myPlants = useSelector(state => state.firebase.my_Plants)
 
+  //console.log(myPlants)
 
-  return (
-    <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.headerText}>Ilmoitukset</Text>
-        </View>
-        <View style={styles.bottom}>
-          <Text style={styles.bottom2}>
-            <FlatList
+  const renderNotifications = () => {
+    if (myPlants !== "No plants yet") {
+      return (
+        <FlatList
               data={myPlants}
               keyExtractor={(item, index) => index.toString()}
               marginLeft={230}
@@ -26,11 +23,30 @@ export default function Notifications() {
                   </View>
                   <View style={styles.notificationTexts}>
                     <Text style={styles.subHeader}>Tänään klo 8.20</Text>
-                    <Text style={styles.title}>{item.nimi} kasteltu.</Text>
+                    <Text style={styles.title}>{item.plantName} kasteltu.</Text>
                   </View>
                 </View>
               )}
             />
+      )
+    } else {
+      return (
+        <Text>
+          No ePlants yet! Add them first
+        </Text>
+      )
+    }
+  }
+  return (
+    <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Notifications</Text>
+        </View>
+        <View style={styles.bottom}>
+          <Text style={styles.bottom2}>
+            
+            {renderNotifications()}
+
           </Text>
         </View>
     </View>

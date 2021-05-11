@@ -23,7 +23,31 @@ export default function PlantCards({navigation}) {
     return (
         <View style={styles.container}>
                 <View style={styles.category}>
-                    <Text style={styles.text}>Yksivuotinen</Text>
+                    
+                    <Text style={styles.text}>All</Text>
+                    <FlatList
+                        horizontal={true}
+                        contentContainerStyle={{ alignSelf: 'flex-start' }}
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
+                        keyExtractor={(item, index) => index.toString()}
+                        marginLeft={10}
+                        data={foodPlants}
+                        renderItem={({ item }) =>
+                            <TouchableOpacity
+                                onPress={() => handleSelect(item)}
+                                title="Plant"
+                                style={[styles.border]}
+                            >
+                                <Text style={[styles.plantheader]}>{item.laji}</Text>
+                                <Image style={[styles.plantimage]} source={setImage(item.laji.toLowerCase())} />
+
+                            </TouchableOpacity>
+
+                        }
+                    />
+                    
+                    <Text style={styles.text2}>Yksivuotinen</Text>
                     <FlatList
                         horizontal={true}
                         contentContainerStyle={{ alignSelf: 'flex-start' }}
@@ -45,7 +69,7 @@ export default function PlantCards({navigation}) {
 
                         }
                     />
-                    <Text style={styles.text2}>Kaksivuotinen</Text>
+                    <Text style={styles.text3}>Kaksivuotinen</Text>
                     <FlatList
                         horizontal={true}
                         contentContainerStyle={{ alignSelf: 'flex-start' }}
@@ -89,28 +113,7 @@ export default function PlantCards({navigation}) {
 
                         }
                     />
-                     <Text style={styles.text3}>Kaikki</Text>
-                    <FlatList
-                        horizontal={true}
-                        contentContainerStyle={{ alignSelf: 'flex-start' }}
-                        showsVerticalScrollIndicator={false}
-                        showsHorizontalScrollIndicator={false}
-                        keyExtractor={(item, index) => index.toString()}
-                        marginLeft={10}
-                        data={foodPlants}
-                        renderItem={({ item }) =>
-                            <TouchableOpacity
-                                onPress={() => handleSelect(item)}
-                                title="Plant"
-                                style={[styles.border]}
-                            >
-                                <Text style={[styles.plantheader]}>{item.laji}</Text>
-                                <Image style={[styles.plantimage]} source={setImage(item.laji.toLowerCase())} />
-
-                            </TouchableOpacity>
-
-                        }
-                    />
+                     
                 </View>
         </View>
     );

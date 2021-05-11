@@ -45,8 +45,8 @@ function Signup(navigate, userEmail, UserPassword, displayName) {
     .createUserWithEmailAndPassword(userEmail, UserPassword)
     .then((userCredential) => {
       // Signed in
-      console.log(userCredential.user)
-      console.log(firebase.auth().currentUser)
+      //console.log(userCredential.user)
+      //console.log(firebase.auth().currentUser)
       var user = userCredential.user;
 
         user.updateProfile({displayName: displayName});
@@ -78,9 +78,41 @@ function UpdateUserData(dispatch) {
          } else {
              setUser("error")
          }
-     })
+     })   
+}
+
+function ResetPasswordSendEmail(typedEmail) {
+    firebase.auth().sendPasswordResetEmail(typedEmail).then(function() {
+        alert("New password is send to email address")
+      }).catch(function(error) {
+        // An error happened.
+        alert("Error happened. Try again or create new user.")
+      });
+    
+}
+
+function DeleteUser(user) {
+
+    try {
+         user.delete().then(function() {
+        // User deleted.
+        firebase.database().ref('users/' + user.uid).remove()
+
+        alert("All user data has been removed")
+            
+        }).catch(function(error) {
+        // An error happened.
+            console.log(error)
+        });
 
      
+      } catch (error) {
+          alert("User info was not deleted from database. Log out and back in then try again. If there is still problem please contact us.")
+      }
+      
+     
+
+
 }
 
 export default {
@@ -88,5 +120,7 @@ export default {
     LogIn,
     LogOut,
     UpdateUserData,
-    Signup
+    Signup,
+    ResetPasswordSendEmail,
+    DeleteUser
 }

@@ -27,13 +27,13 @@ import ePlantInputThingSpeakID from "./src/screens/Plants/addPot/02-inputThingsp
 import Settings from './src/screens/settings/01-Settings';
 import Info from './src/screens/settings/Info';
 import Safety from './src/screens/settings/Safety';
-import UserNotification from './src/screens/settings/UserNotification';
+import User from './src/screens/settings/User';
 import Pots from './src/screens/settings/Pots';
 
 //UserLogin
 import Login from "./src/screens/UserLogin/Login"
-import Logout from "./src/screens/UserLogin/Logout"
 import Signup from "./src/screens/UserLogin/Signup"
+import ResetPassword from "./src/screens/UserLogin/ResetPassword"
 
 //creating bottom navigation
 const BottomNavigator = createBottomTabNavigator(
@@ -110,9 +110,9 @@ const BottomNavigator = createBottomTabNavigator(
 
 // creating switch navigation for screens without bottom navigation
 const SwitchNavigation = createSwitchNavigator({
-    Logout: Logout,
     Login: Login,
     Signup: Signup, 
+    ResetPassword: ResetPassword,
 
     Plant: Plant,
     MyPlant: MyPlant,
@@ -128,7 +128,7 @@ const SwitchNavigation = createSwitchNavigator({
     Pots: Pots,
     Info: Info,
     Safety: Safety,
-    UserNotification: UserNotification
+    User: User
   })
 
 

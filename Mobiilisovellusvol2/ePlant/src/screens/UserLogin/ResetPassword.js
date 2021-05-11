@@ -5,29 +5,27 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Input, Button } from "react-native-elements";
 import { FancyAlert } from 'react-native-expo-fancy-alerts';
 
-export default function Login(props) {
+export default function ResetPassword(props) {
   const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
-  const [passwordShown, setPasswordShown] = useState(false);
   const navigate = props.navigation.navigate;
 
   //console.log(props.navigation.state.params.errorAlert.title)
 
-  const LogIn = () => {
-    LogginMiddleware.LogIn(navigate, userEmail, userPassword);
-  };
-
-  const togglePasswordVisiblity = () => {
-    setPasswordShown(passwordShown ? false : true);
-    console.log(passwordShown);
-  };
-
+  const ResetPass = (event) => {
+    event.preventDefault();
+    LogginMiddleware.ResetPasswordSendEmail(userEmail);
+    navigate("Login")
+  }
   return (
     <View style={styles.container}>
       <Image
         style={styles.logo}
         source={require("../../assets/ePlant_logo_signin.png")}
       />
+
+            <TouchableOpacity onPress={() => navigate('Login')}>
+                    <Ionicons name="arrow-back-outline" size={30} style={styles.arrow} />
+                </TouchableOpacity>
       <Input
         placeholder=" Email"
         type="text"
@@ -36,34 +34,12 @@ export default function Login(props) {
         leftIcon={<Ionicons name="ios-mail" size={15} color="grey" />}
         onChangeText={(text) => setUserEmail(text)}
       />
-      <Input
-        placeholder="Password"
-        type={passwordShown ? "text" : "password"}
-        required={true}
-        secureTextEntry={true}
-        inputStyle={styles.signintext}
-        leftIcon={<MaterialIcons name="lock" size={18} color="grey" />}
-        rightIcon={
-          <Ionicons
-            name="ios-eye"
-            size={15}
-            color="grey"
-            onPress={togglePasswordVisiblity}
-          />
-        }
-        onChangeText={(text) => setUserPassword(text)}
-      />
       <Button
-        title="Sign In"
+        title="Reset password"
         buttonStyle={styles.buttonsignin}
-        onPress={LogIn}
+        onPress={ResetPass}
       />
-      <Text style={styles.notamember}>Not a member?</Text>
-
-      <Text style={styles.signuptext2} onPress={() => navigate("Signup")}>
-        Signup now
-      </Text>
-      <Text style={styles.forgotpassword} onPress={() => navigate("ResetPassword")}>Forgot your password?</Text>
+      
     </View>
   );
 }

@@ -30,12 +30,12 @@ export default function Search({navigation}) {
         <View style={styles.container}>
             <View style={styles.header}>
                 <View style={{alignItems: 'center'}}>
-                    <Text style={styles.text}>Haku</Text>
+                    <Text style={styles.text}>Search</Text>
                 </View>
                 <View style={styles.searchbar}>
                     <SearchBar
                         onChangeText={handleChange}
-                        placeholder='Hae kasveja'
+                        placeholder='Search plants'
                         onSubmitEditing={handleSubmit}
                         value={searchTerm}
                         platform='ios'
