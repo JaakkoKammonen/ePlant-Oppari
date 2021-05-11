@@ -20,20 +20,18 @@ export default function UserNotification(props) {
                <Text>
                    User name: {user.displayName}
                 </Text> 
-                <Button>
-
-                </Button>
+            
                 <Text>
                    User email: {user.email}
                 </Text>
 
-                <Text>
-                   Reset password: {user.displayName}
-                </Text>
-                
+                <Button
+                title="Edit user"
+                onPress={() => navigate("EditUser", {user: user, navigate:navigate})}
+                />
                 <Button
                 title="Delete all user data"
-                onPress={DeleteUser}
+                onPress={() => DeleteUser}
                 />
 
 

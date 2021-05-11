@@ -11,7 +11,7 @@ export default function Settings(props) {
   // list of listitems headers and icons to make list rendering cleaner
   const list = [
     {
-      name: "Plant pots",
+      name: "ePlant pots",
       icon: "local-drink",
       navigate: "Pots",
     },
@@ -56,7 +56,7 @@ export default function Settings(props) {
             <Text
               style={{ fontStyle: "italic", color: "#63816D", marginBottom: 5 }}
             >
-              {user.uid}
+              {user.email}
             </Text>
           </View>
         </View>

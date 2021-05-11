@@ -32,7 +32,8 @@ function UpdateMyePlantPots(dispatch) {
     if (user) {
       firebase.database().ref('users/' + user.uid + "/ePlant/").on('value', snapshot => {
         if(snapshot.val() !== null) {
-        const userePlants = Object.values(snapshot.val());
+        //console.log(snapshot.val())
+        const userePlants = snapshot.val();
         dispatch(setUser_ePlants(userePlants))
       } else {
         dispatch(setUser_ePlants("No ePlants yet"))
@@ -82,7 +83,7 @@ function AddPlantToUser(userUid,species, plantName, ePlant, navigate) {
           "ePlantPot": ePlant
       }
   )
-  navigate('Home', {showSnackbar: true, plantName: plantName})
+  navigate('Home', {showSnackbar: true, plantName: "New " + plantName + "was added!"})
 }
 
 
@@ -97,8 +98,35 @@ function AddePlantToUser(userUid, ePlant, navigate) {
     }
   )
 
-  navigate('Home', {showSnackbar: true, plantName: "New ePlant"})
+  navigate('Home', {showSnackbar: true, plantName: "New ePlant was added"})
 }  
+
+function ModifyUserEPlant(ePlant, navigate) {
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      firebase.database().ref('users/' + user.uid + "/ePlant/" + ePlant.ePlantID).update({
+        channel_id: ePlant.channel_id,
+        write_apikey: ePlant.write_apikey
+      })
+    }
+    navigate('Home', {showSnackbar: true, plantName: "ePlant was updated!"})
+});
+}
+function DeleteUserEPlant(ePlantID) {
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      firebase.database().ref('users/' + user.uid + "/ePlant/" + ePlantID).remove()
+    }
+});
+}
+
+function DeleteUserMyPlant(ePlantID) {
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      firebase.database().ref('users/' + user.uid + "/myPlant/" + ePlantID).remove()
+    }
+});
+}
 
 
 export default {
@@ -108,5 +136,7 @@ export default {
   UpdateEPlantModels,
   AddUserToDatabase,
   AddePlantToUser,
-  UpdateMyePlantPots
+  UpdateMyePlantPots,
+  ModifyUserEPlant,
+  DeleteUserEPlant
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert, Button } from 'react-native';
 //import { FlatList } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import moment from "moment";
@@ -8,12 +8,13 @@ import setImage from "../components/SetImage"
 
 export default function MyPlant(props) {
     const plant = props.navigation.state.params.plant;
-    //console.log(plant)
+    console.log(plant)
     const channelId = plant.ePlantPot.channel_id;
     const [ph, setPh] = useState(0);
     const [ec, setEc] = useState(0);
     const [updateDate, setUpdateDate] = useState(0);
     const { navigate } = props.navigation;
+
 
     useEffect(() => {
         getData();
@@ -26,17 +27,18 @@ export default function MyPlant(props) {
         fetch(url)
             .then((response) => response.json())
             .then((responseJson) => {
-                //console.log(responseJson)
-                if (responseJson.feeds[99].field1 != null) {
+                //console.log(responseJson.feeds)
+                //console.log(responseJson.feeds[responseJson.feeds.length-1])
+                if (responseJson.feeds[responseJson.feeds.length-1].field1 != null) {
                     //console.log(responseJson.feeds[99])
-                    setUpdateDate(responseJson.feeds[99].created_at)
-                    setPh(responseJson.feeds[99].field1);
+                    setUpdateDate(responseJson.feeds[responseJson.feeds.length-1].created_at)
+                    setPh(responseJson.feeds[responseJson.feeds.length-1].field1);
                 } else {
                     
                     setPh('0')
                 }
-                if (responseJson.feeds[99].field2 != null) {
-                    setEc(responseJson.feeds[99].field2);
+                if (responseJson.feeds[responseJson.feeds.length-1].field2 != null) {
+                    setEc(responseJson.feeds[responseJson.feeds.length-1].field2);
                 } else {
                     setEc('0')
                 }
@@ -46,6 +48,9 @@ export default function MyPlant(props) {
             });
     }
 
+    const DeletePlant = () => {
+        console.log(plant)
+    }
     return (
         <ScrollView style={styles.container}>
             <View style={styles.top}>
@@ -67,7 +72,7 @@ export default function MyPlant(props) {
                 </View>
                 <View style={styles.progress}>
                     <View style={styles.ph}>
-                        <Text style={styles.phtext}>pH-arvo</Text>
+                        <Text style={styles.phtext}>pH value</Text>
                         <AnimatedCircularProgress
                         size={100}
                         width={10}
@@ -85,7 +90,7 @@ export default function MyPlant(props) {
                             </AnimatedCircularProgress>
                     </View>
                     <View style={styles.ec}>
-                        <Text style={styles.ectext}>EC-arvo</Text>
+                        <Text style={styles.ectext}>ppm value</Text>
                         <View>
                         <AnimatedCircularProgress
                         size={100}
@@ -112,13 +117,18 @@ export default function MyPlant(props) {
 
 
                 <View style={styles.bottomheader}>
-                    <Text style={styles.header}>Viimeisimmät tapahtumat</Text>
+                    
                     <TouchableOpacity
                         onPress={() => navigate('Notifications')}
                     >
-                        <Text style={styles.showmore}>Näytä lisää</Text>
+                        <Text style={styles.showmore}>Notifications</Text>
                     </TouchableOpacity>
                 </View>
+
+                <Button
+                title= "Delete plant"
+                onPress = {() => DeletePlant()}
+                />
             
             </View>
         </ScrollView>

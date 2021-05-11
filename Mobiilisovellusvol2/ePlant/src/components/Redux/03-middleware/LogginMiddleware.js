@@ -80,6 +80,26 @@ function UpdateUserData(dispatch) {
          }
      })   
 }
+function ModifyUser(newUser, navigate) {
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            user.updateProfile({
+                displayName: newUser.displayName,
+              }).then(function() {
+                // Update successful.
+                firebase.database().ref('users/' + user.uid).update({
+                    displayName: newUser.displayName,
+                  })
+
+                navigate('Home', {showSnackbar: true, plantName: "User was updated!"})
+                
+              }).catch(function(error) {
+                // An error happened.
+                console.log(error)
+              });
+        }
+    })   
+}
 
 function ResetPasswordSendEmail(typedEmail) {
     firebase.auth().sendPasswordResetEmail(typedEmail).then(function() {
@@ -122,5 +142,6 @@ export default {
     UpdateUserData,
     Signup,
     ResetPasswordSendEmail,
-    DeleteUser
+    DeleteUser,
+    ModifyUser
 }

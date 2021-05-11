@@ -28,7 +28,9 @@ import Settings from './src/screens/settings/01-Settings';
 import Info from './src/screens/settings/Info';
 import Safety from './src/screens/settings/Safety';
 import User from './src/screens/settings/User';
+import EditUser from "./src/screens/settings/Edit-User"
 import Pots from './src/screens/settings/Pots';
+import EditUserEPlant from "./src/screens/settings/Edit-ePlantPot"
 
 //UserLogin
 import Login from "./src/screens/UserLogin/Login"
@@ -124,11 +126,13 @@ const SwitchNavigation = createSwitchNavigator({
 
     SelectePlantModel: SelectePlantModel,
     ePlantInputThingSpeakID: ePlantInputThingSpeakID,
-    
+
     Pots: Pots,
     Info: Info,
     Safety: Safety,
-    User: User
+    User: User,
+    EditUserEPlant: EditUserEPlant,
+    EditUser: EditUser
   })
 
 

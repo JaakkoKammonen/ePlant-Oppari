@@ -150,7 +150,7 @@ export default function Home(props) {
                         onPress: () => {toggleSnackBar},
                     }}
                 >
-                    {plantName} added!
+                    {plantName}
                 </Snackbar>
             </View>
         </View>
