@@ -6,10 +6,10 @@ export default function PlantCards({navigation}) {
     
     const plants = useSelector(state => state.firebase.plants)
     //console.log(plants)
-    const foodPlants = plants.filter(plant => plant.tyyppi === 'Ruokakasvi')
-    const feature = plants.filter(plant => plant.ominaisuus === 'Yksivuotinen')
-    const feature2 = plants.filter(plant => plant.ominaisuus === 'Kaksivuotinen')
-    const feature3 = plants.filter(plant => plant.ominaisuus === 'Monivuotinen')
+    const foodPlants = plants.filter(plant => plant.tyyppi === 'Food plant')
+    const feature = plants.filter(plant => plant.ominaisuus === 'Annual')
+    const feature2 = plants.filter(plant => plant.ominaisuus === 'Biennial')
+    const feature3 = plants.filter(plant => plant.ominaisuus === 'Perennial')
 
     
     const { navigate } = navigation;
@@ -47,7 +47,7 @@ export default function PlantCards({navigation}) {
                         }
                     />
                     
-                    <Text style={styles.text2}>Yksivuotinen</Text>
+                    <Text style={styles.text2}>Annual</Text>
                     <FlatList
                         horizontal={true}
                         contentContainerStyle={{ alignSelf: 'flex-start' }}
@@ -69,7 +69,7 @@ export default function PlantCards({navigation}) {
 
                         }
                     />
-                    <Text style={styles.text3}>Kaksivuotinen</Text>
+                    <Text style={styles.text3}>Biennial</Text>
                     <FlatList
                         horizontal={true}
                         contentContainerStyle={{ alignSelf: 'flex-start' }}
@@ -91,7 +91,7 @@ export default function PlantCards({navigation}) {
 
                         }
                     />
-                    <Text style={styles.text3}>Monivuotinen</Text>
+                    <Text style={styles.text3}>Perennial</Text>
                     <FlatList
                         horizontal={true}
                         contentContainerStyle={{ alignSelf: 'flex-start' }}

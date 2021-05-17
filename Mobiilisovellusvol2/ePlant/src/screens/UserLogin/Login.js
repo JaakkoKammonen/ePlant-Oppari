@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import LogginMiddleware from "../../components/Redux/03-middleware/LogginMiddleware";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Input, Button } from "react-native-elements";
-import { FancyAlert } from 'react-native-expo-fancy-alerts';
 
 export default function Login(props) {
   const [userEmail, setUserEmail] = useState("");
@@ -63,7 +62,12 @@ export default function Login(props) {
       <Text style={styles.signuptext2} onPress={() => navigate("Signup")}>
         Signup now
       </Text>
-      <Text style={styles.forgotpassword} onPress={() => navigate("ResetPassword")}>Forgot your password?</Text>
+      <Text
+        style={styles.forgotpassword}
+        onPress={() => navigate("ResetPassword")}
+      >
+        Forgot your password?
+      </Text>
     </View>
   );
 }

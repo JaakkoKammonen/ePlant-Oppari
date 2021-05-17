@@ -21,31 +21,31 @@ export default function SetBackgroundImg(plant) {
     //console.log(plant)
 
     switch (plant) {
-        case 'tilli':
+        case 'dill':
             return tilliImage;
-        case 'persilja':
+        case 'parsley':
             return persiljaImage;
-        case 'kumina':
+        case 'caraway':
             return kuminaImage;
-        case 'timjami':
+        case 'thyme':
             return timjamiImage;
-        case 'basilika':
+        case 'basil':
             return basilikaImage;
-        case 'korianteri':
+        case 'coriander':
             return korianteriImage;
-        case 'viinisuolaheina':
+        case 'bloody dock':
             return viinisuolaheinaImage;
         case 'oregano':
             return oreganoImage;
-        case 'ruohosipuli':
+        case 'chive':
             return ruohosipuliImage;
-        case 'minttu':
+        case 'mint':
             return minttuImage;
-        case 'rakuuna':
+        case 'tarragon':
             return rakuunaImage;
-        case 'sitruunamelissa':
+        case 'lemon balm':
             return sitruunamelissaImage;
-        case 'muu':
+        case 'other':
             return eimaariteltyImage;
         default:
         return placeholderImage;

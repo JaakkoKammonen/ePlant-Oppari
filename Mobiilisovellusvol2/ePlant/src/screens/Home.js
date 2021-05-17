@@ -50,8 +50,8 @@ export default function Home(props) {
             if (plants === "No plants yet") {
                 return(
                     <View>
-                        <Text>
-                        No plants yet    
+                        <Text style={styles.noplants}>
+                        No plants yet   
                         </Text>
                     </View>
                 )
@@ -84,8 +84,8 @@ export default function Home(props) {
         if (plants === "No plants yet") {
             return(
                 <View>
-                    <Text>
-                    No notifications yet    
+                    <Text style={styles.nonotifications}>
+                    No notifications yet
                     </Text>
                 </View>
             )
@@ -193,6 +193,18 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginLeft: 10,
         marginBottom: 15
+    },
+    noplants: {
+            fontSize: 14,
+            fontWeight: 'normal',
+            marginLeft: 10,
+            marginBottom: 15
+    },
+    nonotifications: {
+            fontSize: 14,
+            fontWeight: 'normal',
+            marginLeft: 10,
+            marginBottom: 15
     },
     header2: {
         fontSize: 14,

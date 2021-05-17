@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 export default function Settings(props) {
   const { navigate } = props.navigation;
-  let user = useSelector(state => state.user)
+  let user = useSelector((state) => state.user);
 
   // list of listitems headers and icons to make list rendering cleaner
   const list = [

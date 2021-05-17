@@ -1,11 +1,9 @@
 import React from "react";
-import SafeAreaView from 'react-native-safe-area-view';
-import { View, Text, StyleSheet, FlatList} from "react-native";
+import { View, Text, StyleSheet, FlatList } from "react-native";
 import { useSelector } from "react-redux";
 
 export default function Notifications() {
-
-  const myPlants = useSelector(state => state.firebase.my_Plants)
+  const myPlants = useSelector((state) => state.firebase.my_Plants);
 
   //console.log(myPlants)
 
@@ -13,42 +11,36 @@ export default function Notifications() {
     if (myPlants !== "No plants yet") {
       return (
         <FlatList
-              data={myPlants}
-              keyExtractor={(item, index) => index.toString()}
-              marginLeft={230}
-              renderItem={({ item }) => (
-                <View style={styles.notification}>
-                  <View>
-                    <View style={styles.circle} />
-                  </View>
-                  <View style={styles.notificationTexts}>
-                    <Text style={styles.subHeader}>Tänään klo 8.20</Text>
-                    <Text style={styles.title}>{item.plantName} kasteltu.</Text>
-                  </View>
-                </View>
-              )}
-            />
-      )
+          data={myPlants}
+          keyExtractor={(item, index) => index.toString()}
+          marginLeft={230}
+          renderItem={({ item }) => (
+            <View style={styles.notification}>
+              <View>
+                <View style={styles.circle} />
+              </View>
+              <View style={styles.notificationTexts}>
+                <Text style={styles.subHeader}>Tänään klo 8.20</Text>
+                <Text style={styles.title}>{item.plantName} kasteltu.</Text>
+              </View>
+            </View>
+          )}
+        />
+      );
     } else {
       return (
-        <Text>
-          No ePlants yet! Add them first
-        </Text>
-      )
+        <Text style={styles.noplants}>No ePlants yet! Add them first</Text>
+      );
     }
-  }
+  };
   return (
     <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.headerText}>Notifications</Text>
-        </View>
-        <View style={styles.bottom}>
-          <Text style={styles.bottom2}>
-            
-            {renderNotifications()}
-
-          </Text>
-        </View>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Notifications</Text>
+      </View>
+      <View style={styles.bottom}>
+        <Text style={styles.bottom2}>{renderNotifications()}</Text>
+      </View>
     </View>
   );
 }
@@ -101,6 +93,12 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginBottom: 10,
     flex: 2,
+  },
+  noplants: {
+    fontSize: 14,
+    fontWeight: "normal",
+    marginLeft: 10,
+    marginBottom: 15,
   },
   subHeader: {
     marginLeft: 5,

@@ -28,7 +28,7 @@ export default function Plant(props) {
                             <Image style={styles.icon} source={require('../assets/hand-holding-plant-icon.png')} />
                         </View>
                         <View>
-                            <Text style={styles.boxtext1}>Hoito</Text>
+                            <Text style={styles.boxtext1}>Care</Text>
                             <Text style={styles.boxtext2}>{plant.hoito}</Text>
                         </View>
                     </View>
@@ -37,7 +37,7 @@ export default function Plant(props) {
                             <Image style={styles.icon} source={require('../assets/wateringcan.png')} />
                         </View>
                         <View>
-                            <Text style={styles.boxtext1}>Veden tarve</Text>
+                            <Text style={styles.boxtext1}>Water needs</Text>
                             <Text style={styles.boxtext2}>{plant.vesitarve}</Text>
                         </View>
                     </View>
@@ -48,7 +48,7 @@ export default function Plant(props) {
                             <Image style={styles.icon} source={require('../assets/cloud.png')} />
                         </View>
                         <View>
-                            <Text style={styles.boxtext1}>Valon tarve</Text>
+                            <Text style={styles.boxtext1}>Lighting needs</Text>
                             <Text style={styles.boxtext2}>{plant.valotarve}</Text>
                         </View>
                     </View>
@@ -57,7 +57,7 @@ export default function Plant(props) {
                             <Image style={styles.icon} source={require('../assets/location.png')} />
                         </View>
                         <View>
-                            <Text style={styles.boxtext1}>Alkuperä</Text>
+                            <Text style={styles.boxtext1}>Origin</Text>
                             <Text style={styles.boxtext2}>{plant.origin}</Text>
                         </View>
                     </View>
