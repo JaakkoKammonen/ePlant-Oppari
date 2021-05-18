@@ -7,7 +7,6 @@ import kuva from '../../../assets/herbs.png'
 export default function SelectPot(props) {
 
     const my_ePlants = useSelector(state => state.firebase.my_ePlants)
-
     const { navigate } = props.navigation;
     
     const plant = props.navigation.state.params.plant;
@@ -21,7 +20,7 @@ export default function SelectPot(props) {
         if(my_ePlants !== "No ePlants yet") {
             return(
                 <View style={styles.middle}>
-                {my_ePlants.map((eplant, i) => (
+                {Object.values(my_ePlants).map((eplant, i) => (
                     <TouchableOpacity
                     onPress={() => handleSelect(eplant)}
                     key={i}
