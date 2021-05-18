@@ -4,15 +4,49 @@ import { Ionicons } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
 import { Button } from "react-native-elements";
 import LogginMiddleware from '../../components/Redux/03-middleware/LogginMiddleware';
+import swal from 'sweetalert';
 
 export default function UserNotification(props) {
    
     const { navigate } = props.navigation;
     let user = useSelector(state => state.user)
 
-    const DeleteUser = (event) => {
-        event.preventDefault();
-        LogginMiddleware.DeleteUser(user)
+    const DeleteUser = () => {
+
+        swal({
+            title: "Delete user?",
+            text: "Are you sure? This will delete user and all user data from databases!",
+            icon: "warning",
+            buttons: [true, "Do it!"],
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+
+                swal({
+                    title:"Input your password",
+                    content: {
+                    element: "input",
+                    attributes: {
+                        placeholder: "Type your password",
+                        type: "password",
+                      },
+                    },
+                  }).then((password) => {
+                    //console.log(item)
+                    LogginMiddleware.DeleteUser(user, password, navigate)
+                  });
+            
+
+            
+            } else {
+              swal("Your plant is safe!", {
+                button: "Close",
+                timer: 1500,
+              });
+            }
+          });
+        
     }
     const UserInfo = () => {
         return (
@@ -31,7 +65,7 @@ export default function UserNotification(props) {
                 />
                 <Button
                 title="Delete all user data"
-                onPress={() => DeleteUser}
+                onPress={() => DeleteUser()}
                 />
 
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import firebase from "../../firebaseConfig"
 import FireBasemiddleware from "./FireBasemiddleware";
 import {setUser} from "../01-actions"
+import swal from 'sweetalert';
 
 function CheckIfLoggedIn(navigate) {
     firebase.auth().onAuthStateChanged((user) => {
@@ -19,22 +20,37 @@ function LogIn(navigate, userEmail, UserPassword) {
     firebase.auth()
     .signInWithEmailAndPassword(userEmail, UserPassword)
     .then(() => {
-        console.log('User account signed in!');
+        //console.log('User account signed in!');
         navigate("Home");
     })
     .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
         console.log('That email address is already in use!');
-        alert('That email address is already in use!')
+
+        swal(
+            {
+           title: "That email address is already in use!",
+           button: true,
+         });
+
         navigate("Login");
         }
 
         if (error.code === 'auth/invalid-email') {
         console.log('That email address is invalid!');
-        alert('That email address is invalid!')
+        swal(
+            {
+           title: "That email address is invalid!",
+           button: true,
+         });
         navigate("Login");
         }
-        alert("Invalid email or password")
+
+        swal(
+            {
+           title: "Invalid email or password!",
+           button: true,
+         });
         navigate("Login");
         
     });
@@ -55,7 +71,10 @@ function Signup(navigate, userEmail, UserPassword, displayName) {
     navigate("Home")
     })
     .catch((error) => {
-      alert(error.code,error.message);
+        swal(
+             error.code,error.message,
+          );
+     
     });
 
     
@@ -65,7 +84,7 @@ function LogOut(navigate) {
 firebase.auth()
   .signOut()
   .then(() => {
-  console.log('User signed out!')
+  //console.log('User signed out!')
   navigate("Login")
   });
 }
@@ -95,7 +114,11 @@ function ModifyUser(newUser, navigate) {
                 
               }).catch(function(error) {
                 // An error happened.
-                console.log(error)
+                swal(
+                    {
+                   title: "Something went wrong",
+                   button: true,
+                 });
               });
         }
     })   
@@ -103,36 +126,52 @@ function ModifyUser(newUser, navigate) {
 
 function ResetPasswordSendEmail(typedEmail) {
     firebase.auth().sendPasswordResetEmail(typedEmail).then(function() {
-        alert("New password is send to email address")
+        swal(
+            {
+           title: "New password is send to email address",
+           button: true,
+         });
       }).catch(function(error) {
         // An error happened.
-        alert("Error happened. Try again or create new user.")
+        swal(
+            {
+           title: "Wrong email!",
+           button: true,
+         });
       });
     
 }
 
-function DeleteUser(user) {
-
-    try {
-         user.delete().then(function() {
-        // User deleted.
+function DeleteUser(user, password, navigate) {
+    
+    //console.log(user.email, password)
+    
+    firebase.auth().signInWithEmailAndPassword(user.email, password)
+    .then((userCredential) => {
+        // Signed in
+        let user = userCredential.user;
+        user.delete().then(function() {
+         // User deleted.
         firebase.database().ref('users/' + user.uid).remove()
-
-        alert("All user data has been removed")
-            
-        }).catch(function(error) {
+    
+        navigate('Login', { swal: true})
+    }).catch(function(error) {
         // An error happened.
-            console.log(error)
+        swal({
+           title: "Something went wrong!",
+           button: true,
+         });
         });
 
-     
-      } catch (error) {
-          alert("User info was not deleted from database. Log out and back in then try again. If there is still problem please contact us.")
-      }
+    }).catch((error) => {
+        swal(
+             {
+            title: "Wrong password",
+            button: true,
+          });
+        //console.log(error)
+    });
       
-     
-
-
 }
 
 export default {

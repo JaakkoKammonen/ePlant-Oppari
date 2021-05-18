@@ -3,6 +3,7 @@ import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Input, Button } from "react-native-elements";
 import LogginMiddleware from "../../components/Redux/03-middleware/LogginMiddleware";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import swal from 'sweetalert';
 
 export default function Signup(props) {
   const [userEmail, setUserEmail] = useState("");
@@ -13,7 +14,7 @@ export default function Signup(props) {
   //console.log(props.navigation.state.params.errorAlert.title)
 
   const Signup2 = () => {
-    LogginMiddleware.Signup(navigate, userEmail, userPassword, displayName);
+    LogginMiddleware.Signup(navigate, userEmail, userPassword, displayName, swal);
   };
 
   const togglePasswordVisiblity = () => {
@@ -21,12 +22,7 @@ export default function Signup(props) {
     console.log(passwordShown);
   };
 
-    const Signup = () => {
-        //console.log(userEmail, userPassword, displayName)
-        LogginMiddleware.Signup(navigate, userEmail, userPassword, displayName)   
-    }   
-  
-
+   
   return (
       <View style={styles.container}>
       <TouchableOpacity onPress={() => navigate("Login")}>

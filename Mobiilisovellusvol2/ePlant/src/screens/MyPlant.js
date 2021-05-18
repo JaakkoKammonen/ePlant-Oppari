@@ -1,23 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert, Button } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert, Button, FlatList} from 'react-native';
 //import { FlatList } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import moment from "moment";
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import setImage from "../components/SetImage"
 import FireBasemiddleware from '../components/Redux/03-middleware/FireBasemiddleware';
+import swal from 'sweetalert';
 
 export default function MyPlant(props) {
+
+    const [notifications, setNotifications] = useState("Loading...")
+    const [updateDate, setUpdateDate] = useState("Loading...");
+
+    let year = updateDate.slice(0, 4)
+    let month = updateDate.slice(5, 7)
+    let day = updateDate.slice(8, 10)
+    let time = updateDate.slice(11, 19)
+
     const plant = props.navigation.state.params.plant[1];
     const plantID = props.navigation.state.params.plant[0];
-    console.log(plantID)
     const channelId = plant.ePlantPot.channel_id;
-    const [ph, setPh] = useState(0);
-    const [ec, setEc] = useState(0);
-    const [updateDate, setUpdateDate] = useState(0);
+
+    const [Field1, setField1] = useState({ 
+        name: plant.ePlantPot.ePlantModel.Field1, 
+        value: 0 
+    });
+
+    const [Field2, setField2] = useState({ 
+        name: plant.ePlantPot.ePlantModel.Field2, 
+        value: 0 
+    });
+
+    //console.log(plant)
+    //console.log(Field1, Field2)
+    
     const { navigate } = props.navigation;
 
-
+    
     useEffect(() => {
         getData();
     }, []);
@@ -34,24 +54,87 @@ export default function MyPlant(props) {
                 if (responseJson.feeds[responseJson.feeds.length-1].field1 != null) {
                     //console.log(responseJson.feeds[99])
                     setUpdateDate(responseJson.feeds[responseJson.feeds.length-1].created_at)
-                    setPh(responseJson.feeds[responseJson.feeds.length-1].field1);
+                    setField1({...Field1, value: responseJson.feeds[responseJson.feeds.length-1].field1});
+                    setNotifications(responseJson.feeds)
                 } else {
-                    
-                    setPh('0')
+                    setField1({...Field1, value: 0})
                 }
+
                 if (responseJson.feeds[responseJson.feeds.length-1].field2 != null) {
-                    setEc(responseJson.feeds[responseJson.feeds.length-1].field2);
+                    setField2({...Field2, value: responseJson.feeds[responseJson.feeds.length-1].field2});
                 } else {
-                    setEc('0')
+                    setField2({...Field2, value: 0})
                 }
             })
             .catch((error) => {
-                Alert.alert('Error', error);
+                swal({
+                title: "Error",
+                text: "Something went wrong while getting plant data",
+             })
+             console.log(error)
             });
     }
 
     const DeletePlant = () => {
-        FireBasemiddleware.DeleteUserMyPlant(plantID, navigate);
+
+        swal({
+            title: "Delete plant?",
+            text: "Are you sure?",
+            icon: "warning",
+            buttons: [true, "Do it!"],
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+
+              FireBasemiddleware.DeleteUserMyPlant(plantID, navigate);  
+
+              swal("Poof! Plant deleted!", {
+                icon: "success",
+                timer: 1500,
+              });
+            } else {
+              swal("Your plant is safe!", {
+                button: "Close",
+                timer: 1500,
+              });
+            }
+          });
+    }
+
+    const NotificationMaker = () => {
+        
+        let lastTen = notifications.slice(notifications.length-11, notifications.length-1)
+        //console.log(lastTen)
+
+        const timeParser = (date) => {
+            
+            let year = date.slice(0, 4)
+            let month = date.slice(5, 7)
+            let day = date.slice(8, 10)
+            let time = date.slice(11, 19)
+
+            return( day + "." + month + "." + year + " at: " +time)
+        }
+        return(
+            <FlatList data={lastTen}
+                marginLeft={15}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({ item }) =>
+                    <View >
+                        <View>
+
+                        <Image style={styles.circle} source={setImage(plant.species.toLowerCase())}/>
+                        
+                        </View>
+                        <View >
+                            <Text >{timeParser(item.created_at)}</Text>
+                            <Text >{plant.plantName} values were updated</Text>
+                        </View>
+                    </View>
+                }
+            />
+        )
     }
     return (
         <ScrollView style={styles.container}>
@@ -73,38 +156,38 @@ export default function MyPlant(props) {
                     <Text style={styles.datetext1}>{moment(plant.paivays).format("DD.MM.YYYY")}</Text>
                 </View>
                 <View style={styles.progress}>
-                    <View style={styles.ph}>
-                        <Text style={styles.phtext}>pH value</Text>
+                    <View style={styles.field1}>
+                        <Text style={styles.field1Value}>{Field1.name}</Text>
                         <AnimatedCircularProgress
                         size={100}
                         width={10}
-                        fill={ph}
+                        fill={Field1.value}
                         tintColor="#00e0ff"
                         //onAnimationComplete={() => console.log('onAnimationComplete')}
                         backgroundColor="#3d5875">
                             {
                                 (fill) => (
                                 <Text>
-                                   {ph}
+                                   {Field1.value}
                                 </Text>
                                 )
                             }
                             </AnimatedCircularProgress>
                     </View>
-                    <View style={styles.ec}>
-                        <Text style={styles.ectext}>ppm value</Text>
+                    <View style={styles.field2}>
+                        <Text style={styles.field2Value}>{Field2.name}</Text>
                         <View>
                         <AnimatedCircularProgress
                         size={100}
                         width={10}
-                        fill={ec}
+                        fill={Field2.value}
                         tintColor="#00e0ff"
                         //onAnimationComplete={() => console.log('onAnimationComplete')}
                         backgroundColor="#3d5875">
                             {
                                 (fill) => (
                                 <Text>
-                                   {ec}
+                                   {Field2.value}
                                 </Text>
                                 )
                             }
@@ -115,23 +198,21 @@ export default function MyPlant(props) {
                 <View>
                 </View>
 
-                <Text>Values were updated in {updateDate} </Text>
+                <Text>Values were updated in {day}.{month}.{year} at: {time} </Text>
 
 
                 <View style={styles.bottomheader}>
                     
-                    <TouchableOpacity
-                        onPress={() => navigate('Notifications')}
-                    >
-                        <Text style={styles.showmore}>Notifications</Text>
-                    </TouchableOpacity>
+                <Text style={styles.notifi}>Notifications</Text>
+
+                {NotificationMaker()}
                 </View>
 
-                <Button
-                title= "Delete plant"
-                onPress = {() => DeletePlant()}
-                />
-            
+            <Button 
+            title="Delete plant"
+            onPress={() => DeletePlant()}
+            />
+
             </View>
         </ScrollView>
     );
@@ -204,14 +285,14 @@ const styles = StyleSheet.create({
         marginRight: 20,
         fontWeight: 'bold'
     },
-    ph: {
+    field1: {
         borderRightColor: 'lightgrey',
         borderRightWidth: 1,
         marginRight: 30,
         paddingLeft: 30,
         paddingRight: 30
     },
-    phtext: {
+    field1Value: {
         fontSize: 16,
         marginTop: 20,
         marginBottom: 10,
@@ -222,7 +303,7 @@ const styles = StyleSheet.create({
         fontSize: 22,
         color: '#63816D'
     },
-    ectext: {
+    field2Value: {
         fontSize: 16,
         marginTop: 20,
         marginBottom: 10,
@@ -300,6 +381,16 @@ const styles = StyleSheet.create({
         height: 40,
         borderRadius: 100/2,
         backgroundColor: '#eaaf7e'
+    }, 
+    
+    notifi: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginLeft: 10,
+        marginBottom: 15
     },
+    
+    
+ 
 
 });

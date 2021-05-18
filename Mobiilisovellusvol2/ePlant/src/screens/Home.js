@@ -8,23 +8,24 @@ import setImage from "../components/SetImage"
 export default function Home(props) {
 
     const dispatch = useDispatch();
-
-    let plants = useSelector(state => Object.entries(state.firebase.my_Plants))
     const user = useSelector(state => state.user)
-    //console.log(plants)
 
     const [visibility, setVisibility] = useState(false);
     const { navigate } = props.navigation;
-
+    let plants;
+    if (useSelector(state => state.firebase.my_Plants) === "No plants yet") {
+        plants = useSelector(state => state.firebase.my_Plants)
+    } else {
+        plants = useSelector(state => Object.entries(state.firebase.my_Plants))
+    }
+     
     // use these variables if they have all these props (so if user has navigated to Koti.js from SelectName.js)
     const showSnackbar = props.navigation && props.navigation.state && props.navigation.state.params && props.navigation.state.params.showSnackbar
     const plantName = props.navigation && props.navigation.state && props.navigation.state.params && props.navigation.state.params.plantName
-    //console.log(plants)
+
     // change snackbar visibility opposite to current status
     const toggleSnackBar = () => setVisibility(!visibility);
-
     
-
     useEffect(() => {
     LogginMiddleware.CheckIfLoggedIn(navigate);
     LogginMiddleware.UpdateUserData(dispatch)
@@ -41,7 +42,7 @@ export default function Home(props) {
 
     // sending selected items data to next screen and navigating to there
     const handleSelect = (item) => {
-        console.log(item)
+        //console.log(item)
         navigate('MyPlant', { plant: item })
     };
 

@@ -30,10 +30,7 @@ export default function Settings(props) {
       icon: "info",
       navigate: "Info",
     },
-    {
-      name: "Logout",
-      icon: "logout",
-    },
+    
   ];
 
   return (
@@ -67,12 +64,18 @@ export default function Settings(props) {
             <ListItem.Title>{l.name}</ListItem.Title>
           </ListItem>
         ))}
-      </View>
-      <Button
-        buttonStyle={styles.buttonlogout}
-        title="Logout"
+
+        <ListItem 
+        bottomDivider 
         onPress={() => LogginMiddleware.LogOut(navigate)}
-      />
+        >
+            <Icon name="logout" color="#555555" />
+            <ListItem.Title>
+              Logout
+              </ListItem.Title>
+        </ListItem>
+      </View>
+     
     </View>
   );
 }

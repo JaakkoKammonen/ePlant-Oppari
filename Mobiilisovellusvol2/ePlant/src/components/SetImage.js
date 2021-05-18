@@ -1,52 +1,51 @@
 // importing all images and naming them
-import tilliImage from '../assets/set_image/tilli.jpg'
-import persiljaImage from '../assets/set_image/persilja.jpg'
-import kuminaImage from '../assets/set_image/kumina.jpg'
-import timjamiImage from '../assets/set_image/timjami.jpg'
-import basilikaImage from '../assets/set_image/basilika.jpg'
-import korianteriImage from '../assets/set_image/korianteri.jpg'
-import viinisuolaheinaImage from '../assets/set_image/viinisuolaheina.jpg'
-import oreganoImage from '../assets/set_image/oregano.jpg'
-import ruohosipuliImage from '../assets/set_image/ruohosipuli.jpg'
-import minttuImage from '../assets/set_image/minttu.jpg'
-import rakuunaImage from '../assets/set_image/rakuuna.jpg'
-import sitruunamelissaImage from '../assets/set_image/sitruunamelissa.jpg'
-import eimaariteltyImage from '../assets/set_image/ei_maaritelty.jpg'
+import dill from '../assets/set_image/tilli.jpg'
+import parsley from '../assets/set_image/persilja.jpg'
+import caraway from '../assets/set_image/kumina.jpg'
+import thyme from '../assets/set_image/timjami.jpg'
+import basil from '../assets/set_image/basilika.jpg'
+import coriander from '../assets/set_image/korianteri.jpg'
+import bloodydock from '../assets/set_image/viinisuolaheina.jpg'
+import oregano from '../assets/set_image/oregano.jpg'
+import chive from '../assets/set_image/ruohosipuli.jpg'
+import mint from '../assets/set_image/minttu.jpg'
+import tarragon from '../assets/set_image/rakuuna.jpg'
+import lemonbalm from '../assets/set_image/sitruunamelissa.jpg'
+import notdefinedImage from '../assets/set_image/ei_maaritelty.jpg'
 import placeholderImage from "../assets/set_image/placeholderImage.png"
 
 // selecting which image to return based on param from Search.js
 export default function SetBackgroundImg(plant) {
     
-    plant.toLowerCase();
     //console.log(plant)
 
     switch (plant) {
         case 'dill':
-            return tilliImage;
+            return dill;
         case 'parsley':
-            return persiljaImage;
+            return parsley;
         case 'caraway':
-            return kuminaImage;
+            return caraway;
         case 'thyme':
-            return timjamiImage;
+            return thyme;
         case 'basil':
-            return basilikaImage;
+            return basil;
         case 'coriander':
-            return korianteriImage;
+            return coriander;
         case 'bloody dock':
-            return viinisuolaheinaImage;
+            return bloodydock;
         case 'oregano':
-            return oreganoImage;
+            return oregano;
         case 'chive':
-            return ruohosipuliImage;
+            return chive;
         case 'mint':
-            return minttuImage;
+            return mint;
         case 'tarragon':
-            return rakuunaImage;
+            return tarragon;
         case 'lemon balm':
-            return sitruunamelissaImage;
+            return lemonbalm;
         case 'other':
-            return eimaariteltyImage;
+            return notdefinedImage;
         default:
         return placeholderImage;
         

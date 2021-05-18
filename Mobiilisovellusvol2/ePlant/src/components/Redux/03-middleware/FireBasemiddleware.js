@@ -83,7 +83,7 @@ function AddPlantToUser(userUid,species, plantName, ePlant, navigate) {
           "ePlantPot": ePlant
       }
   )
-  navigate('Home', {showSnackbar: true, plantName: "New " + plantName + "was added!"})
+  navigate('Home', {showSnackbar: true, plantName: "New " + plantName + " was added!"})
 }
 
 
@@ -124,7 +124,7 @@ function DeleteUserMyPlant(ePlantID, navigate) {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       firebase.database().ref('users/' + user.uid + "/myPlants/" + ePlantID).remove();
-      navigate('Home', {showSnackbar: true, plantName: "Plant was deleted!"})
+      navigate('Home', {showSnackbar: true, plantName: "Plant was deleted!"}) 
     } else {
       navigate('Home', {showSnackbar: true, plantName: "Something went wrong!"})
     }
