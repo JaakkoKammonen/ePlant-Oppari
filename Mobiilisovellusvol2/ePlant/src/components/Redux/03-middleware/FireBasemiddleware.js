@@ -15,7 +15,7 @@ firebase.auth().onAuthStateChanged((user) => {
     firebase.database().ref('users/' + user.uid + "/myPlants/").on('value', snapshot => {
       //console.log(snapshot.val())
     if (snapshot.val() !== null) {
-    const plants = Object.values(snapshot.val());
+    const plants = snapshot.val();
     //console.log(snapshot.val())
     dispatch(setUser_Plants(plants))
   } else {
@@ -120,10 +120,13 @@ function DeleteUserEPlant(ePlantID) {
 });
 }
 
-function DeleteUserMyPlant(ePlantID) {
+function DeleteUserMyPlant(ePlantID, navigate) {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      firebase.database().ref('users/' + user.uid + "/myPlant/" + ePlantID).remove()
+      firebase.database().ref('users/' + user.uid + "/myPlants/" + ePlantID).remove();
+      navigate('Home', {showSnackbar: true, plantName: "Plant was deleted!"})
+    } else {
+      navigate('Home', {showSnackbar: true, plantName: "Something went wrong!"})
     }
 });
 }
@@ -138,5 +141,6 @@ export default {
   AddePlantToUser,
   UpdateMyePlantPots,
   ModifyUserEPlant,
-  DeleteUserEPlant
+  DeleteUserEPlant,
+  DeleteUserMyPlant
 }

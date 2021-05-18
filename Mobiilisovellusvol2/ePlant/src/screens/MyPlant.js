@@ -5,10 +5,12 @@ import { Ionicons } from '@expo/vector-icons';
 import moment from "moment";
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import setImage from "../components/SetImage"
+import FireBasemiddleware from '../components/Redux/03-middleware/FireBasemiddleware';
 
 export default function MyPlant(props) {
-    const plant = props.navigation.state.params.plant;
-    console.log(plant)
+    const plant = props.navigation.state.params.plant[1];
+    const plantID = props.navigation.state.params.plant[0];
+    console.log(plantID)
     const channelId = plant.ePlantPot.channel_id;
     const [ph, setPh] = useState(0);
     const [ec, setEc] = useState(0);
@@ -49,7 +51,7 @@ export default function MyPlant(props) {
     }
 
     const DeletePlant = () => {
-        console.log(plant)
+        FireBasemiddleware.DeleteUserMyPlant(plantID, navigate);
     }
     return (
         <ScrollView style={styles.container}>

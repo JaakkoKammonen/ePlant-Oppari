@@ -9,9 +9,9 @@ export default function Home(props) {
 
     const dispatch = useDispatch();
 
-    let plants = useSelector(state => state.firebase.my_Plants)
+    let plants = useSelector(state => Object.entries(state.firebase.my_Plants))
     const user = useSelector(state => state.user)
-    //console.log(user.uid)
+    //console.log(plants)
 
     const [visibility, setVisibility] = useState(false);
     const { navigate } = props.navigation;
@@ -41,7 +41,7 @@ export default function Home(props) {
 
     // sending selected items data to next screen and navigating to there
     const handleSelect = (item) => {
-        //console.log(item)
+        console.log(item)
         navigate('MyPlant', { plant: item })
     };
 
@@ -66,12 +66,13 @@ export default function Home(props) {
                     data={plants}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={({ item }) =>
+                        
                         <TouchableOpacity 
                         style={styles.border}
                         onPress={() => handleSelect(item)}
                         >
-                            <Text style={styles.middletext}>{item.plantName}</Text>
-                            <Image style={styles.middleimage} source={setImage(item.species.toLowerCase())} />
+                            <Text style={styles.middletext}>{item[1].plantName}</Text>
+                            <Image style={styles.middleimage} source={setImage(item[1].species.toLowerCase())} />
                         </TouchableOpacity>
                     }
                 />
