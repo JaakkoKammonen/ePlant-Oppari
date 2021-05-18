@@ -137,8 +137,8 @@ export default function MyPlant(props) {
 
 const styles = StyleSheet.create({
     container: {
-       // backgroundColor: '#E8E7E2',
         flex: 1,
+        backgroundColor: '#F0F0F0',
     },
     top: {
         flex: 1,
@@ -175,14 +175,16 @@ const styles = StyleSheet.create({
     topimage2: {
         width: 250,
         height: 250,
-        marginLeft: 20
+        marginLeft: 20,
+        borderRadius: 160
     },
     container2: {
+        marginTop: 20,
         flex: 2,
         backgroundColor: 'white',
         height: 600,
         borderTopLeftRadius: 30,
-        borderTopRightRadius: 30
+        borderTopRightRadius: 30,
     },
     date: {
         flexDirection: 'row',
