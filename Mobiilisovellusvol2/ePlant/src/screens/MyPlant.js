@@ -137,7 +137,7 @@ export default function MyPlant(props) {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#E8E7E2',
+       // backgroundColor: '#E8E7E2',
         flex: 1,
     },
     top: {

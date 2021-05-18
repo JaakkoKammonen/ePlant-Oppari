@@ -122,11 +122,11 @@ export default function PlantCards({navigation}) {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#FCFCFC',
         flex: 1 
     },
     category: {
         marginTop: 25,
+        marginBottom: 25,
     },
     plantheader: { 
         textAlign: 'center', 
@@ -135,8 +135,11 @@ const styles = StyleSheet.create({
         fontWeight: "bold" 
     },
     plantimage: { 
-        width: 150, 
-        height: 150
+        marginLeft: 20,
+        marginTop: 10,
+        width: 130, 
+        height: 130,
+        borderRadius: 70,
     },
     text: {
         fontSize: 14,
@@ -179,7 +182,6 @@ const styles = StyleSheet.create({
             width: 2
         },
         elevation:4,
-        backgroundColor: '#FAFAFA'
     },
     searchcontainer: {
         backgroundColor: '#FCFCFC',
@@ -190,7 +192,6 @@ const styles = StyleSheet.create({
     textinput: {
         width: '80%',
         marginLeft: 10
-
     },
     icon: {
         color: 'grey',

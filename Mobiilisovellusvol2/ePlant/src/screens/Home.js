@@ -50,9 +50,7 @@ export default function Home(props) {
             if (plants === "No plants yet") {
                 return(
                     <View>
-                        <Text style={styles.noplants}>
-                        No plants yet   
-                        </Text>
+                    <Image style={styles.noplants} source={require('../assets/oops2.png')} />
                     </View>
                 )
             }   else {
@@ -112,9 +110,7 @@ export default function Home(props) {
     }
     return (
         <View style={styles.container}>    
-                <View style={styles.top} >
                     <Text style={styles.toptext}>Howdy {user.displayName}!</Text>
-                </View>
                 <View style={styles.middle}>
                     <View style={styles.middleheader}>
                         <Text style={styles.header}>My plants</Text>
@@ -163,7 +159,6 @@ const styles = StyleSheet.create({
         paddingBottom: 20
     },
     container: {
-        backgroundColor: '#FCFCFC',
         flex: 2,
         padding: 3,
     },
@@ -173,7 +168,10 @@ const styles = StyleSheet.create({
         marginTop: 70,
     },
     toptext: {
-        fontSize: 26
+        fontSize: 26,
+        marginTop: 20,
+        marginLeft: 10,
+        marginBottom: 20,
     },
     middle: {
         flex: 2,
@@ -195,16 +193,17 @@ const styles = StyleSheet.create({
         marginBottom: 15
     },
     noplants: {
-            fontSize: 14,
-            fontWeight: 'normal',
-            marginLeft: 10,
-            marginBottom: 15
+        width: 220,
+        height: 220,
+        marginLeft: 70,
+        marginRight: 50,
+        marginBottom: 15,
     },
     nonotifications: {
-            fontSize: 14,
-            fontWeight: 'normal',
-            marginLeft: 10,
-            marginBottom: 15
+        fontSize: 14,
+        fontWeight: 'normal',
+        marginLeft: 10,
+        marginBottom: 15
     },
     header2: {
         fontSize: 14,
@@ -215,7 +214,7 @@ const styles = StyleSheet.create({
     border: {
         shadowOffset: { height: 3, width: 2 }, // IOS
         shadowOpacity: 3, // IOS
-        shadowColor: '#A9A9A9',
+        shadowColor: '#919191',
         shadowRadius: 1, //IOS
         elevation: 3, // android
         borderRadius: 4,

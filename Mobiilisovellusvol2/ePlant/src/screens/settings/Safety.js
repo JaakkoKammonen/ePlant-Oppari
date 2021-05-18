@@ -20,7 +20,7 @@ export default function Safety(props) {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#FCFCFC',
+     //   backgroundColor: '#FCFCFC',
         flex: 1,
     },
     topimage: {
