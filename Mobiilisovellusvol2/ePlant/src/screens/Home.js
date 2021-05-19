@@ -4,7 +4,8 @@ import { Snackbar } from 'react-native-paper';
 import { useDispatch, useSelector } from "react-redux";
 import Firebase from "../components/Redux/03-middleware/FireBasemiddleware"
 import LogginMiddleware from '../components/Redux/03-middleware/LogginMiddleware';
-import setImage from "../components/SetImage" 
+import setImage from "../components/SetImage";
+
 export default function Home(props) {
 
     const dispatch = useDispatch();
@@ -22,8 +23,6 @@ export default function Home(props) {
     //console.log(plants)
     // change snackbar visibility opposite to current status
     const toggleSnackBar = () => setVisibility(!visibility);
-
-    
 
     useEffect(() => {
     LogginMiddleware.CheckIfLoggedIn(navigate);
@@ -55,7 +54,6 @@ export default function Home(props) {
                 )
             }   else {
                 return(
-
                     <FlatList
                     horizontal={true}
                     contentContainerStyle={{ alignSelf: 'flex-start' }}
@@ -68,8 +66,10 @@ export default function Home(props) {
                         style={styles.border}
                         onPress={() => handleSelect(item)}
                         >
-                            <Text style={styles.middletext}>{item.plantName}</Text>
                             <Image style={styles.middleimage} source={setImage(item.species.toLowerCase())} />
+                            <View style={styles.text_container}>
+                            <Text style={styles.middletext}>{item.plantName}</Text>
+                        </View>
                         </TouchableOpacity>
                     }
                 />
@@ -186,6 +186,15 @@ const styles = StyleSheet.create({
         justifyContent:"space-between",
         flexDirection: 'row',
     },
+    text_container:{
+        position: "absolute",
+        width: 170,
+        height: 30,
+        bottom:0,
+        backgroundColor: "rgba(0,0,0, 0.3)",
+        borderBottomLeftRadius : 4,
+        borderBottomRightRadius: 4
+      },
     header: {
         fontSize: 14,
         fontWeight: 'bold',
@@ -212,14 +221,10 @@ const styles = StyleSheet.create({
         marginBottom: 15
     },
     border: {
-        shadowOffset: { height: 3, width: 2 }, // IOS
-        shadowOpacity: 3, // IOS
-        shadowColor: '#919191',
-        shadowRadius: 1, //IOS
         elevation: 3, // android
         borderRadius: 4,
         margin:5,
-        height: 185,
+        height: 187,
         width: 170,
         marginTop: 10,
         backgroundColor: 'white',
@@ -227,13 +232,20 @@ const styles = StyleSheet.create({
     middletext: {
         textAlign: 'center',
         fontSize: 16,
-        marginTop: 10,
-        fontWeight: 'bold'
+        marginTop: 3,
+        color: "white",
+        fontWeight: 'normal'
     },
     middleimage: {
-        width: 150,
-        height: 150,
+        width: 172,
+        height: 187,
+        borderRadius: 6
     },
+    card_title: {
+        position: 'absolute',
+        left: 0,
+        top: 100
+      },
     bottomheader: {
         justifyContent:"space-between",
         flexDirection: 'row',
