@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
 import { Button } from "react-native-elements";
@@ -89,7 +89,6 @@ export default function UserNotification(props) {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#FCFCFC',
         flex: 1,
     },
     topimage: {

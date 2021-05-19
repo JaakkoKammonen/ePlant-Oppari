@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert, Button, FlatList} from 'react-native';
-//import { FlatList } from 'react-native-gesture-handler';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert, Flatlist } from 'react-native';
+import { Button} from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import moment from "moment";
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
@@ -154,6 +154,7 @@ export default function MyPlant(props) {
             <View style={styles.container2}>
                 <View style={styles.date}>    
                     <Text style={styles.datetext1}>{moment(plant.paivays).format("DD.MM.YYYY")}</Text>
+                    <Text style={styles.moredetails}>More details</Text>
                 </View>
                 <View style={styles.progress}>
                     <View style={styles.field1}>
@@ -198,21 +199,19 @@ export default function MyPlant(props) {
                 <View>
                 </View>
 
-                <Text>Values were updated in {day}.{month}.{year} at: {time} </Text>
-
-
+                <Text style={styles.value}>Values were updated in {day}.{month}.{year} at: {time} </Text>
+            
+                <Button
+                buttonStyle={styles.btnmyplant}
+                title= "Delete plant"
+                onPress = {() => DeletePlant()}
+                />
                 <View style={styles.bottomheader}>
                     
                 <Text style={styles.notifi}>Notifications</Text>
 
                 {NotificationMaker()}
                 </View>
-
-            <Button 
-            title="Delete plant"
-            onPress={() => DeletePlant()}
-            />
-
             </View>
         </ScrollView>
     );
@@ -220,13 +219,24 @@ export default function MyPlant(props) {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#E8E7E2',
         flex: 1,
+        backgroundColor: '#F0F0F0',
     },
     top: {
         flex: 1,
         flexDirection: 'row',
         marginTop:15
+    },
+    btnmyplant: {
+        backgroundColor: "#63816D",
+        borderRadius: 3,
+        marginTop: 20,
+        fontSize: 12,
+        fontWeight: "bold",
+        textTransform: "uppercase",
+        letterSpacing: 0.5,
+        marginLeft: 100,
+        marginRight: 100
     },
     plantname: {
         fontSize: 22,
@@ -242,6 +252,12 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         fontStyle: 'italic'
     },
+    value: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginTop: 30,
+        marginLeft: 30
+    },
     progress: {
         flexDirection: 'row',
         justifyContent: "center",
@@ -256,16 +272,19 @@ const styles = StyleSheet.create({
         borderRadius: 100
     },
     topimage2: {
-        width: 250,
-        height: 250,
-        marginLeft: 20
+        width: 200,
+        height: 200,
+        marginLeft: 40,
+        marginTop: 10,
+        borderRadius: 160
     },
     container2: {
+        marginTop: 20,
         flex: 2,
         backgroundColor: 'white',
         height: 600,
         borderTopLeftRadius: 30,
-        borderTopRightRadius: 30
+        borderTopRightRadius: 30,
     },
     date: {
         flexDirection: 'row',
@@ -331,6 +350,12 @@ const styles = StyleSheet.create({
         fontSize: 12,
         marginRight:15,
         fontWeight: 'bold'
+    },
+    moredetails: {
+        color: '#63816D',
+        fontSize: 12,
+        fontWeight: 'bold',
+        marginRight: 20
     },
     bottom: {
         marginLeft: 15,

@@ -4,7 +4,8 @@ import { Snackbar } from 'react-native-paper';
 import { useDispatch, useSelector } from "react-redux";
 import Firebase from "../components/Redux/03-middleware/FireBasemiddleware"
 import LogginMiddleware from '../components/Redux/03-middleware/LogginMiddleware';
-import setImage from "../components/SetImage" 
+import setImage from "../components/SetImage";
+
 export default function Home(props) {
 
     const dispatch = useDispatch();
@@ -26,6 +27,7 @@ export default function Home(props) {
     // change snackbar visibility opposite to current status
     const toggleSnackBar = () => setVisibility(!visibility);
     
+
     useEffect(() => {
     LogginMiddleware.CheckIfLoggedIn(navigate);
     LogginMiddleware.UpdateUserData(dispatch)
@@ -51,14 +53,11 @@ export default function Home(props) {
             if (plants === "No plants yet") {
                 return(
                     <View>
-                        <Text style={styles.noplants}>
-                        No plants yet   
-                        </Text>
+                    <Image style={styles.noplants} source={require('../assets/oops2.png')} />
                     </View>
                 )
             }   else {
                 return(
-
                     <FlatList
                     horizontal={true}
                     contentContainerStyle={{ alignSelf: 'flex-start' }}
@@ -72,8 +71,10 @@ export default function Home(props) {
                         style={styles.border}
                         onPress={() => handleSelect(item)}
                         >
-                            <Text style={styles.middletext}>{item[1].plantName}</Text>
                             <Image style={styles.middleimage} source={setImage(item[1].species.toLowerCase())} />
+                            <View style={styles.text_container}>
+                            <Text style={styles.middletext}>{item[1].plantName}</Text>
+                        </View>
                         </TouchableOpacity>
                     }
                 />
@@ -114,9 +115,7 @@ export default function Home(props) {
     }
     return (
         <View style={styles.container}>    
-                <View style={styles.top} >
                     <Text style={styles.toptext}>Howdy {user.displayName}!</Text>
-                </View>
                 <View style={styles.middle}>
                     <View style={styles.middleheader}>
                         <Text style={styles.header}>My plants</Text>
@@ -165,7 +164,6 @@ const styles = StyleSheet.create({
         paddingBottom: 20
     },
     container: {
-        backgroundColor: '#FCFCFC',
         flex: 2,
         padding: 3,
     },
@@ -175,7 +173,10 @@ const styles = StyleSheet.create({
         marginTop: 70,
     },
     toptext: {
-        fontSize: 26
+        fontSize: 26,
+        marginTop: 20,
+        marginLeft: 10,
+        marginBottom: 20,
     },
     middle: {
         flex: 2,
@@ -190,6 +191,15 @@ const styles = StyleSheet.create({
         justifyContent:"space-between",
         flexDirection: 'row',
     },
+    text_container:{
+        position: "absolute",
+        width: 170,
+        height: 30,
+        bottom:0,
+        backgroundColor: "rgba(0,0,0, 0.3)",
+        borderBottomLeftRadius : 4,
+        borderBottomRightRadius: 4
+      },
     header: {
         fontSize: 14,
         fontWeight: 'bold',
@@ -197,16 +207,17 @@ const styles = StyleSheet.create({
         marginBottom: 15
     },
     noplants: {
-            fontSize: 14,
-            fontWeight: 'normal',
-            marginLeft: 10,
-            marginBottom: 15
+        width: 220,
+        height: 220,
+        marginLeft: 70,
+        marginRight: 50,
+        marginBottom: 15,
     },
     nonotifications: {
-            fontSize: 14,
-            fontWeight: 'normal',
-            marginLeft: 10,
-            marginBottom: 15
+        fontSize: 14,
+        fontWeight: 'normal',
+        marginLeft: 10,
+        marginBottom: 15
     },
     header2: {
         fontSize: 14,
@@ -215,14 +226,10 @@ const styles = StyleSheet.create({
         marginBottom: 15
     },
     border: {
-        shadowOffset: { height: 3, width: 2 }, // IOS
-        shadowOpacity: 3, // IOS
-        shadowColor: '#A9A9A9',
-        shadowRadius: 1, //IOS
         elevation: 3, // android
         borderRadius: 4,
         margin:5,
-        height: 185,
+        height: 187,
         width: 170,
         marginTop: 10,
         backgroundColor: 'white',
@@ -230,13 +237,20 @@ const styles = StyleSheet.create({
     middletext: {
         textAlign: 'center',
         fontSize: 16,
-        marginTop: 10,
-        fontWeight: 'bold'
+        marginTop: 3,
+        color: "white",
+        fontWeight: 'normal'
     },
     middleimage: {
-        width: 150,
-        height: 150,
+        width: 172,
+        height: 187,
+        borderRadius: 6
     },
+    card_title: {
+        position: 'absolute',
+        left: 0,
+        top: 100
+      },
     bottomheader: {
         justifyContent:"space-between",
         flexDirection: 'row',

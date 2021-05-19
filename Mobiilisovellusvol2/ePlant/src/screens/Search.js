@@ -28,7 +28,7 @@ export default function Search({navigation}) {
 
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
+                <View style={styles.header}>
                 <View style={{alignItems: 'center'}}>
                     <Text style={styles.text}>Search</Text>
                 </View>
@@ -60,7 +60,6 @@ Search.navigationOptions = () => ({ title: 'Search' });
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#FCFCFC',
         flex: 1  
     },
     text: {
@@ -78,7 +77,6 @@ const styles = StyleSheet.create({
             width: 2
         },
         elevation:4,
-        backgroundColor: '#FAFAFA'
     },
     searchbar: {
         alignSelf: 'flex-end',
@@ -86,9 +84,9 @@ const styles = StyleSheet.create({
         marginRight:5
     },
     searchcontainer: {
-        backgroundColor: '#FCFCFC',
-        borderBottomColor: 'transparent',
-        borderTopColor: 'transparent',
+       // backgroundColor: '#FCFCFC',
+       // borderBottomColor: 'transparent',
+       // borderTopColor: 'transparent',
     },
     icon: {
         color: 'grey',

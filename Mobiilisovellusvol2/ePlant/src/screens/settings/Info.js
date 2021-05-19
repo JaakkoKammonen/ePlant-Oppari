@@ -21,7 +21,7 @@ export default function Info(props) {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#FCFCFC',
+        //backgroundColor: '#FCFCFC',
         flex: 1,
     },
     topimage: {

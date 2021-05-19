@@ -82,7 +82,6 @@ export default function Settings(props) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#FCFCFC",
     flex: 1,
     flexDirection: "column",
   },

@@ -70,7 +70,7 @@ export default function Plant(props) {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#FCFCFC',
+     //   backgroundColor: '#FCFCFC',
         flex: 1,
     },
     topimage: {

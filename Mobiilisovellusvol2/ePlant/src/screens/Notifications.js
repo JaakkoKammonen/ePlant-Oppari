@@ -47,7 +47,7 @@ export default function Notifications() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#FCFCFC",
+   // backgroundColor: "#FCFCFC",
     flex: 1,
   },
   header: {

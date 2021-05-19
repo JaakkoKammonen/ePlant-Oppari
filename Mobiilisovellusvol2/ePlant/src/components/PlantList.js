@@ -31,7 +31,7 @@ export default function SelectPlant({searchTerm, navigation}) {
                     key={i}
                     title={item.laji}
                     containerStyle={{
-                        backgroundColor: '#FCFCFC'
+                        backgroundColor: '#FFFFFF'
                     }}
                 />
             ))}
@@ -42,7 +42,6 @@ export default function SelectPlant({searchTerm, navigation}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FCFCFC'
     },
     header: {
         flexDirection:"row",
