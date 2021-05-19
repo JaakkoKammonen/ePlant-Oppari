@@ -16,7 +16,7 @@ export default function UserNotification(props) {
         swal({
             title: "Delete user?",
             text: "Are you sure? This will delete user and all user data from databases!",
-            icon: "warning",
+            icon: "error",
             buttons: [true, "Do it!"],
             dangerMode: true,
           })
