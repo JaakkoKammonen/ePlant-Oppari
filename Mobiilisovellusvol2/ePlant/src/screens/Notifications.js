@@ -6,9 +6,8 @@ import setImage from "../components/SetImage";
 export default function Notifications() {
  
 
-  const allNotifications = useSelector(state => state.firebase.notification);
-  const sortedBytime = allNotifications.slice().sort((a, b) => new Date(b.time) -new  Date(a.time))
-  const tenlastnotifications = sortedBytime.slice(sortedBytime.length-11, sortedBytime.length-1).reverse();
+  const allNotifications = useSelector(state => state.firebase.notification).slice().sort((a, b) => new Date(b.time) - new  Date(a.time)).reverse()
+ 
 
   //console.log(myPlants)
 
@@ -16,7 +15,7 @@ export default function Notifications() {
     if (allNotifications !== []) {
       return (
         <FlatList
-          data={sortedBytime}
+          data={allNotifications}
           keyExtractor={(item, index) => index.toString()}
           marginLeft={230}
           renderItem={({ item }) => (

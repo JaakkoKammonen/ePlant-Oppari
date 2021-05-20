@@ -11,10 +11,7 @@ export default function Home(props) {
     const dispatch = useDispatch();
     const user = useSelector(state => state.user)
 
-    const allNotifications = useSelector(state => state.firebase.notification);
-    const sortedBytime = allNotifications.slice().sort((a, b) => new Date(b.time) -new  Date(a.time)).reverse()
-    const tenlastnotifications = sortedBytime.slice(sortedBytime.length-11, sortedBytime.length-1).reverse();
-
+    const allNotifications = useSelector(state => state.firebase.notification).slice().sort((a, b) => new Date(b.time) - new  Date(a.time));
 
     const [visibility, setVisibility] = useState(false);
     const { navigate } = props.navigation;
@@ -91,9 +88,7 @@ export default function Home(props) {
 
     const NotificationsRender = () => {
 
-     
-
-        if (plants === "[]") {
+        if (plants === "No plants yet") {
             return(
                 <View>
                     <Text style={styles.nonotifications}>
@@ -103,7 +98,7 @@ export default function Home(props) {
             )
         }   else {
             return(
-                <FlatList data={tenlastnotifications}
+                <FlatList data={allNotifications}
                 marginLeft={15}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) =>

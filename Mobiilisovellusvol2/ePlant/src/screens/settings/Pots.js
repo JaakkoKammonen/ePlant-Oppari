@@ -51,7 +51,7 @@ export default function Pots(props) {
                     return(
                         <View key={i}>
                         <Card>
-                                    <Card.Title>POT</Card.Title>
+                                    <Card.Title>ePlant</Card.Title>
                             <Card.Divider />
                             <Text style={styles.modeltype}>Model: <Text style={styles.modeldata}>{ePlantPots[item].ePlantModel.type}</Text> </Text>
                             <Text style={styles.version}>Version: <Text style={styles.versiondata}>{ePlantPots[item].ePlantModel.version}</Text></Text>
