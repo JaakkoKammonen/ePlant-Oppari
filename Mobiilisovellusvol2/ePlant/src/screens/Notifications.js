@@ -7,12 +7,13 @@ export default function Notifications() {
  
 
   const allNotifications = useSelector(state => state.firebase.notification).slice().sort((a, b) => new Date(b.time) - new  Date(a.time)).reverse()
- 
+  let plants = useSelector(state => state.firebase.my_Plants) 
+
 
   //console.log(myPlants)
 
   const renderNotifications = () => {
-    if (allNotifications !== []) {
+    if ( plants !== "No plants yet" ) {
       return (
         <FlatList
           data={allNotifications}
