@@ -1,29 +1,38 @@
 import React from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { View, Text, StyleSheet, FlatList,Image, } from "react-native";
 import { useSelector } from "react-redux";
+import setImage from "../components/SetImage";
 
 export default function Notifications() {
-  const myPlants = useSelector((state) => state.firebase.my_Plants);
+ 
+
+  const allNotifications = useSelector(state => state.firebase.notification);
+  const sortedBytime = allNotifications.slice().sort((a, b) => new Date(b.time) -new  Date(a.time))
+  const tenlastnotifications = sortedBytime.slice(sortedBytime.length-11, sortedBytime.length-1).reverse();
 
   //console.log(myPlants)
 
   const renderNotifications = () => {
-    if (myPlants !== "No plants yet") {
+    if (allNotifications !== []) {
       return (
         <FlatList
-          data={myPlants}
+          data={sortedBytime}
           keyExtractor={(item, index) => index.toString()}
           marginLeft={230}
           renderItem={({ item }) => (
-            <View style={styles.notification}>
-              <View>
-                <View style={styles.circle} />
-              </View>
-              <View style={styles.notificationTexts}>
-                <Text style={styles.subHeader}>Tänään klo 8.20</Text>
-                <Text style={styles.title}>{item.plantName} kasteltu.</Text>
-              </View>
-            </View>
+            <View >
+                    <View>
+
+                    <Image style={styles.circle} source={setImage(item.imagesrc.toLowerCase())}/>
+                    
+                    </View>
+                    <View >
+                        <Text >{item.time}</Text>
+                        <Text >{item.plantname} values were updated</Text>
+                        <Text >{item.field1Name}: {item.field1Value}</Text>
+                        <Text >{item.field2Name}: {item.field2Value}</Text>
+                    </View>
+                </View>
           )}
         />
       );

@@ -4,7 +4,8 @@ import {
   setPlants,
   setePlantModels,
   setUser_ePlants,
-  setUser_Plants
+  setUser_Plants,
+  setUser_Notifications
 } from "../01-actions"
 
 // Get my plants
@@ -18,13 +19,50 @@ firebase.auth().onAuthStateChanged((user) => {
     const plants = snapshot.val();
     //console.log(snapshot.val())
     dispatch(setUser_Plants(plants))
+    UpdateNotifications(dispatch, plants)
   } else {
     dispatch(setUser_Plants("No plants yet"))
   }
     })
   } 
 })
+}
 
+function UpdateNotifications(dispatch, my_Plants) { 
+
+  Object.values(my_Plants).map((plant) => {
+
+    const url = 'https://api.thingspeak.com/channels/' + plant.ePlantPot.channel_id + '/feeds.json';
+    fetch(url)
+        .then((response) => response.json())
+        .then((responseJson) => {
+            //console.log(responseJson.feeds)
+            //console.log(responseJson.feeds[responseJson.feeds.length-1])
+
+            let lastTen = responseJson.feeds.slice(responseJson.feeds.length-11, responseJson.feeds.length-1);
+
+            //console.log(lastTen)
+             let mapped = lastTen.map((feedItem) => {
+              let time = feedItem.created_at.slice(0 , feedItem.created_at.length-1)
+                let data = {
+                imagesrc: plant.species,
+                time: time,
+                plantname: plant.plantName,
+                field1Name: plant.ePlantPot.ePlantModel.Field1,
+                field1Value: feedItem.field1,
+                field2Name: plant.ePlantPot.ePlantModel.Field2,
+                field2Value: feedItem.field2
+                }
+                return data
+             })
+             dispatch(setUser_Notifications(mapped))
+        })
+        .catch((error) => {
+            //console.log(error)
+            dispatch(setUser_Notifications(["null"]))
+        });
+        
+  })
 }
 
 function UpdateMyePlantPots(dispatch) {

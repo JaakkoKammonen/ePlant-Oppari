@@ -10,14 +10,14 @@ export default function Login(props) {
   const [passwordShown, setPasswordShown] = useState(false);
   const navigate = props.navigation.navigate;
 
-  console.log(props.navigation.state.params)
+  //console.log(props.navigation.state.params)
 
-  if (props.navigation.state.params.swal) {
+  /*if (props.navigation.state.params.swal) {
     swal("User and all user data is deleted!", {
       buttons: false,
       timer: 3000,
     });
-  }
+  }*/
   
   const LogIn = () => {
     LogginMiddleware.LogIn(navigate, userEmail, userPassword);
@@ -25,7 +25,7 @@ export default function Login(props) {
 
   const togglePasswordVisiblity = () => {
     setPasswordShown(passwordShown ? false : true);
-    console.log(passwordShown);
+    //console.log(passwordShown);
   };
 
   return (

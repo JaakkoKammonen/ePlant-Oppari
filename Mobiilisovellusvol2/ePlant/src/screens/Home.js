@@ -11,6 +11,11 @@ export default function Home(props) {
     const dispatch = useDispatch();
     const user = useSelector(state => state.user)
 
+    const allNotifications = useSelector(state => state.firebase.notification);
+    const sortedBytime = allNotifications.slice().sort((a, b) => new Date(b.time) -new  Date(a.time)).reverse()
+    const tenlastnotifications = sortedBytime.slice(sortedBytime.length-11, sortedBytime.length-1).reverse();
+
+
     const [visibility, setVisibility] = useState(false);
     const { navigate } = props.navigation;
     let plants;
@@ -26,6 +31,7 @@ export default function Home(props) {
 
     // change snackbar visibility opposite to current status
     const toggleSnackBar = () => setVisibility(!visibility);
+
     
 
     useEffect(() => {
@@ -84,7 +90,10 @@ export default function Home(props) {
 
 
     const NotificationsRender = () => {
-        if (plants === "No plants yet") {
+
+     
+
+        if (plants === "[]") {
             return(
                 <View>
                     <Text style={styles.nonotifications}>
@@ -94,19 +103,23 @@ export default function Home(props) {
             )
         }   else {
             return(
-                <FlatList data={plants}
+                <FlatList data={tenlastnotifications}
                 marginLeft={15}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) =>
-                    <View style={styles.bottomitem}>
-                        <View>
-                           <View style={styles.circle}/>
-                        </View>
-                        <View style={styles.bottomtext}>
-                            <Text style={styles.bottomtext1}>Tänään klo 8.20</Text>
-                            <Text style={styles.bottomtext2}>{item.plantName} kasteltu.</Text>
-                        </View>
+                <View >
+                    <View>
+
+                    <Image style={styles.circle} source={setImage(item.imagesrc.toLowerCase())}/>
+                    
                     </View>
+                    <View >
+                        <Text >{item.time}</Text>
+                        <Text >{item.plantname} values were updated</Text>
+                        <Text >{item.field1Name}: {item.field1Value}</Text>
+                        <Text >{item.field2Name}: {item.field2Value}</Text>
+                    </View>
+                </View>
                 }
             />
             )
