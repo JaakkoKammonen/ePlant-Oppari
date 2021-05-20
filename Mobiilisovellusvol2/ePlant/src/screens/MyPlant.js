@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList } from 'react-native';
 import { Button} from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import moment from "moment";
@@ -7,6 +7,7 @@ import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import setImage from "../components/SetImage"
 import FireBasemiddleware from '../components/Redux/03-middleware/FireBasemiddleware';
 import swal from 'sweetalert';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default function MyPlant(props) {
 
@@ -80,7 +81,7 @@ export default function MyPlant(props) {
         swal({
             title: "Delete plant?",
             text: "Are you sure?",
-            icon: "warning",
+            icon: "error",
             buttons: [true, "Do it!"],
             dangerMode: true,
           })
@@ -91,12 +92,12 @@ export default function MyPlant(props) {
 
               swal("Poof! Plant deleted!", {
                 icon: "success",
-                timer: 1500,
+                timer: 2000,
               });
             } else {
               swal("Your plant is safe!", {
                 button: "Close",
-                timer: 1500,
+                timer: 2000,
               });
             }
           });
@@ -116,20 +117,18 @@ export default function MyPlant(props) {
 
             return( day + "." + month + "." + year + " at: " +time)
         }
-        return(
+        return(        
             <FlatList data={lastTen}
                 marginLeft={15}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) =>
-                    <View >
+                    <View style={styles.bottomitem}>
                         <View>
-
-                        <Image style={styles.circle} source={setImage(plant.species.toLowerCase())}/>
-                        
+                           <Image style={styles.circle} source={setImage(plant.species.toLowerCase())}/>
                         </View>
-                        <View >
-                            <Text >{timeParser(item.created_at)}</Text>
-                            <Text >{plant.plantName} values were updated</Text>
+                        <View style={styles.bottomtext}>
+                            <Text style={styles.bottomtext1}>{timeParser(item.created_at)}</Text>
+                            <Text style={styles.bottomtext2}>{plant.plantName} values were updated</Text>
                         </View>
                     </View>
                 }
@@ -196,23 +195,28 @@ export default function MyPlant(props) {
                     </View>
                     </View>
                 </View>
-                <View>
-                </View>
-
                 <Text style={styles.value}>Values were updated in {day}.{month}.{year} at: {time} </Text>
-            
+                <View style={styles.bottomheader}>
+                <Text style={styles.notifi}>Notifications</Text>
+                </View>
+                <ScrollView 
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+                style={styles.scrollable}>
+                <View style={styles.bottom}>
+
+                {NotificationMaker()}
+
+                </View>
+                </ScrollView>
+                <View style={styles.buttonwrapper1}>
                 <Button
                 buttonStyle={styles.btnmyplant}
                 title= "Delete plant"
                 onPress = {() => DeletePlant()}
                 />
-                <View style={styles.bottomheader}>
-                    
-                <Text style={styles.notifi}>Notifications</Text>
-
-                {NotificationMaker()}
                 </View>
-            </View>
+                </View>
         </ScrollView>
     );
 };
@@ -230,13 +234,20 @@ const styles = StyleSheet.create({
     btnmyplant: {
         backgroundColor: "#63816D",
         borderRadius: 3,
-        marginTop: 20,
-        fontSize: 12,
-        fontWeight: "bold",
+        marginTop: 10,
+        marginBottom: 10,
         textTransform: "uppercase",
         letterSpacing: 0.5,
+        width: 150,
+        height: 30,
+    },
+    scrollable: {
+        margin: 10, 
+        maxHeight: 200,
+    },
+    buttonwrapper1: {
         marginLeft: 100,
-        marginRight: 100
+        marginRight: 100,
     },
     plantname: {
         fontSize: 22,
@@ -340,16 +351,9 @@ const styles = StyleSheet.create({
         marginBottom: 5
     },
     bottomheader: {
-        flexDirection: 'row',
         justifyContent:"space-between",
+        flexDirection: 'row',
         marginLeft: 10,
-        marginTop: 50
-    },
-    showmore: {
-        color: '#63816D',
-        fontSize: 12,
-        marginRight:15,
-        fontWeight: 'bold'
     },
     moredetails: {
         color: '#63816D',
@@ -361,6 +365,7 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
         marginBottom: 10,
+        marginTop: 5,
         flex: 2,
         shadowColor: 'rgba(0,0,0, .1)', // IOS
         shadowOffset: { height: 3, width: 2 }, // IOS
@@ -374,16 +379,11 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         marginBottom: 5,
         marginTop: 10
-
-    },
-    bottomimage: {
-        width: 30,
-        height: 30,
-        borderRadius: 40
     },
     bottomtext: {
         marginLeft: 10,
         marginBottom: 10,
+        marginTop: 10,
         flex: 2
     },
     bottomtext1: {
@@ -406,16 +406,11 @@ const styles = StyleSheet.create({
         height: 40,
         borderRadius: 100/2,
         backgroundColor: '#eaaf7e'
-    }, 
-    
+    },
     notifi: {
         fontSize: 14,
         fontWeight: 'bold',
         marginLeft: 10,
-        marginBottom: 15
+        marginTop: 20
     },
-    
-    
- 
-
 });

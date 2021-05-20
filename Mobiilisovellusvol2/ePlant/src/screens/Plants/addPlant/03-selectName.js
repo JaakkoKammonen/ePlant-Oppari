@@ -23,7 +23,7 @@ export default function SelectName(props) {
         <View style={{flex: 1}}>
             <View style={styles.header}>
                 <Text style={{width:"14%"}}></Text>
-                <Text style={styles.headertitle}>Lisää kasvi</Text>
+                <Text style={styles.headertitle}>Add a new plant</Text>
                 <Icon 
                     name="close" 
                     size={40} 
@@ -37,13 +37,13 @@ export default function SelectName(props) {
             >
                 <View style={styles.container}>
                     <View>
-                        <Text style={styles.title}>Melkein valmista!</Text>
-                        <Text style={styles.text}>Anna vielä kasvillesi nimi</Text>
+                        <Text style={styles.title}>Almost done!</Text>
+                        <Text style={styles.text}>Now, give your plant a name</Text>
                     </View>
                     <Image style={styles.middleimage} source={AloeVera} />
                     <Input
-                        placeholder='Anna kasville nimi'
-                        inputContainerStyle={styles.textinput}
+                        placeholder='Name it'
+                        inputStyle={styles.textinput}
                         clearButtonMode='always'
                         onChangeText={text => setPlantName(text)}
                         returnKeyType='done'
@@ -101,8 +101,10 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     textinput: {
-        width: 350,
-        alignSelf: 'center'
+        fontSize: 12,
+        fontWeight: "bold",
+        textTransform: "uppercase",
+        letterSpacing: 0.5,
     }
 
 });
