@@ -1,12 +1,12 @@
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, ScrollView } from "react-native";
 import { Card } from "react-native-elements";
 
 export default function PlantOrPot({ navigation }) {
   const { navigate } = navigation;
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
      <View style={styles.header}>
         <Text style={styles.headerText}>Add a new plant or a pot</Text>
       </View>
@@ -26,7 +26,7 @@ export default function PlantOrPot({ navigation }) {
             style={styles.plantorpot}>
         </Card.Image>
       </Card>
-    </View>
+    </ScrollView>
   );
 }
 
