@@ -40,3 +40,10 @@ export const setUser_ePlants  = (payload) => {
         payload: payload
     }
 }
+
+export const setUser_Notifications  = (payload) => {
+    return {
+        type: "setUser_Notifications",
+        payload: payload
+    }
+}

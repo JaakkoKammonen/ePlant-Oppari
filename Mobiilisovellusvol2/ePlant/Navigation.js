@@ -39,6 +39,7 @@ import ResetPassword from "./src/screens/UserLogin/ResetPassword";
 //creating bottom navigation
 const BottomNavigator = createBottomTabNavigator(
   {
+    
     Home: {
       screen: Home,
       navigationOptions: {
