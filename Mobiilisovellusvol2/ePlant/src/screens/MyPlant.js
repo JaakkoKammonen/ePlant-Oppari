@@ -106,7 +106,7 @@ export default function MyPlant(props) {
     const NotificationMaker = () => {
         
         let lastTen = notifications.slice(notifications.length-11, notifications.length-1)
-        //console.log(lastTen)
+        console.log(lastTen)
 
         const timeParser = (date) => {
             
@@ -126,9 +126,11 @@ export default function MyPlant(props) {
                         <View>
                            <Image style={styles.circle} source={setImage(plant.species.toLowerCase())}/>
                         </View>
-                        <View style={styles.bottomtext}>
+                            <View style={styles.bottomtext}>
                             <Text style={styles.bottomtext1}>{timeParser(item.created_at)}</Text>
                             <Text style={styles.bottomtext2}>{plant.plantName} values were updated</Text>
+                            <Text >{Field1.name}: {item.field1}</Text>
+                            <Text >{Field2.name}: {item.field2}</Text>
                         </View>
                     </View>
                 }
