@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList } from 'react-native';
-import { Button} from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import moment from "moment";
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
@@ -128,9 +127,9 @@ export default function MyPlant(props) {
                         </View>
                             <View style={styles.bottomtext}>
                             <Text style={styles.bottomtext1}>{timeParser(item.created_at)}</Text>
-                            <Text style={styles.bottomtext2}>{plant.plantName} values were updated</Text>
-                            <Text >{Field1.name}: {item.field1}</Text>
-                            <Text >{Field2.name}: {item.field2}</Text>
+                            <Text style={styles.bottomtext2}>{plant.plantName}'s values were updated</Text>
+                            <Text style={styles.field1}>{Field1.name}:<Text style={styles.field01value}> {item.field1}</Text></Text>
+                            <Text style={styles.field2}>{Field2.name}:<Text style={styles.field02value}> {item.field2}</Text></Text>
                         </View>
                     </View>
                 }
@@ -155,7 +154,16 @@ export default function MyPlant(props) {
             <View style={styles.container2}>
                 <View style={styles.date}>    
                     <Text style={styles.datetext1}>{moment(plant.paivays).format("DD.MM.YYYY")}</Text>
-                    <Text style={styles.moredetails}>More details</Text>
+                    <View style={styles.moredetails}>
+                <Ionicons 
+                name="ios-trash" 
+                size={24} 
+                color="#63816D"
+                buttonStyle={styles.btnmyplant}
+                title= "Delete plant"
+                onPress = {() => DeletePlant()}
+                />
+                </View>
                 </View>
                 <View style={styles.progress}>
                     <View style={styles.field1}>
@@ -197,7 +205,7 @@ export default function MyPlant(props) {
                     </View>
                     </View>
                 </View>
-                <Text style={styles.value}>Values were updated in {day}.{month}.{year} at: {time} </Text>
+                <Text style={styles.value}>Last updated: <Text style={styles.updateformat}>{day}.{month}.{year} at: {time} </Text></Text>
                 <View style={styles.bottomheader}>
                 <Text style={styles.notifi}>Notifications</Text>
                 </View>
@@ -211,13 +219,6 @@ export default function MyPlant(props) {
 
                 </View>
                 </ScrollView>
-                <View style={styles.buttonwrapper1}>
-                <Button
-                buttonStyle={styles.btnmyplant}
-                title= "Delete plant"
-                onPress = {() => DeletePlant()}
-                />
-                </View>
                 </View>
         </ScrollView>
     );
@@ -248,8 +249,8 @@ const styles = StyleSheet.create({
         maxHeight: 200,
     },
     buttonwrapper1: {
-        marginLeft: 100,
-        marginRight: 100,
+        marginTop: 10,
+        marginLeft: 200,
     },
     plantname: {
         fontSize: 22,
@@ -270,6 +271,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginTop: 30,
         marginLeft: 30
+    },
+    updateformat: {
+        fontSize: 14,
+        fontWeight: 'normal',
+        marginTop: 30,
+        marginLeft: 3
     },
     progress: {
         flexDirection: 'row',
@@ -371,11 +378,11 @@ const styles = StyleSheet.create({
         flex: 2,
         shadowColor: 'rgba(0,0,0, .1)', // IOS
         shadowOffset: { height: 3, width: 2 }, // IOS
-        shadowOpacity: 3, // IOS
+        shadowOpacity: 1, // IOS
         shadowRadius: 1, //IOS
         elevation: 3, // android
-        backgroundColor: 'white',
-        borderRadius: 4
+        backgroundColor: '#fbfbfb',
+        borderRadius: 8
     },
     bottomitem: {
         flexDirection: "row",
@@ -406,6 +413,8 @@ const styles = StyleSheet.create({
     circle: {
         width: 40,
         height: 40,
+        marginTop: 30,
+        marginLeft: 20,
         borderRadius: 100/2,
         backgroundColor: '#eaaf7e'
     },
@@ -414,5 +423,25 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginLeft: 10,
         marginTop: 20
+    },
+    field1: {
+        fontSize: 12,
+        fontWeight: "bold",
+        marginLeft: 4,
+    },
+    field01value: {
+        fontSize: 10,
+        fontWeight: "normal",
+        marginLeft: 4,
+    },
+    field2: {
+        fontSize: 12,
+        fontWeight: "bold",
+        marginLeft: 4,
+    },
+    field02value: {
+        fontSize: 10,
+        fontWeight: "normal",
+        marginLeft: 4,
     },
 });

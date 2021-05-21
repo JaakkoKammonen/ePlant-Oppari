@@ -1,15 +1,19 @@
 import React from "react";
-import { View, StyleSheet, Text, ScrollView } from "react-native";
+import { View, StyleSheet, Text, ScrollView, TouchableOpacity } from "react-native";
 import { Card } from "react-native-elements";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function PlantOrPot({ navigation }) {
   const { navigate } = navigation;
 
   return (
     <ScrollView style={styles.container}>
-     <View style={styles.header}>
-        <Text style={styles.headerText}>Add a new plant or a pot</Text>
-      </View>
+      <TouchableOpacity onPress={() => navigate("Home")}>
+                <Ionicons name="arrow-back-outline" size={30} style={styles.arrow} />
+                </TouchableOpacity>
+                    <View>
+                        <Text style={styles.headerText}>Add a new plant or a pot</Text>
+                    </View>
       <Card style={styles.card}>
         <Card.Title>PLANT</Card.Title>
         <Card.Divider />
@@ -43,20 +47,16 @@ const styles = StyleSheet.create({
     height: 195,
   },
   headerText: {
-    fontSize: 14,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginTop: 48,
+    fontSize: 22,
+    marginTop: 20,
+    fontWeight: '600',
     marginBottom: 20,
-  },
-  header: {
-    shadowColor: "#DEDDDD",
-    shadowOpacity: 2,
-    shadowOffset: {
-      height: 2,
-      width: 2,
-    },
-    elevation: 4,
-    backgroundColor: "#FAFAFA",
-  },
+    color: '#63816D',
+    alignSelf: 'center'
+},
+  arrow: {
+    marginLeft: 20,
+    marginTop: 10,
+    color: 'grey'
+},
 });
