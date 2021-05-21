@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import LogginMiddleware from "../../components/Redux/03-middleware/LogginMiddleware";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Input, Button } from "react-native-elements";
+//import swal from 'sweetalert';
 
 export default function Login(props) {
   const [userEmail, setUserEmail] = useState("");

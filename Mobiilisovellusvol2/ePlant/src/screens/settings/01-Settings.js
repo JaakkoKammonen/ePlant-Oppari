@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
-import { ListItem, Icon, Button } from "react-native-elements";
+import { ListItem, Icon } from "react-native-elements";
 import LogginMiddleware from "../../components/Redux/03-middleware/LogginMiddleware";
 import { useSelector } from "react-redux";
 

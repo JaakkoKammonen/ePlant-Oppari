@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, KeyboardAvoidingView, Button } from 'react-native';
-import { Input, Icon } from 'react-native-elements';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { Card } from 'react-native-elements';
+import { Ionicons } from "@expo/vector-icons";
 import { useSelector } from 'react-redux';
 
 export default function SelectName(props) {
@@ -23,18 +24,14 @@ export default function SelectName(props) {
             //console.log(hydroponic[item])
                 return(
                     <View key={i}>
-                        
-                        <Text >
-                            Version: {hydroponic[item].version}
-                        </Text> 
-                        <Text >
-                            Type: {hydroponic[item].type}
-                        </Text> 
-                        <Button 
-                        title={"Submit"}
-                        style={{paddingBottom: 10}}
-                        onPress={() => handleSubmit(hydroponic[item])}
-                        />
+                <Card style={styles.card}>
+                    <Card.Title>HYDRO</Card.Title>
+                    <Card.Divider />
+                    <Card.Image source={require("../../../assets/hydro.png")}
+                    style={styles.hydro}
+                    onPress={() =>  handleSubmit(hydroponic[item])}>
+                    </Card.Image>
+                </Card>
                     </View>
                 )
             })
@@ -50,17 +47,14 @@ export default function SelectName(props) {
             //console.log(hydroponic[item])
                 return(
                     <View key={i}>
-                        <Text>
-                            Version: {soil[item].version}
-                        </Text> 
-                        <Text>
-                            Type: {soil[item].type}
-                        </Text> 
-                        <Button 
-                        title={"Submit"}
-                        style={{paddingBottom: 10}}
-                        onPress={() => handleSubmit(soil[item])}
-                        />
+                    <Card>
+                    <Card.Title>SOIL</Card.Title>
+                    <Card.Divider />
+                    <Card.Image source={require("../../../assets/soil.png")}
+                        style={styles.soil}
+                        onPress={() => handleSubmit(soil[item])}>
+                    </Card.Image>
+                </Card>
                     </View>
                 )
             })
@@ -69,44 +63,26 @@ export default function SelectName(props) {
     }
 
     return (
-        <View style={{flex: 1}}>
-            <View style={styles.header}>
-                <Text style={{width:"14%"}}></Text>
-                <Text style={styles.headertitle}>Select your ePlant model</Text>
-                <Icon 
-                    name="close" 
-                    size={40} 
-                    iconStyle={styles.icon}
-                    onPress={() => navigate('Home')} 
-                />
-            </View>
-            <KeyboardAvoidingView
-                behavior={'padding'}
-                style={styles.container}
-            >
-                <View style={styles.container}>
+        <ScrollView style={styles.container}>
+                <TouchableOpacity onPress={() => navigate("Home")}>
+                <Ionicons name="arrow-back-outline" size={30} style={styles.arrow} />
+                </TouchableOpacity>
                     <View>
-                        <Text style={styles.title}>Select your ePlant model</Text>
-                        
+                        <Text style={styles.title}>Add a new pot model</Text>
                     </View>
-
                     {HydroponicsVersions()}
                     {SoilVersions()}
-                
-                   
-                </View>
-            </KeyboardAvoidingView>
-        </View>
+        </ScrollView>
 
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
+        flex: 2,
+        padding: 3,
+        marginBottom: 10
+      },
     icon: {
         marginTop: "70%",
         marginRight:15,
@@ -117,18 +93,33 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     header: {
-        flexDirection:"row",
-        justifyContent:"space-between",
-    },
-    headertitle: {
+        shadowColor: "#DEDDDD",
+        shadowOpacity: 2,
+        shadowOffset: {
+          height: 2,
+          width: 2,
+        },
+        elevation: 4,
+        backgroundColor: "#FAFAFA",
+      },
+      bottom: {
+        marginLeft: 10,
+        flex: 2,
+        marginTop: 20,
+      },
+      bottom2: {
+        fontSize: 14,
+      },
+      headertitle: {
         fontSize: 14,
         fontWeight: "bold",
-        textAlign: 'center',
-        marginTop: "11%",
-        paddingBottom: 20,
-    },
+        textAlign: "center",
+        marginTop: 48,
+        marginBottom: 20,
+      },
     title: {
         fontSize: 22,
+        marginTop: 20,
         fontWeight: '600',
         marginBottom: 20,
         color: '#63816D',
@@ -148,6 +139,26 @@ const styles = StyleSheet.create({
     textinput: {
         width: 350,
         alignSelf: 'center'
-    }
-
+    },
+    arrow: {
+        marginLeft: 20,
+        marginTop: 10,
+        color: 'grey'
+    },
+    soil: {
+        marginTop: 10,
+        marginBottom: 10,
+        marginLeft: 35,
+        marginRight: 50,
+        width: 250,
+        height: 195,
+      },
+     hydro: {
+        marginTop: 10,
+        marginBottom: 10,
+        marginLeft: 35,
+        marginRight: 50,
+        width: 200,
+        height: 200,
+      },
 });

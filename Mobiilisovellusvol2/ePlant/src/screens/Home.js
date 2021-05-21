@@ -277,11 +277,11 @@ const styles = StyleSheet.create({
         flex: 2,
         shadowColor: 'rgba(0,0,0, .1)', // IOS
         shadowOffset: { height: 3, width: 2 }, // IOS
-        shadowOpacity: 3, // IOS
+        shadowOpacity: 1, // IOS
         shadowRadius: 1, //IOS
         elevation: 3, // android
-        backgroundColor: 'white',
-        borderRadius: 4
+        backgroundColor: '#fbfbfb',
+        borderRadius: 8
     },
     bottomitem: {
         flexDirection: "row",
