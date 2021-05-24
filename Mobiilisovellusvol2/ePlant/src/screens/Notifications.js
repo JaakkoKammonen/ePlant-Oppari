@@ -102,12 +102,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     flex: 2,
     marginTop: 10,
-    shadowColor: 'rgba(0,0,0, .1)', // IOS
-    shadowOffset: { height: 3, width: 2 }, // IOS
-    shadowOpacity: 1, // IOS
-    shadowRadius: 1, //IOS
-    elevation: 3, // android
-    borderRadius: 10
 },
   bottom2: {
     fontSize: 14,
