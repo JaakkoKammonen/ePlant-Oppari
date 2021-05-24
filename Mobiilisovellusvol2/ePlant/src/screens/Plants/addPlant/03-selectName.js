@@ -11,9 +11,10 @@ export default function SelectName(props) {
     const { navigate } = props.navigation;
     let species = props.navigation.state.params.plant;
     let ePlant = props.navigation.state.params.eplant
-
+    let my_Plants = useSelector(state => state.firebase.my_Plants)
     let userUid = useSelector(state => state.user.uid)
     
+
    const AddPlantDb = (event) => {
      event.preventDefault();
      FireBase.AddPlantToUser(userUid,species,plantName, ePlant, navigate)

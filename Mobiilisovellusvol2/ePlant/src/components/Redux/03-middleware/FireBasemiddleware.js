@@ -113,12 +113,19 @@ function AddUserToDatabase(userUid, userEmail, userDisplayName) {
 
 
 function AddPlantToUser(userUid,species, plantName, ePlant, navigate) {
+
+  console.log(ePlant)
   firebase.database().ref('users/' + userUid + "/myPlants").push(
       {
-          'species': species,
-          'plantName': plantName,
-          'date': Date(),
-          "ePlantPot": ePlant
+          species: species,
+          plantName: plantName,
+          date: Date(),
+          ePlantPot: {
+            ePlantID: ePlant[0],
+            channel_id: ePlant[1].channel_id,
+            write_apikey: ePlant[1].write_apikey,
+            ePlantModel: ePlant[1].ePlantModel
+          }
       }
   )
   navigate('Home', {showSnackbar: true, plantName: "New " + plantName + " was added!"})
@@ -141,15 +148,66 @@ function AddePlantToUser(userUid, ePlant, navigate) {
 
 function ModifyUserEPlant(ePlant, navigate) {
   firebase.auth().onAuthStateChanged((user) => {
+    //console.log(ePlant)
     if (user) {
-      firebase.database().ref('users/' + user.uid + "/ePlant/" + ePlant.ePlantID).update({
-        channel_id: ePlant.channel_id,
-        write_apikey: ePlant.write_apikey
+
+    firebase.database().ref('users/' + user.uid + "/myPlants/").on('value', snapshot => {
+
+        
+        let myPlants = Object.values(snapshot.val())
+        let myPlantWithIDs = Object.entries(snapshot.val())
+        //console.log(myPlants, myPlantWithIDs)
+
+         let ifFound = myPlants.map((item, index) => {
+            console.log(item)          
+            console.log(ePlant)
+
+            if (ePlant.channel_id === item.ePlantPot.channel_id ) {
+              return "Error"
+            } else if (ePlant.write_apikey === item.ePlantPot.write_apikey ) {
+              return "Error"
+            }
+            else if(ePlant.ePlantID === item.ePlantPot.ePlantID) {
+              return index
+            } else {
+              return null
+            }
+
+        })
+        let found = ifFound.filter(i => i !== null)
+
+        if(found.includes("Error")) {
+          navigate('Home', {showSnackbar: true, plantName: "You cannot have two ePlants with same channel id or write_apikey!"})
+        }  else {
+
+          let foundIndex = found[0]
+          let plantID = myPlantWithIDs[foundIndex]
+
+          if (found.length = 1) {
+            firebase.database().ref('users/' + user.uid + "/myPlants/" + plantID[0] + "/ePlantPot/").update({
+              channel_id: ePlant.channel_id,
+              write_apikey: ePlant.write_apikey
+            })
+          }
+
+
+          firebase.database().ref('users/' + user.uid + "/ePlant/" + ePlant.ePlantID).update({
+            channel_id: ePlant.channel_id,
+            write_apikey: ePlant.write_apikey
+          })
+
+          navigate('Home', {showSnackbar: true, plantName: "ePlant was updated!"})
+        }
+        
       })
+
+      
     }
-    navigate('Home', {showSnackbar: true, plantName: "ePlant was updated!"})
+    
 });
 }
+
+
 function DeleteUserEPlant(ePlantID) {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {

@@ -69,7 +69,7 @@ export default function MyPlant(props) {
             .catch((error) => {
                 swal({
                 title: "Error",
-                text: "Something went wrong while getting plant data",
+                text: "Something went wrong while getting plant data. Check that your Channel Id is correct!",
              })
              console.log(error)
             });

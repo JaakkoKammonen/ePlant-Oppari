@@ -8,12 +8,14 @@ export default function Notifications() {
 
   const allNotifications = useSelector(state => state.firebase.notification).slice().sort((a, b) => new Date(b.time) - new  Date(a.time)).reverse()
   const [notifications, setNotifications] = useState("Loading...")
+  let plants = useSelector(state => state.firebase.my_Plants) 
+
 
   //console.log(myPlants)
 
   const renderNotifications = () => {
-
-    let lastTen = notifications.slice(notifications.length-11, notifications.length-1)
+    if (allNotifications !== []) {
+    let lastTen = allNotifications.slice(allNotifications.length-11, allNotifications.length-1)
     console.log(lastTen)
 
     const timeParser = (date) => {
@@ -26,7 +28,6 @@ export default function Notifications() {
         return( day + "." + month + "." + year + " at: " +time)
     }
 
-    if (allNotifications !== []) {
       return (
         <FlatList
           data={allNotifications}
@@ -35,6 +36,7 @@ export default function Notifications() {
           renderItem={({ item }) => (
             <View style={styles.bottomitem}>
                     <View>
+                      
                     <Image style={styles.circle} source={setImage(item.imagesrc.toLowerCase())}/>
                     </View>
                     <View style={styles.bottomtext}>
@@ -53,6 +55,8 @@ export default function Notifications() {
       );
     }
   };
+
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
