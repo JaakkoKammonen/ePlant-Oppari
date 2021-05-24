@@ -118,6 +118,7 @@ const SwitchNavigation = createSwitchNavigator({
 
   Plant: Plant,
   MyPlant: MyPlant,
+  PlantOrPot: PlantOrPot,
 
   SelectPlant: SelectPlant,
   SelectName: SelectName,

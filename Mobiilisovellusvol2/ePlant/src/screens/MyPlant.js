@@ -127,9 +127,9 @@ export default function MyPlant(props) {
                         </View>
                             <View style={styles.bottomtext}>
                             <Text style={styles.bottomtext1}>{timeParser(item.created_at)}</Text>
-                            <Text style={styles.bottomtext2}>{plant.plantName}'s values were updated</Text>
-                            <Text style={styles.field1}>{Field1.name}:<Text style={styles.field01value}> {item.field1}</Text></Text>
-                            <Text style={styles.field2}>{Field2.name}:<Text style={styles.field02value}> {item.field2}</Text></Text>
+                            <Text style={styles.bottomtext2}>{plant.plantName}'s value were updated</Text>
+                            <Text style={styles.field01}>{Field1.name}:<Text style={styles.field01value}> {item.field1}</Text></Text>
+                            <Text style={styles.field02}>{Field2.name}:<Text style={styles.field02value}> {item.field2}</Text></Text>
                         </View>
                     </View>
                 }
@@ -226,13 +226,14 @@ export default function MyPlant(props) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 2,
+        padding: 3,
         backgroundColor: '#F0F0F0',
     },
     top: {
-        flex: 1,
         flexDirection: 'row',
-        marginTop:15
+        marginTop: 15,
+        flex: 1
     },
     btnmyplant: {
         backgroundColor: "#63816D",
@@ -246,7 +247,7 @@ const styles = StyleSheet.create({
     },
     scrollable: {
         margin: 10, 
-        maxHeight: 200,
+        maxHeight: 250,
     },
     buttonwrapper1: {
         marginTop: 10,
@@ -338,16 +339,16 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginRight: 50
     },
-    phtext2: {
-        fontSize: 22,
-        color: '#63816D'
-    },
     field2Value: {
         fontSize: 16,
         marginTop: 20,
         marginBottom: 10,
         fontWeight: 'bold',
         marginRight: 50
+    },
+    phtext2: {
+        fontSize: 22,
+        color: '#63816D'
     },
     ectext2: {
         fontSize: 22,
@@ -375,14 +376,14 @@ const styles = StyleSheet.create({
         marginRight: 15,
         marginBottom: 10,
         marginTop: 5,
-        flex: 2,
+        flex: 4,
         shadowColor: 'rgba(0,0,0, .1)', // IOS
         shadowOffset: { height: 3, width: 2 }, // IOS
         shadowOpacity: 1, // IOS
         shadowRadius: 1, //IOS
         elevation: 3, // android
         backgroundColor: '#fbfbfb',
-        borderRadius: 8
+        borderRadius: 10
     },
     bottomitem: {
         flexDirection: "row",
@@ -391,9 +392,8 @@ const styles = StyleSheet.create({
     },
     bottomtext: {
         marginLeft: 10,
-        marginBottom: 10,
-        marginTop: 10,
-        flex: 2
+        marginBottom: 5,
+        marginTop: 5,
     },
     bottomtext1: {
         marginLeft: 5,
@@ -422,9 +422,9 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: 'bold',
         marginLeft: 10,
-        marginTop: 20
+        marginTop: 20,
     },
-    field1: {
+    field01: {
         fontSize: 12,
         fontWeight: "bold",
         marginLeft: 4,
@@ -432,9 +432,9 @@ const styles = StyleSheet.create({
     field01value: {
         fontSize: 10,
         fontWeight: "normal",
-        marginLeft: 4,
+        marginLeft: 3,
     },
-    field2: {
+    field02: {
         fontSize: 12,
         fontWeight: "bold",
         marginLeft: 4,
@@ -442,6 +442,6 @@ const styles = StyleSheet.create({
     field02value: {
         fontSize: 10,
         fontWeight: "normal",
-        marginLeft: 4,
+        marginLeft: 3,
     },
 });

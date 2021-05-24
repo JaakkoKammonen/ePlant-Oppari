@@ -64,7 +64,7 @@ export default function SelectName(props) {
 
     return (
         <ScrollView style={styles.container}>
-                <TouchableOpacity onPress={() => navigate("Home")}>
+                <TouchableOpacity onPress={() => navigate("PlantOrPot")}>
                 <Ionicons name="arrow-back-outline" size={30} style={styles.arrow} />
                 </TouchableOpacity>
                     <View>

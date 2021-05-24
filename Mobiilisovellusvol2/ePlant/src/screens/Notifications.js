@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, StyleSheet, FlatList,Image, } from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, FlatList, Image, ScrollView } from "react-native";
 import { useSelector } from "react-redux";
 import setImage from "../components/SetImage";
 
@@ -7,11 +7,25 @@ export default function Notifications() {
  
 
   const allNotifications = useSelector(state => state.firebase.notification).slice().sort((a, b) => new Date(b.time) - new  Date(a.time)).reverse()
- 
+  const [notifications, setNotifications] = useState("Loading...")
 
   //console.log(myPlants)
 
   const renderNotifications = () => {
+
+    let lastTen = notifications.slice(notifications.length-11, notifications.length-1)
+    console.log(lastTen)
+
+    const timeParser = (date) => {
+        
+        let year = date.slice(0, 4)
+        let month = date.slice(5, 7)
+        let day = date.slice(8, 10)
+        let time = date.slice(11, 19)
+
+        return( day + "." + month + "." + year + " at: " +time)
+    }
+
     if (allNotifications !== []) {
       return (
         <FlatList
@@ -19,17 +33,15 @@ export default function Notifications() {
           keyExtractor={(item, index) => index.toString()}
           marginLeft={230}
           renderItem={({ item }) => (
-            <View >
+            <View style={styles.bottomitem}>
                     <View>
-
                     <Image style={styles.circle} source={setImage(item.imagesrc.toLowerCase())}/>
-                    
                     </View>
-                    <View >
-                        <Text >{item.time}</Text>
-                        <Text >{item.plantname} values were updated</Text>
-                        <Text >{item.field1Name}: {item.field1Value}</Text>
-                        <Text >{item.field2Name}: {item.field2Value}</Text>
+                    <View style={styles.bottomtext}>
+                        <Text style={styles.timetext}>{timeParser(item.time)}</Text>
+                        <Text style={styles.fieldname}>{item.plantname} values were updated</Text>
+                        <Text style={styles.field01}>{item.field1Name}:<Text style={styles.field01value}>{item.field1Value}</Text></Text>
+                        <Text style={styles.field02}>{item.field2Name}:<Text style={styles.field01value}>{item.field2Value}</Text></Text>
                     </View>
                 </View>
           )}
@@ -46,9 +58,15 @@ export default function Notifications() {
       <View style={styles.header}>
         <Text style={styles.headerText}>Notifications</Text>
       </View>
-      <View style={styles.bottom}>
-        <Text style={styles.bottom2}>{renderNotifications()}</Text>
-      </View>
+      <ScrollView 
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+                style={styles.scrollable}>
+                <View style={styles.bottom}>
+
+        {renderNotifications()}
+        </View>
+      </ScrollView>
     </View>
   );
 }
@@ -67,7 +85,10 @@ const styles = StyleSheet.create({
     },
     elevation: 4,
     backgroundColor: "#FAFAFA",
-  },
+},
+  scrollable: {
+    margin: 10, 
+},
   headerText: {
     fontSize: 14,
     fontWeight: "bold",
@@ -76,47 +97,95 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     borderBottomColor: "#DEDDDD",
     borderBottomWidth: 1,
-  },
+},
   bottom: {
     marginLeft: 10,
     flex: 2,
-    marginTop: 20,
-  },
+    marginTop: 10,
+    shadowColor: 'rgba(0,0,0, .1)', // IOS
+    shadowOffset: { height: 3, width: 2 }, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 1, //IOS
+    elevation: 3, // android
+    borderRadius: 10
+},
   bottom2: {
     fontSize: 14,
-  },
+},
+  bottomtext: {
+    marginLeft: 10,
+    marginBottom: 5,
+    marginTop: 5,
+},
+  timetext: {
+    marginLeft: 5,
+    fontSize: 12,
+    color: "#ACACAC",
+    fontWeight: "bold"
+},
+  bottomitem: {
+    flexDirection: "row",
+    marginBottom: 5,
+    marginTop: 10
+},
   notification: {
     flexDirection: "row",
     width: 179,
     height: 40,
     marginBottom: 35,
-  },
+},
   circle: {
     width: 40,
     height: 40,
-    borderRadius: 100 / 2,
-    backgroundColor: "#eaaf7e",
-  },
+    marginTop: 10,
+    marginLeft: 20,
+    borderRadius: 100/2,
+    backgroundColor: '#eaaf7e'
+},
   notificationTexts: {
     marginLeft: 10,
     marginBottom: 10,
     flex: 2,
-  },
+},
   noplants: {
     fontSize: 14,
     fontWeight: "normal",
     marginLeft: 10,
     marginBottom: 15,
-  },
+},
   subHeader: {
     marginLeft: 5,
     fontSize: 12,
     color: "#ACACAC",
     fontWeight: "bold",
     marginBottom: 6,
-  },
+},
   title: {
     marginLeft: 5,
     fontSize: 16,
-  },
+},
+  fieldname: {
+    marginLeft: 4,
+    fontSize: 16
+},
+  field01: {
+    fontSize: 12,
+    fontWeight: "bold",
+    marginLeft: 4,
+},
+  field01value: {
+    fontSize: 10,
+    fontWeight: "normal",
+    marginLeft: 3,
+},
+  field02: {
+    fontSize: 12,
+    fontWeight: "bold",
+    marginLeft: 4,
+},
+  field02value: {
+    fontSize: 10,
+    fontWeight: "normal",
+    marginLeft: 3,
+}
 });

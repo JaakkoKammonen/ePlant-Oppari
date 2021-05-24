@@ -14,6 +14,8 @@ export default function Home(props) {
     const allNotifications = useSelector(state => state.firebase.notification).slice().sort((a, b) => new Date(b.time) - new  Date(a.time));
 
     const [visibility, setVisibility] = useState(false);
+    const [notifications, setNotifications] = useState("Loading...")
+
     const { navigate } = props.navigation;
     let plants;
     if (useSelector(state => state.firebase.my_Plants) === "No plants yet") {
@@ -85,8 +87,20 @@ export default function Home(props) {
             }
         }
 
-
     const NotificationsRender = () => {
+
+        let lastTen = notifications.slice(notifications.length-11, notifications.length-1)
+        console.log(lastTen)
+
+        const timeParser = (date) => {
+            
+            let year = date.slice(0, 4)
+            let month = date.slice(5, 7)
+            let day = date.slice(8, 10)
+            let time = date.slice(11, 19)
+
+            return( day + "." + month + "." + year + " at: " +time)
+        }
 
         if (plants === "No plants yet") {
             return(
@@ -102,17 +116,19 @@ export default function Home(props) {
                 marginLeft={15}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) =>
-                <View >
+                <View style={styles.bottomitem}>
                     <View>
 
                     <Image style={styles.circle} source={setImage(item.imagesrc.toLowerCase())}/>
                     
                     </View>
                     <View >
-                        <Text >{item.time}</Text>
-                        <Text >{item.plantname} values were updated</Text>
-                        <Text >{item.field1Name}: {item.field1Value}</Text>
-                        <Text >{item.field2Name}: {item.field2Value}</Text>
+                    <View style={styles.bottomtext}>
+                        <Text style={styles.bottomtext1}>{timeParser(item.time)}</Text>
+                        <Text style={styles.fieldname}>{item.plantname}'s value were updated</Text>
+                        <Text style={styles.field01}>{item.field1Name}:<Text style={styles.field01value}> {item.field1Value}</Text></Text>
+                        <Text style={styles.field02}>{item.field2Name}: <Text style={styles.field01value}> {item.field2Value}</Text></Text>
+                        </View>
                     </View>
                 </View>
                 }
@@ -187,7 +203,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     middle: {
-        flex: 2,
+        flex: 1.5,
         shadowColor: "#000",
     },
     middletext: {
@@ -295,8 +311,8 @@ const styles = StyleSheet.create({
     },
     bottomtext: {
         marginLeft: 10,
-        marginBottom: 10,
-        flex: 2
+        marginBottom: 5,
+        marginTop: 5,
     },
     bottomtext1: {
         marginLeft: 5,
@@ -311,7 +327,33 @@ const styles = StyleSheet.create({
     circle: {
         width: 40,
         height: 40,
+        marginTop: 10,
+        marginLeft: 20,
         borderRadius: 100/2,
         backgroundColor: '#eaaf7e'
     },
+    fieldname: {
+        marginLeft: 5,
+        fontSize: 16
+    },
+    field01: {
+        fontSize: 12,
+        fontWeight: "bold",
+        marginLeft: 4,
+    },
+    field01value: {
+        fontSize: 10,
+        fontWeight: "normal",
+        marginLeft: 3,
+    },
+    field02: {
+        fontSize: 12,
+        fontWeight: "bold",
+        marginLeft: 4,
+    },
+    field02value: {
+        fontSize: 10,
+        fontWeight: "normal",
+        marginLeft: 3,
+    }
 });

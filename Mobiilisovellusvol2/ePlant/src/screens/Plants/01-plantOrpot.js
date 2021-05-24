@@ -37,10 +37,11 @@ export default function PlantOrPot({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 2,
+    padding: 3,
+    marginBottom: 10
   },
   plantorpot: {
     marginTop: 10,
-    marginBottom: 10,
     marginLeft: 35,
     marginRight: 50,
     width: 250,
