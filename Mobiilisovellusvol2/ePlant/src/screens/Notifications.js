@@ -22,7 +22,7 @@ export default function Notifications() {
           renderItem={({ item }) => (
             <View >
                     <View>
-
+                      
                     <Image style={styles.circle} source={setImage(item.imagesrc.toLowerCase())}/>
                     
                     </View>

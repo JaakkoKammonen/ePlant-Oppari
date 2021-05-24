@@ -7,27 +7,74 @@ import kuva from '../../../assets/herbs.png'
 export default function SelectPot(props) {
 
     const my_ePlants = useSelector(state => state.firebase.my_ePlants)
+
+    const my_Plants = useSelector(state => state.firebase.my_Plants)
+
+
     const { navigate } = props.navigation;
     
     const plant = props.navigation.state.params.plant;
     //console.log(plant)
     // sending selected items data to next screen and navigating to there
     const handleSelect = (eplant) => {
-        navigate('SelectName', { eplant: eplant, plant: plant })
+        //console.log(eplant)
+        try {
+           if(Object.entries(my_Plants).length > 1 ) {
+
+            //console.log("enemmänkun yks kasvi")
+            let testData = Object.entries(my_Plants).map((item) => {
+                //console.log(item[1].ePlantPot.ePlantID, eplant[0])
+                if(item[1].ePlantPot.ePlantID === eplant[0]) {
+                    return true
+                } else {
+                    return false
+                }
+            })
+            
+            if (testData.includes(true)) {
+                navigate('Home', {showSnackbar: true, plantName: "You cannot add two plants in the same ePlant!"})
+            } else {
+               // console.log("enemmänkun yks kasvi ELSE")
+                navigate('SelectName', { eplant: eplant, plant: plant })
+            }
+            
+            
+
+        } else if(Object.entries(my_Plants).length = 1) {
+          // console.log("Ykskasvi")
+            let parsing = Object.entries(my_Plants)[0]
+            let myPlant = parsing[1]
+            //console.log(myPlant.ePlantPot.ePlantID,eplant[0] )
+
+            if(myPlant.ePlantPot.ePlantID === eplant[0] ) {
+                navigate('Home', {showSnackbar: true, plantName: "You cannot add two plants in the same ePlant!"})
+            } else {
+                navigate('SelectName', { eplant: eplant, plant: plant })
+            }
+
+        } else {
+           // console.log("Elsen navi")
+            navigate('SelectName', { eplant: eplant, plant: plant })
+        } 
+        } catch (error) {
+           // console.log("Catch navi")
+            navigate('SelectName', { eplant: eplant, plant: plant })
+        }
+        
     };
 
     const renderePlants = () => {
         if(my_ePlants !== "No ePlants yet") {
             return(
                 <View style={styles.middle}>
-                {Object.values(my_ePlants).map((eplant, i) => (
+                {Object.entries(my_ePlants).map((eplant, i) => (
                     <TouchableOpacity
                     onPress={() => handleSelect(eplant)}
                     key={i}
                     title={"choosePot"}
                     style={styles.border}
                     >
-                    <Text style={styles.plantheader}>{eplant.ePlantModel.type}</Text>
+                    <Text style={styles.plantheader}>{eplant[1].ePlantModel.type}</Text>
                     <Image style={styles.plantimage} source={kuva} />
 
                     </TouchableOpacity>
