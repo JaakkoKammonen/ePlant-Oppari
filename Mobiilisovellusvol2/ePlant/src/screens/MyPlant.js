@@ -12,11 +12,26 @@ export default function MyPlant(props) {
 
     const [notifications, setNotifications] = useState("Loading...")
     const [updateDate, setUpdateDate] = useState("Loading...");
+    
+    const PlantUpdateDate = () =>  {
 
-    let year = updateDate.slice(0, 4)
-    let month = updateDate.slice(5, 7)
-    let day = updateDate.slice(8, 10)
-    let time = updateDate.slice(11, 19)
+        if (updateDate !== "Loading...") {
+        let year = updateDate.slice(0, 4)
+        let month = updateDate.slice(5, 7)
+        let day = updateDate.slice(8, 10)
+        let time = updateDate.slice(11, 19)
+
+        return ( 
+            <Text style={styles.value}>Last updated: <Text style={styles.updateformat}>{day}.{month}.{year} at: {time} </Text></Text>
+        )
+        } else {
+            return (
+                <Text style={styles.value}>Last updated: Error getting data </Text>
+            )
+        }
+   
+    }
+    
 
     const plant = props.navigation.state.params.plant[1];
     const plantID = props.navigation.state.params.plant[0];
@@ -102,12 +117,8 @@ export default function MyPlant(props) {
           });
     }
 
-    const NotificationMaker = () => {
-        
-        let lastTen = notifications.slice(notifications.length-11, notifications.length-1)
-        console.log(lastTen)
 
-        const timeParser = (date) => {
+    const timeParser = (date) => {
             
             let year = date.slice(0, 4)
             let month = date.slice(5, 7)
@@ -115,7 +126,14 @@ export default function MyPlant(props) {
             let time = date.slice(11, 19)
 
             return( day + "." + month + "." + year + " at: " +time)
-        }
+    }
+    const NotificationMaker = () => {
+        
+        //console.log(notifications)
+        if (notifications !== "Loading...") {
+
+        let lastTen = notifications.slice(notifications.length-11, notifications.length-1)
+        
         return(        
             <FlatList data={lastTen}
                 marginLeft={15}
@@ -135,6 +153,15 @@ export default function MyPlant(props) {
                 }
             />
         )
+
+        } else {
+            return (
+                <Text>Error getting data! Check your ePlant channel_id</Text>
+            )
+        }
+
+
+        
     }
     return (
         <ScrollView style={styles.container}>
@@ -205,7 +232,9 @@ export default function MyPlant(props) {
                     </View>
                     </View>
                 </View>
-                <Text style={styles.value}>Last updated: <Text style={styles.updateformat}>{day}.{month}.{year} at: {time} </Text></Text>
+
+                {PlantUpdateDate()}
+                
                 <View style={styles.bottomheader}>
                 <Text style={styles.notifi}>Notifications</Text>
                 </View>

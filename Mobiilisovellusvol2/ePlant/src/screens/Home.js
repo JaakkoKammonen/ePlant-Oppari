@@ -87,12 +87,8 @@ export default function Home(props) {
             }
         }
 
-    const NotificationsRender = () => {
 
-        let lastTen = notifications.slice(notifications.length-11, notifications.length-1)
-        console.log(lastTen)
-
-        const timeParser = (date) => {
+    const timeParser = (date) => {
             
             let year = date.slice(0, 4)
             let month = date.slice(5, 7)
@@ -102,6 +98,9 @@ export default function Home(props) {
             return( day + "." + month + "." + year + " at: " +time)
         }
 
+
+    const NotificationsRender = () => {
+
         if (plants === "No plants yet") {
             return(
                 <View>
@@ -110,7 +109,8 @@ export default function Home(props) {
                     </Text>
                 </View>
             )
-        }   else {
+        } else {
+
             return(
                 <FlatList data={allNotifications}
                 marginLeft={15}

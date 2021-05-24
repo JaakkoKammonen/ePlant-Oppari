@@ -4,21 +4,21 @@ import { useSelector } from "react-redux";
 import setImage from "../components/SetImage";
 
 export default function Notifications() {
- 
+  
+  let allNotifications = [];
 
-  const allNotifications = useSelector(state => state.firebase.notification).slice().sort((a, b) => new Date(b.time) - new  Date(a.time)).reverse()
+  try {
+    allNotifications = useSelector(state => state.firebase.notification).slice().sort((a, b) => new Date(b.time) - new  Date(a.time)).reverse()
+  } catch (error) {
+    allNotifications = []
+  }
+  
   const [notifications, setNotifications] = useState("Loading...")
   let plants = useSelector(state => state.firebase.my_Plants) 
 
 
-  //console.log(myPlants)
-
-  const renderNotifications = () => {
-    if (allNotifications !== []) {
-    let lastTen = allNotifications.slice(allNotifications.length-11, allNotifications.length-1)
-    console.log(lastTen)
-
-    const timeParser = (date) => {
+  //console.log(allNotifications)
+  const timeParser = (date) => {
         
         let year = date.slice(0, 4)
         let month = date.slice(5, 7)
@@ -27,6 +27,10 @@ export default function Notifications() {
 
         return( day + "." + month + "." + year + " at: " +time)
     }
+
+
+  const renderNotifications = () => {
+    if (allNotifications.length > 1) {
 
       return (
         <FlatList
