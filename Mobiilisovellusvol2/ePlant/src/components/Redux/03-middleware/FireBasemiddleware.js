@@ -159,8 +159,8 @@ function ModifyUserEPlant(ePlant, navigate) {
         //console.log(myPlants, myPlantWithIDs)
 
          let ifFound = myPlants.map((item, index) => {
-            console.log(item)          
-            console.log(ePlant)
+            //console.log(item)          
+            //console.log(ePlant)
 
             if (ePlant.channel_id === item.ePlantPot.channel_id ) {
               return "Error"
