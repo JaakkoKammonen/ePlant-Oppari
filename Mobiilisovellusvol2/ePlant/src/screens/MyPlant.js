@@ -132,7 +132,7 @@ export default function MyPlant(props) {
         //console.log(notifications)
         if (notifications !== "Loading...") {
 
-        let lastTen = notifications.slice(notifications.length-11, notifications.length-1)
+        let lastTen = notifications.slice(notifications.length-11, notifications.length-1).reverse()
         
         return(        
             <FlatList data={lastTen}

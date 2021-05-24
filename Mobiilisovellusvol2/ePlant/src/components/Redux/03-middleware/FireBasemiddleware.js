@@ -182,12 +182,16 @@ function ModifyUserEPlant(ePlant, navigate) {
 
           let foundIndex = found[0]
           let plantID = myPlantWithIDs[foundIndex]
-
+          //console.log(plantID)
           if (found.length = 1) {
-            firebase.database().ref('users/' + user.uid + "/myPlants/" + plantID[0] + "/ePlantPot/").update({
+            if (plantID !== undefined) {
+
+              firebase.database().ref('users/' + user.uid + "/myPlants/" + plantID[0] + "/ePlantPot/").update({
               channel_id: ePlant.channel_id,
               write_apikey: ePlant.write_apikey
             })
+
+          }
           }
 
 
