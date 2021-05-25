@@ -185,9 +185,11 @@ function AddePlantToUser(userUid, ePlant, navigate) {
 
 }  
 
+
+
 function ModifyUserEPlant(ePlant, navigate) {
   firebase.auth().onAuthStateChanged((user) => {
-     //console.log(ePlant)
+     console.log(ePlant, "Valittu ePlant")
 
     if (user) {
 
@@ -225,44 +227,44 @@ function ModifyUserEPlant(ePlant, navigate) {
         // Jos yhdessä ePlantissa on sama channel_id kuin tulevassa ePlantissa
         if (item.channel_id === ePlant.channel_id) {
 
-          console.log(allMyEPlants[index], item)
+          //console.log(allMyEPlants[index], item)
 
           // Jos se on sama item kun klikattu => palautus Good voidaan muokata
           if (allMyEPlants[index] === item) {
-            console.log( "Sama klikattu kasvi ja channel id, Good")
+            //console.log( "Sama klikattu kasvi ja channel id, Good")
             return "Good"
           // Jos ei ole error, koska samat channelId
           } else {
-            console.log("Ei sama kasvi, mutta channel_id on sama kun jollain muulla, Error")
+            //console.log("Ei sama kasvi, mutta channel_id on sama kun jollain muulla, Error")
             return "Error"
           }
           // Jos Writekey on sama kun joku valmis ePlant
         } else if (item.write_apikey === ePlant.write_apikey) {
           // Jos se on sama mikä klikattu => Good
           if (allMyEPlants[index] === item) {
-            console.log("Sama klikattu kasvi ja writekey, Good")
+            //console.log("Sama klikattu kasvi ja writekey, Good")
             return "Good"
           // Muutoin Error, koska sama Writeapikey
           } else {
-            console.log("Ei sama kasvi, mutta write on, Error")
+            //console.log("Ei sama kasvi, mutta write on, Error")
             return "Error"
           }
           // Jos ei ole samaa write tai channel id palautetaan Good
         } else {
-          console.log("Ei sama channleID tai Write_apikey, Good")
+          //console.log("Ei sama channleID tai Write_apikey, Good")
           return "Good"
         }
       })
-      console.log(ifFound)
+      //console.log(ifFound)
 
       // Jos sisältää Errorin ei muokata mitään ja palataan Homeen error kanssa.
       if (ifFound.includes("Error")) {
-        console.log("Error, jossain samassa ePlantissa on sama channel id tai Write apikey, joka ei ole sama valittu")
+        //console.log("Error, jossain samassa ePlantissa on sama channel id tai Write apikey, joka ei ole sama valittu")
         navigate('Home', {showSnackbar: true, plantName: "You cannot have two ePlants with same channel id or write_apikey!"})
         
       } else {
         // Jos ei ole erroreita muokataan 
-        console.log("Pitäisi muokata")
+        //console.log("Ei erroreita, joten muokkaus läpi")
         firebase.database().ref('users/' + user.uid + "/ePlant/" + ePlant.ePlantID).update({
           channel_id: ePlant.channel_id,
           write_apikey: ePlant.write_apikey
@@ -270,92 +272,91 @@ function ModifyUserEPlant(ePlant, navigate) {
         // Navigointi kotiin
         navigate('Home', {showSnackbar: true, plantName: "ePlant was updated!"})
       }
-    }
 
     } else {
-      // Kasveja löytyy! Muokataan myös kasvien ePlant tiedot muokkauksen yhteydessä!
-
-      // ePlant map
       
-    
-    //console.log(allMyPlants, allMyEPlants)
+      //console.log("Kasveja löyty")
+      // Kasveja löytyy! Käydään kasvit läpi
+      let ifFound = allMyPlants.map((item, index) => {
+        //console.log(item)
 
-    // Tarkistetaan onko mulla kasveja lisätty
-    /*
-      } else {
+        // Jos kasvilla on sama channel_id kun valitusta ePlantissä
+        if (ePlant.channel_id === item.ePlantPot.channel_id ) {
+          //console.log("Kasvilla on sama channel_id")
+          // Jos se on sama kun listan [] luku, voidaan kasvin ePlanttia muuttaa, muuten Error,
+          // Koska sitten olisi kaksi samanlaista channel_idtä kasveissa.
+          if(allMyPlants[index] === item) {
+            // Kasvi on sama kun listan [] arvo, palautus [] arvo eli index
+            //console.log("Kasvilla on sama index kun listassa, palautetaan kasvin sijainti index, myös channel id ")
+            return index
+          } else {
+            // Kasvi ei ole sama kuin listan [] arvo, joten error ettei tule samoja channel_ideitä
+            //console.log("Kasvi ei ole sama kun listassa, mutta channel_id sama, Error")
+            return "Error"
+          }
+          
+          // Jos kasvilla on sama write_apikey kun valitusta ePlantissä
+        } else if (ePlant.write_apikey === item.ePlantPot.write_apikey ) {
 
-      
-        let myPlants = Object.values(snapshot.val())
-        let myPlantWithIDs = Object.entries(snapshot.val())
-        //console.log(myPlants, myPlantWithIDs)
+          if(allMyPlants[index] === item) {
+            // Jos se on sama kun listan [] luku, voidaan kasvin ePlanttia muuttaa, muuten Error,
+            // Koska sitten olisi kaksi samanlaista channel_idtä kasveissa.
+            //console.log("Kasvilla on sama index kun listassa, palautetaan kasvin sijainti index, myös write_apikey sama ")
+            return index
+          } else {
+            // Kasvi ei ole sama kuin listan [] arvo, joten error ettei tule samoja write_apikeytä
+            //console.log("Kasvi ei ole sama kun listassa, mutta write_apikey sama, Error")
+            return "Error"
+          }
+          
+        }
+        // Jos valitulla ePlantillä on sama ID, kun listan kasvin eplantpot palautetaan index
+        else if(ePlant.ePlantID === item.ePlantPot.ePlantID) {
+          //console.log("Kasvilla on sama ID, Index")
+          return index
+        } else {
+          // Jos kasvilla ei ole samaa ePlant ID, kun valittu ePlant ID, palautetaan null
+          //console.log("Kasvin ePlantissa ei ole sama ID, null")
+          return null
+        }
 
-         let ifFound = myPlants.map((item, index) => {
-            //console.log(item)          
-            //console.log(ePlant)
+    })
 
-            if (ePlant.channel_id === item.ePlantPot.channel_id ) {
-              if(myPlants[index] === item) {
-                //console.log("same item channel id")
-                return index
-              } else {
-                return "Error"
-              }
-              
-              
-            } else if (ePlant.write_apikey === item.ePlantPot.write_apikey ) {
-              if(myPlants[index] === item) {
-                //console.log("same item writeapi")
-                return index
-              } else {
-                return "Error"
-              }
-              
-            }
-            else if(ePlant.ePlantID === item.ePlantPot.ePlantID) {
-              //console.log("index")
-              return index
-            } else {
-              //console.log("null")
-              return null
-            }
+    // Poistetaan null arvot
+    let found = ifFound.filter(i => i !== null)
 
+    // Jos löytyy Error, ei tehdä mitään muokkauksia!
+    if(found.includes("Error")) {
+      //console.log("Erroreita löytyi, ohjataan takaisin Homeen")
+      navigate('Home', {showSnackbar: true, plantName: "You cannot have two ePlants with same channel id or write_apikey!"})
+    }  else {
+      //console.log("Ei erroreita muokataan ePlant ja Kasvin ePlantPot")
+      let foundIndex = found[0]
+      let plantID = allMyPlantsWithID[foundIndex]
+      //console.log(plantID)
+      if (found.length = 1) {
+        if (plantID !== undefined) {
+
+          firebase.database().ref('users/' + user.uid + "/myPlants/" + plantID[0] + "/ePlantPot/").update({
+          channel_id: ePlant.channel_id,
+          write_apikey: ePlant.write_apikey
         })
 
-        let found = ifFound.filter(i => i !== null)
-
-        if(found.includes("Error")) {
-          navigate('Home', {showSnackbar: true, plantName: "You cannot have two ePlants with same channel id or write_apikey!"})
-        }  else {
-
-          let foundIndex = found[0]
-          let plantID = myPlantWithIDs[foundIndex]
-          //console.log(plantID)
-          if (found.length = 1) {
-            if (plantID !== undefined) {
-
-              firebase.database().ref('users/' + user.uid + "/myPlants/" + plantID[0] + "/ePlantPot/").update({
-              channel_id: ePlant.channel_id,
-              write_apikey: ePlant.write_apikey
-            })
-
-          }
-          }
+      }
+      }
 
 
-          firebase.database().ref('users/' + user.uid + "/ePlant/" + ePlant.ePlantID).update({
-            channel_id: ePlant.channel_id,
-            write_apikey: ePlant.write_apikey
-          })
+      firebase.database().ref('users/' + user.uid + "/ePlant/" + ePlant.ePlantID).update({
+        channel_id: ePlant.channel_id,
+        write_apikey: ePlant.write_apikey
+      })
 
-          navigate('Home', {showSnackbar: true, plantName: "ePlant was updated!"})
-        }
-        
-     } }) 
-
-     */ 
+      navigate('Home', {showSnackbar: true, plantName: "ePlant was updated!"})
     }
-    
-}); 
+
+    } 
+  }
+  })
 }
 
 
