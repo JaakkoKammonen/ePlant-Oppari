@@ -135,10 +135,17 @@ function AddPlantToUser(userUid,species, plantName, ePlant, navigate) {
 function AddePlantToUser(userUid, ePlant, navigate) {
 
   //console.log(ePlant)
+  let allMyEPlants = "";
+
+  // Haetaan kaikki ePlantit
   firebase.database().ref('users/' + userUid + "/ePlant/").on('value', snapshot => {
+    allMyEPlants = snapshot.val(); 
+  })
     
-    //console.log(snapshot.val() )
-    if ( snapshot.val() === null) {
+
+    // Jos ePlanttejä ei ole lisätään ePlant ja navigoidaan Homeen
+    if ( allMyEPlants === null) {
+      
       firebase.database().ref('users/' + userUid + '/ePlant').push(
         { 
           channel_id: ePlant.channel_id,
@@ -150,27 +157,37 @@ function AddePlantToUser(userUid, ePlant, navigate) {
       navigate('Home', {showSnackbar: true, plantName: "New ePlant was added"})
 
     } else {
- 
-    let myePlants = Object.values(snapshot.val())
-    //console.log(ePlant)
-    //console.log(myePlants, myePlantsWithIDs)
-
+    
+    // ePlanttejä löytyi!
+    let myePlants = Object.values(allMyEPlants)
+    
+    // Käydään ePlantit läpi
+    //console.log("ePlanttejä löytyi")
+    //console.log(ePlant, "Syötetty ePlant")
     let ifFound = myePlants.map((item) => {
       //console.log(item)
       if(item.channel_id === ePlant.channel_id) {
+        // Syötetty channel_id löytyy jo ePlanteistä! Error
+        //console.log("Syötetty channel_id löytyy jo ePlanteistä! Error")
         return "Error"
       } else if (item.write_apikey === ePlant.write_apikey) {
+        // Syötetty write-apikey löytyy jo ePlanteistä! Error
+        //console.log("Syötetty write_apikey löytyy jo ePlanteistä! Error")
         return "Error"
       } else {
+        // ePlanteistä ei löydy samaa write tai channel ID, Palautetaan Good arvo.
         return "Good"
       }
     })
 
+    // Jos ei Erroreita voidaan lisätä ePlant
     //console.log(ifFound)
     if (ifFound.includes("Error")) {
+      //console.log("Erroreita löytyi, sama channel_id tai write_apikey")
       navigate('Home', {showSnackbar: true, plantName: "You cannot have two ePlants with same channel id or write_apikey!"})
     } else {
-
+    // Ei erroreita, listätään ePlant
+    //console.log("Ei erroreita, lisätään uusi ePlant")
     firebase.database().ref('users/' + userUid + '/ePlant').push(
     { 
       channel_id: ePlant.channel_id,
@@ -181,7 +198,7 @@ function AddePlantToUser(userUid, ePlant, navigate) {
      navigate('Home', {showSnackbar: true, plantName: "New ePlant was added"})
     }
     
-  }})
+  }
 
 }  
 
@@ -189,7 +206,7 @@ function AddePlantToUser(userUid, ePlant, navigate) {
 
 function ModifyUserEPlant(ePlant, navigate) {
   firebase.auth().onAuthStateChanged((user) => {
-     console.log(ePlant, "Valittu ePlant")
+     //console.log(ePlant, "Valittu ePlant")
 
     if (user) {
 
@@ -343,8 +360,7 @@ function ModifyUserEPlant(ePlant, navigate) {
         })
 
       }
-      }
-
+    }
 
       firebase.database().ref('users/' + user.uid + "/ePlant/" + ePlant.ePlantID).update({
         channel_id: ePlant.channel_id,
