@@ -198,14 +198,14 @@ export default function MyPlant(props) {
                         <AnimatedCircularProgress
                         size={100}
                         width={10}
-                        fill={Field1.value}
+                        fill={parseFloat(Field1.value, 10)}
                         tintColor="#00e0ff"
                         //onAnimationComplete={() => console.log('onAnimationComplete')}
                         backgroundColor="#3d5875">
                             {
                                 (fill) => (
                                 <Text>
-                                   {Field1.value}
+                                   {fill}
                                 </Text>
                                 )
                             }
@@ -217,14 +217,14 @@ export default function MyPlant(props) {
                         <AnimatedCircularProgress
                         size={100}
                         width={10}
-                        fill={Field2.value}
+                        fill={parseFloat(Field2.value, 10)}
                         tintColor="#00e0ff"
                         //onAnimationComplete={() => console.log('onAnimationComplete')}
                         backgroundColor="#3d5875">
                             {
                                 (fill) => (
                                 <Text>
-                                   {Field2.value}
+                                   {fill}
                                 </Text>
                                 )
                             }
