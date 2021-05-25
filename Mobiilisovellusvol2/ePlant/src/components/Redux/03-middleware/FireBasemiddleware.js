@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import firebase from "../../firebaseConfig"
 import {
   setPlants,
@@ -114,7 +113,7 @@ function AddUserToDatabase(userUid, userEmail, userDisplayName) {
 
 function AddPlantToUser(userUid,species, plantName, ePlant, navigate) {
 
-  console.log(ePlant)
+  //console.log(ePlant)
   firebase.database().ref('users/' + userUid + "/myPlants").push(
       {
           species: species,
@@ -380,15 +379,76 @@ function DeleteUserEPlant(ePlantID, navigate) {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
 
+      let allMyPlants = "";
+      let allMyPlantsWithID = "";
 
+    // Haetaan kaikki käyttäjän kasvit
+    firebase.database().ref('users/' + user.uid + "/myPlants/").on('value', snapshot => {
+      try {
+        allMyPlants = Object.values(snapshot.val())
+        allMyPlantsWithID = Object.entries(snapshot.val())
+      } catch (error) {
+        allMyPlants = snapshot.val();
+        allMyPlantsWithID = snapshot.val()
+      }
+      
+    })
+
+    // Jos kasveja ei ole poistetaan huoletta ePlant
+    if (allMyPlants === null) {
+      console.log("Ei kasveja. Poistetaan pelkkä ePlant")
       firebase.database().ref('users/' + user.uid + "/ePlant/" + ePlantID).remove()
-      navigate('Home', {showSnackbar: true, plantName: "ePlant was deleted!"}) 
+      navigate('Home', {showSnackbar: true, plantName: "ePlant was deleted!"})
 
-      swal("Poof! Pot deleted!", {
-        icon: "success",
-        timer: 2000,
-    });
-    }
+    } else {
+      // Kasveja löytyi
+
+      // Käydään ne läpi ja tarkistetaan onko niiden ePlantPot sama kuin poistettava ePlant
+      let ifSame = allMyPlants.map((item, index) => {
+        //console.log(item)
+        if (item.ePlantPot.ePlantID === ePlantID) {
+          // Jos kasvin ePlanPot on sama kun poistettavan ePlantin
+          // Palautetaan index
+          return index
+        } else {
+          // Jos arvo ei ole sama palautetaan "Not same"
+          return "Not same"
+        }
+      })
+      
+      // Poistetaan Not same arvot, eli ei kasvista ei löydy samaa arvoa
+      let ePlantPotSame = ifSame.filter((item) => item !== "Not same")
+      //console.log(ifSame, ePlantPotSame)
+
+      // Jos listalla on pituutta, poistettava ePlant löytyy kasveista.
+      if(ePlantPotSame.length = 1) {
+        // Poistetaan kasvi sekä ePlantPot
+        let plant = allMyPlantsWithID[ePlantPotSame[0]]
+        //console.log(plant[0], "Kasvin ID")
+        console.log("Kasvi löytyi, jossa sama ePlant. Poistetaan ePlant sekä kasvi!")
+        // Poistetaan ePlant
+        firebase.database().ref('users/' + user.uid + "/ePlant/" + ePlantID).remove();
+        // Poistetaan kasvi
+        firebase.database().ref('users/' + user.uid + "/myPlants/" + plant[0]).remove();
+
+        swal("Poof! ePlant deleted!", {
+          icon: "success",
+          timer: 2000,
+        });
+
+      } else {
+        // Jos kasvia listasta ei löydy sama ePlantPottia poistetaan pelkästään ePlant
+        console.log("Kasvi listasta ei löytynyt samaa ePlanttiä. Poistetaan pelkkä ePlant")
+        firebase.database().ref('users/' + user.uid + "/ePlant/" + ePlantID).remove();
+
+        swal("Poof! ePlant deleted!", {
+          icon: "success",
+          timer: 2000,
+        });
+      }
+    } 
+      
+}
 });
 }
 
