@@ -51,7 +51,7 @@ export default function Settings(props) {
               {user.displayName}
             </Text>
             <Text
-              style={{ fontStyle: "italic", color: "#63816D", marginBottom: 5 }}
+              style={styles.useremail}
             >
               {user.email}
             </Text>
@@ -106,6 +106,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 48,
     marginBottom: 20,
+  },
+  useremail: {
+    fontStyle: "italic",
+    color: "#63816D", 
+    marginBottom: 5
   },
   header: {
     shadowColor: "#DEDDDD",

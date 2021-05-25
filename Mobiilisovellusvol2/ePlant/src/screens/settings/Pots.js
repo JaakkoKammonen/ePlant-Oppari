@@ -51,7 +51,7 @@ export default function Pots(props) {
                     return(
                         <View key={i}>
                         <Card>
-                                    <Card.Title>ePlant</Card.Title>
+                            <Card.Title>POT</Card.Title>
                             <Card.Divider />
                             <Text style={styles.modeltype}>Model: <Text style={styles.modeldata}>{ePlantPots[item].ePlantModel.type}</Text> </Text>
                             <Text style={styles.version}>Version: <Text style={styles.versiondata}>{ePlantPots[item].ePlantModel.version}</Text></Text>
@@ -79,7 +79,7 @@ export default function Pots(props) {
             return(
             <View>
                 <Text style={styles.noplantsyet}>
-                    No ePlants yet
+                    No pots yet
                 </Text>
             </View> 
             )
@@ -91,7 +91,7 @@ export default function Pots(props) {
                 <TouchableOpacity onPress={() => navigate('Settings')}>
                     <Ionicons name="arrow-back-outline" size={30} style={styles.arrow} />
                 </TouchableOpacity>
-                <Text style={styles.description}>Your ePlants</Text>
+                <Text style={styles.description}>Your ePlant pots</Text>
                     {ePlants()}
         </ScrollView>
     );
@@ -108,10 +108,12 @@ const styles = StyleSheet.create({
         height: 250
     },
     description: {
-        fontSize: 26,
+        fontSize: 22,
         marginTop: 20,
-        marginLeft: 10,
+        fontWeight: '600',
         marginBottom: 20,
+        color: '#63816D',
+        alignSelf: 'center'
     },
     arrow: {
         marginLeft: 20,
@@ -127,7 +129,7 @@ const styles = StyleSheet.create({
         textTransform: "uppercase",
         letterSpacing: 0.5,
         width: 100,
-        height: 30
+        height: 40
     },
     buttondelete: {
         backgroundColor: "#63816D",
@@ -138,7 +140,7 @@ const styles = StyleSheet.create({
         textTransform: "uppercase",
         letterSpacing: 0.5,
         width: 100,
-        height: 30
+        height: 40
     },
     buttonwrapper: {
         marginLeft: 100,

@@ -40,7 +40,6 @@ export default function Notifications() {
           renderItem={({ item }) => (
             <View style={styles.bottomitem}>
                     <View>
-                      
                     <Image style={styles.circle} source={setImage(item.imagesrc.toLowerCase())}/>
                     </View>
                     <View style={styles.bottomtext}>

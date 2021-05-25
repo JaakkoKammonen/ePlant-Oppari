@@ -22,7 +22,6 @@ export default function Login(props) {
   }
   return (
     <View style={styles.container}>
-
     <TouchableOpacity onPress={() => navigate('User')}>
         <Ionicons name="arrow-back-outline" size={30} style={styles.arrow} />
     </TouchableOpacity>

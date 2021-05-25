@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, KeyboardAvoidingView, Button } from 'react-native';
-import { Input, Icon } from 'react-native-elements';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { Input, Button, Card } from 'react-native-elements';
+import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { useSelector } from 'react-redux';
+import { Ionicons } from "@expo/vector-icons";
 import FireBasemiddleware from '../../../components/Redux/03-middleware/FireBasemiddleware';
 
 export default function SelectName(props) {
@@ -24,78 +26,73 @@ export default function SelectName(props) {
     //console.log(props.navigation.state.params)
 
     return (
-        <View style={{flex: 1}}>
-            <View style={styles.header}>
-                <Text style={{width:"14%"}}></Text>
-                <Text style={styles.headertitle}>Input ThingSpeak info</Text>
-                <Icon 
-                    name="close" 
-                    size={40} 
-                    iconStyle={styles.icon}
-                    onPress={() => navigate('Home')} 
-                />
+        <ScrollView style={styles.container}>
+            <TouchableOpacity onPress={() => navigate("SelectePlantModel")}>
+                <Ionicons name="arrow-back-outline" size={30} style={styles.arrow} />
+                </TouchableOpacity>
+                    <View>
+                        <Text style={styles.headerText}>Input ThingSpeak Information</Text>
+                    </View>
+            <View style={styles.container2}>
+            <Image
+        style={styles.logo}
+        source={require("../../../assets/thingspeak.png")}
+        />
+        <View style={styles.titlewrapper}>
+            <Card.Title>THINGSPEAK CHANNEL ID</Card.Title>
             </View>
-            <KeyboardAvoidingView
-                behavior={'padding'}
-                style={styles.container}
-            >
-                <View style={styles.container}>
-                    <Text>
-                        Input ThingSpeak Channel ID
-                    </Text>
-                   <Input
-                    placeholder="ThingsPeak Channel ID" 
-                    clearButtonMode='always'
+            <Input
+                    placeholder=" Channel ID"
+                    type="text"
+                    required={true}
+                    inputStyle={styles.channelidinput}
+                    leftIcon={<AntDesign name="areachart" size={24} color="grey" />}
                     onChangeText={text => setePlant({
-                        ...ePlant, channel_id: text})}
-                    returnKeyType='done'
-                   />
-                   <Text>
-                        Input ThingSpeak Write apikey
-                    </Text>
-                   <Input
-                    placeholder="ThingsPeak Write apikey" 
+                                    ...ePlant, channel_id: text})}
+                                returnKeyType='done'
+                />
+                   <View style={styles.titlewrapper}>
+               <Card.Title>THINGSPEAK WRITE API-KEY</Card.Title>
+               </View>
+                <Input
+                    placeholder=" API-key"
+                    required={true}
                     clearButtonMode='always'
+                    inputStyle={styles.apikeyinput}
+                    leftIcon={<MaterialIcons name="vpn-key" size={24} color="grey" />}
                     onChangeText={text => setePlant({
-                    ...ePlant, write_apikey: text})}
-                   />
-                
+                                ...ePlant, write_apikey: text})}
+                />
+                <View style={styles.buttonwrapper}>
                 <Button
-                title={"Submit"}
-                onPress={ () => handleSubmit(event)} />
-                   
+                    title="Let's go!"
+                    buttonStyle={styles.buttonthingspeak}
+                    onPress={ () => handleSubmit(event)}
+                />
                 </View>
-            </KeyboardAvoidingView>
-        </View>
-
+                </View>
+            </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    icon: {
-        marginTop: "70%",
-        marginRight:15,
-        color: 'grey',
-    },
-    content: {
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
+        padding: 3,
+        flex: 2,
+      },
+      container2: {
+        marginBottom: 3,
+        padding: 50,
+      },
     header: {
-        flexDirection:"row",
-        justifyContent:"space-between",
-    },
-    headertitle: {
-        fontSize: 14,
-        fontWeight: "bold",
-        textAlign: 'center',
-        marginTop: "11%",
-        paddingBottom: 20,
+        shadowColor: "#DEDDDD",
+        shadowOpacity: 2,
+        shadowOffset: {
+          height: 2,
+          width: 2,
+        },
+        elevation: 4,
+        backgroundColor: "#FAFAFA",
     },
     title: {
         fontSize: 22,
@@ -104,20 +101,63 @@ const styles = StyleSheet.create({
         color: '#63816D',
         alignSelf: 'center'
     },
-    text: {
-        fontSize: 16,
-        color: '#404040',
+    headerText: {
+        fontSize: 22,
+        marginTop: 20,
+        fontWeight: '600',
+        marginBottom: 20,
+        color: '#63816D',
         alignSelf: 'center'
     },
-    middleimage: {
-        width: 200,
-        height: 200,
-        margin: 25,
-        alignSelf: 'center'
+    arrow: {
+        marginLeft: 20,
+        marginTop: 10,
+        color: 'grey'
     },
-    textinput: {
-        width: 350,
-        alignSelf: 'center'
-    }
-
+    logo: {
+        width: 260,
+        height: 210,
+      },
+    titlewrapper: {
+        marginTop: 20
+    },
+    buttonthingspeak: {
+        backgroundColor: "#63816D",
+        borderRadius: 3,
+        marginTop: 10,
+        fontSize: 12,
+        fontWeight: "bold",
+        textTransform: "uppercase",
+        letterSpacing: 0.5,
+        width: 100,
+        height: 40
+      },
+        buttonwrapper: {
+        alignItems: "center",
+    },
+      apikeytext: {
+        fontSize: 12,
+        fontWeight: "bold",
+        textTransform: "uppercase",
+        marginTop: 20,
+        letterSpacing: 0.5,
+      },
+      channelidtext: {
+        fontSize: 12,
+        fontWeight: "bold",
+        textTransform: "uppercase",
+        letterSpacing: 0.5,
+      },
+      apikeyinput: {
+        fontSize: 12,
+        fontWeight: "normal",
+        textTransform: "uppercase",
+        letterSpacing: 0.5,
+      },
+      channelidinput: {
+        fontSize: 12,
+        fontWeight: "normal",
+        textTransform: "uppercase",
+        letterSpacing: 0.5,
+      },
 });
