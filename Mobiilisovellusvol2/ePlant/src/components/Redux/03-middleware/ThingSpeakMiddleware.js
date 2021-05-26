@@ -60,75 +60,9 @@ import swal from 'sweetalert';
                  });
         });
     }
-
-
-    const SendPhysicalePlantSensorValuesON = (write_apikey, fieldNumber) => {
-        const url = "https://api.thingspeak.com/update?api_key=" + write_apikey + "&field" + fieldNumber + "=1";
-        fetch(url)
-        .then((response) => response.json())
-        .then((responseJson) => {
-            while (true) {
-                if (parseInt(responseJson) == 0) { 
-                    SendPhysicalePlantSensorValuesON(write_apikey, fieldNumber)
-                    console.log(responseJson);
-                } 
-
-                swal(
-                {
-                   title: "Starting to send values!",
-                   button: false,
-                   timer: 8000
-                 });
-
-                break; 
-            }; 
-            
-        })
-        .catch((error) => {
-            swal(
-                {
-                   title: "Something went wrong!",
-                   button: true,
-                 });
-        });
-    }
-
-    const SendPhysicalePlantSensorValuesOFF = (write_apikey, fieldNumber) => {
-        const url = "https://api.thingspeak.com/update?api_key=" + write_apikey + "&field" + fieldNumber + "=0";
-        fetch(url)
-        .then((response) => response.json())
-        .then((responseJson) => {
-            while (true) {
-                if (parseInt(responseJson) == 0) { 
-                    SendPhysicalePlantSensorValuesOFF(write_apikey, fieldNumber)
-                    console.log(responseJson);
-                } 
-
-                swal(
-                {
-                   title: "Stopping to send values!",
-                   button: false,
-                   timer: 8000
-                 });
-
-                break; 
-            }; 
-            
-        })
-        .catch((error) => {
-            swal(
-                {
-                   title: "Something went wrong!",
-                   button: true,
-                 });
-        });
-    }
-
     
 export default {
     AirPumpON,
     AirPumpOFF,
-    SendPhysicalePlantSensorValuesOFF,
-    SendPhysicalePlantSensorValuesON
 
 }

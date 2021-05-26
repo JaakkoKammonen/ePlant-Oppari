@@ -187,17 +187,12 @@ export default function MyPlant(props) {
         if(text == "OFF") {
             if (item.name === "AirPump") {
                 ThingSpeakMiddleware.AirPumpOFF(write_apikey, item.field )
-            } else if (item.name === "Get ePlantSensorData") {
-                ThingSpeakMiddleware.SendPhysicalePlantSensorValuesOFF(write_apikey, item.field)
-                console.log("Sensor data lähetys lakkautetaan")
-            }
+            } 
         } 
 
         if(text == "ON") {
             if (item.name === "AirPump") {
                 ThingSpeakMiddleware.AirPumpON(write_apikey, item.field )
-            } else if (item.name === "Get ePlantSensorData") {
-                ThingSpeakMiddleware.SendPhysicalePlantSensorValuesON(write_apikey, item.field)
             }
         }
         console.log(item, text)

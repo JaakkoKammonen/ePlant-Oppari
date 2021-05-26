@@ -49,10 +49,6 @@ int PHAnturi= 32;
 
 int ECAnturiVirta = 18;
 int ECAnturi= A0;
- 
-
-                                              // ThingSpeak-field numero
-int SendSensorDataThingSpeakField= 4;                                          // ThingSpeak-field arvo
 
 
 void setup() {
@@ -138,7 +134,7 @@ ThingSpeak.begin(wifiClient);                                                   
 
         digitalWrite(ECAnturiVirta,LOW);
       
-       return tdsValue;
+       return tdsValue,0;
     };
 
   static  int PHTasoAnturiArvo() {
@@ -205,14 +201,9 @@ void loop() {
         Serial.println("ThingSpeak value 0. AirPump is OFF. ");
       }
      
-      // Read SensorControll value from ThingsPeak. 
-      int SendSensorValuesONOFF = ThingSpeak.readFloatField(channel_id, SendSensorDataThingSpeakField);   
-
-       // If SensorControll value is 1,
-       // Send Sensors values to ThingSpeak.
-       if (SendSensorValuesONOFF == 1) {
+    
        
-       Serial.println("ThingSpeak value 1. Reading sensor values then sending them to ThingSpeak"); 
+       Serial.println("Reading sensor values then sending them to ThingSpeak"); 
            int PHarvo = PHTasoAnturiArvo();
            int ECarvo = ECAnturiArvo();
            
@@ -247,12 +238,8 @@ void loop() {
           wifiClient.stop();
        }
 
-       else if (SendSensorValuesONOFF == 0) {
-        Serial.println("ThingSpeak sensor send value is 0. No sensors were read or send!");      // Tulostetaan consoleen
-       }
-    
-  } 
+  
   Serial.println("Loop over");
-  delay(10000);                                                                 // Odotetaan 10 sekuntia
+  delay(10000);     // Odotetaan 10 sekuntia
  }
  
