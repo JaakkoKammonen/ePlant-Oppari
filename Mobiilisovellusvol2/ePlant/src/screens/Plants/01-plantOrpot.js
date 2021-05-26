@@ -4,6 +4,9 @@ import { Card } from "react-native-elements";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function PlantOrPot({ navigation }) {
+
+    // tyylit käyty läpi -> järjestelty, uudelleen nimetty & poistettu ne, joita ei käytetä  //
+
   const { navigate } = navigation;
 
   return (
@@ -14,7 +17,7 @@ export default function PlantOrPot({ navigation }) {
                     <View>
                         <Text style={styles.headerText}>Add a new plant or a pot</Text>
                     </View>
-      <Card style={styles.card}>
+      <Card>
         <Card.Title>PLANT</Card.Title>
         <Card.Divider />
         <Card.Image source={require("../../assets/selectplant.png")}
@@ -40,12 +43,10 @@ const styles = StyleSheet.create({
     padding: 3,
     marginBottom: 10
   },
-  plantorpot: {
+  arrow: {
+    marginLeft: 20,
     marginTop: 10,
-    marginLeft: 35,
-    marginRight: 50,
-    width: 250,
-    height: 195,
+    color: 'grey'
   },
   headerText: {
     fontSize: 22,
@@ -54,10 +55,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     color: '#63816D',
     alignSelf: 'center'
-},
-  arrow: {
-    marginLeft: 20,
+  },
+  plantorpot: {
     marginTop: 10,
-    color: 'grey'
-},
+    marginLeft: 35,
+    marginRight: 50,
+    width: 250,
+    height: 195,
+  },
 });

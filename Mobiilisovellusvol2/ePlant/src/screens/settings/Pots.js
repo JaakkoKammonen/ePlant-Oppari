@@ -7,6 +7,9 @@ import FireBasemiddleware from '../../components/Redux/03-middleware/FireBasemid
 import swal from 'sweetalert';
 
 export default function Pots(props) {
+
+    // tyylit käyty läpi -> järjestelty, uudelleen nimetty & poistettu ne, joita ei käytetä  //
+
     const { navigate } = props.navigation;
 
     let ePlantPots = useSelector(state => state.firebase.my_ePlants)
@@ -60,12 +63,12 @@ export default function Pots(props) {
                             <View style={styles.buttonwrapper}>
                             <Button
                             title="Edit"
-                            buttonStyle={styles.buttonedit}
+                            buttonStyle={styles.potbutton}
                             onPress={() => ModifyePlant(item)}
                             />
                              <Button
                             title="Delete"
-                            buttonStyle={styles.buttondelete}
+                            buttonStyle={styles.potbutton}
                             onPress={() => DeletePot(item)}
                             />
                             </View>
@@ -98,66 +101,6 @@ export default function Pots(props) {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 2,
-        padding: 3,
-        marginBottom: 10
-    },
-    topimage: {
-        width: '100%',
-        height: 250
-    },
-    description: {
-        fontSize: 22,
-        marginTop: 20,
-        fontWeight: '600',
-        marginBottom: 20,
-        color: '#63816D',
-        alignSelf: 'center'
-    },
-    arrow: {
-        marginLeft: 20,
-        marginTop: 10,
-        color: 'grey'
-    },
-    buttonedit: {
-        backgroundColor: "#63816D",
-        borderRadius: 3,
-        marginTop: 10,
-        fontSize: 12,
-        fontWeight: "bold",
-        textTransform: "uppercase",
-        letterSpacing: 0.5,
-        width: 100,
-        height: 40
-    },
-    buttondelete: {
-        backgroundColor: "#63816D",
-        borderRadius: 3,
-        marginTop: 10,
-        fontSize: 12,
-        fontWeight: "bold",
-        textTransform: "uppercase",
-        letterSpacing: 0.5,
-        width: 100,
-        height: 40
-    },
-    buttonwrapper: {
-        marginLeft: 100,
-        marginRight: 100,
-    },
-    noplantsyet: {
-        fontSize: 14,
-        fontWeight: 'normal',
-        marginLeft: 10,
-        marginBottom: 15
-    },
-    headertext: {
-        fontSize: 26,
-        marginTop: 20,
-        marginLeft: 10,
-        marginBottom: 20,
-    },
     modeltype: {
         fontSize: 15,
         fontWeight: "bold",
@@ -210,4 +153,43 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         marginBottom: 20
     },
+    buttonwrapper: {
+        marginLeft: 100,
+        marginRight: 100,
+    },
+    buttonpot: {
+        backgroundColor: "#63816D",
+        borderRadius: 3,
+        marginTop: 10,
+        fontSize: 12,
+        fontWeight: "bold",
+        textTransform: "uppercase",
+        letterSpacing: 0.5,
+        width: 100,
+        height: 40
+    },
+    noplantsyet: {
+        fontSize: 14,
+        fontWeight: 'normal',
+        marginLeft: 10,
+        marginBottom: 15
+    },
+    container: {
+        flex: 2,
+        padding: 3,
+        marginBottom: 10
+    },
+    arrow: {
+        marginLeft: 20,
+        marginTop: 10,
+        color: 'grey'
+    },
+    description: {
+        fontSize: 22,
+        marginTop: 20,
+        fontWeight: '600',
+        marginBottom: 20,
+        color: '#63816D',
+        alignSelf: 'center'
+    }
 });

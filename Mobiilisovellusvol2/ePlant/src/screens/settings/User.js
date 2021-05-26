@@ -57,14 +57,24 @@ export default function UserNotification(props) {
             <View style={styles.body}>
               <View style={styles.bodycontent}>
               <Text style={styles.name}>{user.displayName}</Text>
-                <Text style={styles.email}>{user.email}</Text>
+              <Text style={styles.email}>{user.email}</Text>
+          <View style={styles.profiledetail}>
+            <View style={styles.detailcontent}>
+              <Text style={styles.title}>Plants</Text>
+              <Text style={styles.count}>3</Text>
+            </View>
+            <View style={styles.detailcontent}>
+              <Text style={styles.title}>Pots</Text>
+              <Text style={styles.count}>2</Text>
+            </View>
+          </View>
                 <View style={styles.buttoncontainer}>
                 <Button
                 title="Edit username"
                 buttonStyle={styles.userbutton}
                 onPress={() => navigate("EditUser", {user: user, navigate:navigate})}
                 />  
-                </View>      
+                </View>  
                 <View style={styles.buttoncontainer}>
                 <Button
                 buttonStyle={styles.userbutton}
@@ -72,8 +82,6 @@ export default function UserNotification(props) {
                 onPress={() => DeleteUser()}
                 />
                 </View>
-            <View>
-            </View>
             </View>
             </View>
             </View>
@@ -89,16 +97,6 @@ export default function UserNotification(props) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    },
-    topimage: {
-        width: '100%',
-        height: 250
-    },
-    description: {
-        marginLeft: 15,
-        marginRight: 15,
-        marginTop: 15,
-        fontSize: 14
     },
     arrow: {
         marginLeft: 20,
@@ -132,7 +130,7 @@ const styles = StyleSheet.create({
         fontWeight:'600',
       },
       body:{
-        marginTop:40,
+        marginTop: 40,
       },
       bodycontent: {
         flex: 1,
@@ -140,22 +138,16 @@ const styles = StyleSheet.create({
         padding:30,
       },
       name:{
-        fontSize:28,
+        fontSize: 28,
         color: "#696969",
         fontWeight: "600"
       },
       email:{
-        fontSize:16,
-        marginTop: 10,
+        fontSize: 16,
+        marginTop: 2,
         fontStyle: "italic",
         color: "#63816D", 
-        marginBottom: 5
-      },
-      description:{
-        fontSize:16,
-        color: "#696969",
-        marginTop:10,
-        textAlign: 'center'
+        marginBottom: 0
       },
       buttoncontainer: {
         marginTop: 10,
@@ -164,7 +156,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 20,
+        marginBottom: 15,
       },
       userbutton: {
         backgroundColor: "#63816D",
@@ -173,5 +165,23 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textTransform: "uppercase",
         letterSpacing: 0.5,
-      }
+      },
+      profiledetail:{
+        alignSelf: 'center',
+        marginTop: 2,
+        alignItems: 'center',
+        flexDirection: 'row',
+        backgroundColor: "#ffffff"
+      },
+      detailcontent:{
+        margin: 10,
+        alignItems: 'center'
+      },
+      title:{
+        fontSize: 18,
+        color: "#696969",
+      },
+      count:{
+        fontSize: 14,
+      },
 });

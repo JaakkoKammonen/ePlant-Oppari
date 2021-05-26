@@ -1,17 +1,13 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from "react-native";
 import { Ionicons, MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { Input, Button, Card } from "react-native-elements";
 import FireBasemiddleware from "../../components/Redux/03-middleware/FireBasemiddleware";
 
 export default function Login(props) {
+
+  // tyylit käyty läpi -> järjestelty, uudelleen nimetty & poistettu ne, joita ei käytetä  //
+
   const [ePlantPot, setEPlantPot] = useState({
     channel_id: props.navigation.state.params.ePlantPot.channel_id,
     write_apikey: props.navigation.state.params.ePlantPot.write_apikey,
@@ -90,26 +86,10 @@ const styles = StyleSheet.create({
     padding: 3,
     flex: 2,
   },
-  container2: {
-    marginBottom: 3,
-    padding: 50,
-  },
-  header: {
-    shadowColor: "#DEDDDD",
-    shadowOpacity: 2,
-    shadowOffset: {
-      height: 2,
-      width: 2,
-    },
-    elevation: 4,
-    backgroundColor: "#FAFAFA",
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: "600",
-    marginBottom: 20,
-    color: "#63816D",
-    alignSelf: "center",
+  arrow: {
+    marginLeft: 20,
+    marginTop: 10,
+    color: "grey",
   },
   headerText: {
     fontSize: 22,
@@ -119,10 +99,16 @@ const styles = StyleSheet.create({
     color: "#63816D",
     alignSelf: "center",
   },
-  arrow: {
-    marginLeft: 20,
-    marginTop: 10,
-    color: "grey",
+  container2: {
+    marginBottom: 3,
+    padding: 50,
+  },
+  logo: {
+    width: 260,
+    height: 210,
+  },
+  currentdatawrapper: {
+    alignItems: "center",
   },
   currentchannel: {
     fontSize: 14,
@@ -146,12 +132,23 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
     marginLeft: 33
   },
-  logo: {
-    width: 260,
-    height: 210,
-  },
   titlewrapper: {
     marginTop: 20,
+  },
+  channelidinput: {
+    fontSize: 12,
+    fontWeight: "normal",
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  apikeyinput: {
+    fontSize: 12,
+    fontWeight: "normal",
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  buttonwrapper: {
+    alignItems: "center",
   },
   buttonthingspeak: {
     backgroundColor: "#63816D",
@@ -163,36 +160,5 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
     width: 100,
     height: 40,
-  },
-  buttonwrapper: {
-    alignItems: "center",
-  },
-  currentdatawrapper: {
-    alignItems: "center",
-  },
-  apikeytext: {
-    fontSize: 12,
-    fontWeight: "bold",
-    textTransform: "uppercase",
-    marginTop: 20,
-    letterSpacing: 0.5,
-  },
-  channelidtext: {
-    fontSize: 12,
-    fontWeight: "bold",
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
-  },
-  apikeyinput: {
-    fontSize: 12,
-    fontWeight: "normal",
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
-  },
-  channelidinput: {
-    fontSize: 12,
-    fontWeight: "normal",
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
-  },
+  }
 });

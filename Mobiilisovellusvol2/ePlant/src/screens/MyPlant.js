@@ -10,6 +10,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 export default function MyPlant(props) {
 
+    // tyylit käyty läpi -> järjestelty, uudelleen nimetty & poistettu ne, joita ei käytetä  //
+
     const [notifications, setNotifications] = useState("Loading...")
     const [updateDate, setUpdateDate] = useState("Loading...");
     
@@ -156,12 +158,9 @@ export default function MyPlant(props) {
 
         } else {
             return (
-                <Text>Error getting data! Check your ePlant channel_id</Text>
+                <Text style={styles.error}>Error getting data! Check your ePlant channel_id</Text>
             )
         }
-
-
-        
     }
     return (
         <ScrollView style={styles.container}>
@@ -211,7 +210,7 @@ export default function MyPlant(props) {
                             }
                             </AnimatedCircularProgress>
                     </View>
-                    <View style={styles.field2}>
+                    <View>
                         <Text style={styles.field2Value}>{Field2.name}</Text>
                         <View>
                         <AnimatedCircularProgress
@@ -254,6 +253,77 @@ export default function MyPlant(props) {
 };
 
 const styles = StyleSheet.create({
+    value: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginTop: 30,
+        marginLeft: 30
+    },
+    updateformat: {
+        fontSize: 14,
+        fontWeight: 'normal',
+        marginTop: 30,
+        marginLeft: 3
+    },
+    bottomheader: {
+        justifyContent:"space-between",
+        flexDirection: 'row',
+        marginLeft: 10,
+    },
+    bottomitem: {
+        flexDirection: "row",
+        marginBottom: 5,
+        marginTop: 10
+    },
+    circle: {
+        width: 40,
+        height: 40,
+        marginTop: 30,
+        marginLeft: 20,
+        borderRadius: 100/2,
+        backgroundColor: '#eaaf7e'
+    },
+    bottomtext: {
+        marginLeft: 10,
+        marginBottom: 5,
+        marginTop: 5,
+    },
+    bottomtext1: {
+        marginLeft: 5,
+        fontSize: 12,
+        color: "#ACACAC",
+        fontWeight: "bold"
+    },
+    bottomtext2: {
+        marginLeft: 5,
+        fontSize: 16
+    },  
+    field01: {
+        fontSize: 12,
+        fontWeight: "bold",
+        marginLeft: 4,
+    },
+    field01value: {
+        fontSize: 10,
+        fontWeight: "normal",
+        marginLeft: 3,
+    },
+    field02: {
+        fontSize: 12,
+        fontWeight: "bold",
+        marginLeft: 4,
+    },
+    field02value: {
+        fontSize: 10,
+        fontWeight: "normal",
+        marginLeft: 3,
+    },
+    error: {
+        fontSize: 14,
+        fontWeight: 'normal',
+        marginLeft: 10,
+        marginBottom: 15
+    },
     container: {
         flex: 2,
         padding: 3,
@@ -264,23 +334,10 @@ const styles = StyleSheet.create({
         marginTop: 15,
         flex: 1
     },
-    btnmyplant: {
-        backgroundColor: "#63816D",
-        borderRadius: 3,
-        marginTop: 10,
-        marginBottom: 10,
-        textTransform: "uppercase",
-        letterSpacing: 0.5,
-        width: 150,
-        height: 30,
-    },
-    scrollable: {
-        margin: 10, 
-        maxHeight: 250,
-    },
-    buttonwrapper1: {
-        marginTop: 10,
-        marginLeft: 200,
+    icon: {
+        marginLeft: 30,
+        marginTop: "40%",
+        color: 'grey'
     },
     plantname: {
         fontSize: 22,
@@ -295,23 +352,6 @@ const styles = StyleSheet.create({
         marginTop: 5,
         fontWeight: '600',
         fontStyle: 'italic'
-    },
-    value: {
-        fontSize: 14,
-        fontWeight: 'bold',
-        marginTop: 30,
-        marginLeft: 30
-    },
-    updateformat: {
-        fontSize: 14,
-        fontWeight: 'normal',
-        marginTop: 30,
-        marginLeft: 3
-    },
-    progress: {
-        flexDirection: 'row',
-        justifyContent: "center",
-        alignContent: "center"
     },
     topimage: {
         width: 50,
@@ -348,11 +388,26 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         fontWeight: 'bold'
     },
-    detailstext: {
-        fontSize: 12,
+    moredetails: {
         color: '#63816D',
-        marginRight: 20,
-        fontWeight: 'bold'
+        fontSize: 12,
+        fontWeight: 'bold',
+        marginRight: 20
+    },
+    btnmyplant: {
+        backgroundColor: "#63816D",
+        borderRadius: 3,
+        marginTop: 10,
+        marginBottom: 10,
+        textTransform: "uppercase",
+        letterSpacing: 0.5,
+        width: 150,
+        height: 30,
+    },
+    progress: {
+        flexDirection: 'row',
+        justifyContent: "center",
+        alignContent: "center"
     },
     field1: {
         borderRightColor: 'lightgrey',
@@ -375,30 +430,15 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginRight: 50
     },
-    phtext2: {
-        fontSize: 22,
-        color: '#63816D'
-    },
-    ectext2: {
-        fontSize: 22,
-        color: '#63816D'
-    },
-    header: {
+    notifi: {
         fontSize: 14,
-        fontWeight: "bold",
-        marginLeft: 10,
-        marginBottom: 5
-    },
-    bottomheader: {
-        justifyContent:"space-between",
-        flexDirection: 'row',
-        marginLeft: 10,
-    },
-    moredetails: {
-        color: '#63816D',
-        fontSize: 12,
         fontWeight: 'bold',
-        marginRight: 20
+        marginLeft: 10,
+        marginTop: 20,
+    },
+    scrollable: {
+        margin: 10, 
+        maxHeight: 250,
     },
     bottom: {
         marginLeft: 15,
@@ -413,64 +453,5 @@ const styles = StyleSheet.create({
         elevation: 3, // android
         backgroundColor: '#fbfbfb',
         borderRadius: 10
-    },
-    bottomitem: {
-        flexDirection: "row",
-        marginBottom: 5,
-        marginTop: 10
-    },
-    bottomtext: {
-        marginLeft: 10,
-        marginBottom: 5,
-        marginTop: 5,
-    },
-    bottomtext1: {
-        marginLeft: 5,
-        fontSize: 12,
-        color: "#ACACAC",
-        fontWeight: "bold"
-    },
-    bottomtext2: {
-        marginLeft: 5,
-        fontSize: 16
-    },  
-    icon: {
-        marginLeft: 30,
-        marginTop: "40%",
-        color: 'grey'
-    },
-    circle: {
-        width: 40,
-        height: 40,
-        marginTop: 30,
-        marginLeft: 20,
-        borderRadius: 100/2,
-        backgroundColor: '#eaaf7e'
-    },
-    notifi: {
-        fontSize: 14,
-        fontWeight: 'bold',
-        marginLeft: 10,
-        marginTop: 20,
-    },
-    field01: {
-        fontSize: 12,
-        fontWeight: "bold",
-        marginLeft: 4,
-    },
-    field01value: {
-        fontSize: 10,
-        fontWeight: "normal",
-        marginLeft: 3,
-    },
-    field02: {
-        fontSize: 12,
-        fontWeight: "bold",
-        marginLeft: 4,
-    },
-    field02value: {
-        fontSize: 10,
-        fontWeight: "normal",
-        marginLeft: 3,
-    },
+    }
 });

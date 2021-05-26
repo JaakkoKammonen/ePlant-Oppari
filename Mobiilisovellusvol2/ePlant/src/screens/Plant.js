@@ -4,6 +4,9 @@ import SetImage from '../components/SetImage';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function Plant(props) {
+
+    // tyylit käyty läpi -> järjestelty, uudelleen nimetty & poistettu ne, joita ei käytetä  //
+
     const plant = props.navigation.state.params.plant;
     const plantImage = SetImage(plant.laji.toLowerCase());
     const { navigate } = props.navigation;
@@ -11,9 +14,7 @@ export default function Plant(props) {
     // returning plant data based on props from Search.js and plantImage from SetBackgroundImg.js
     return (
         <ScrollView style={styles.container}>
-            <View style={{ flex: 1 }}>
                 <Image style={styles.topimage} source={plantImage} />
-            </View>
             <View>
                 <TouchableOpacity onPress={() => navigate('Search')}>
                     <Ionicons name="arrow-back-outline" size={30} style={styles.arrow} />
@@ -70,12 +71,16 @@ export default function Plant(props) {
 
 const styles = StyleSheet.create({
     container: {
-     //   backgroundColor: '#FCFCFC',
         flex: 1,
     },
     topimage: {
         width: '100%',
         height: 250
+    },
+    arrow: {
+        marginLeft: 20,
+        marginTop: 10,
+        color: 'grey'
     },
     top: {
         flexDirection: 'row',
@@ -98,10 +103,6 @@ const styles = StyleSheet.create({
     view1: {
         flexDirection: 'row',
         marginTop: 15,
-
-    },
-    view2: {
-        flexDirection: 'row',
     },
     box: {
         flexDirection: "row",
@@ -128,64 +129,13 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#404040',
     },
+    view2: {
+        flexDirection: 'row',
+    },
     description: {
         marginLeft: 15,
         marginRight: 15,
         marginTop: 15,
         fontSize: 14
-    },
-    header3: {
-        marginLeft: 10,
-        marginTop: 15,
-        fontSize: 18,
-        fontWeight: 'bold'
-    },
-    bottom: {
-        flexDirection: 'row',
-        marginBottom: 70
-    },
-    border: {
-        borderWidth: 2,
-        borderColor: "#0000000D",
-        borderRadius: 2,
-        width: 150,
-        marginTop: 15,
-        marginLeft: 15,
-    },
-    bottomtext: {
-        textAlign: 'center',
-        fontSize: 12,
-        marginTop: 10,
-        fontWeight: "bold"
-    },
-    bottomimage: {
-        width: 150,
-        height: 150
-    },
-    add: {
-        backgroundColor: '#F5F5F5',
-        marginTop: 15,
-        marginLeft: 15,
-        marginRight: 15,
-        width: 150,
-        borderRadius: 4
-    },
-    addtext: {
-        textAlign: 'center',
-        fontSize: 12,
-        marginTop: 50,
-        fontWeight: "bold"
-    },
-    addimage: {
-        width: 50,
-        height: 50,
-        marginLeft: 50,
-        marginTop: 15
-    },
-    arrow: {
-        marginLeft: 20,
-        marginTop: 10,
-        color: 'grey'
     }
-
 });
