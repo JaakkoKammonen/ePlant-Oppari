@@ -56,7 +56,6 @@ void setup() {
   pinMode(AirPump,OUTPUT);                                                   // Pin-output anturien pinneille
   pinMode(PHTasoAnturiVirta,OUTPUT);                                            // Relay anturien pinneille
   pinMode(ECAnturiVirta,OUTPUT);
-  //pinMode(ECAnturi,INPUT);
   
   delay(1000);
   config.apid = "ePlantVol2";                                                   // Hotspot-nimi
@@ -65,9 +64,9 @@ void setup() {
   config.title ="ePlant";                                                       // Avattavan Hotspot-nettisivu title
   config.retainPortal = true;                                                   // Hotspots koko ajan paalla
   config.ota = AC_OTA_BUILTIN;                                                  // Over-The-Air -päivitys
-  config.menuItems =                                                            // Nettisivun komponetit
-     AC_MENUITEM_CONFIGNEW
-     ;
+  config.menuItems = AC_MENUITEM_CONFIGNEW;                                     // Nettisivun komponetit
+  
+     
   Portal.config(config);                                                        // Wifi avaa web-portaalin
   Serial.begin(115200);                                                         // Serial monitor
   Serial.println();
