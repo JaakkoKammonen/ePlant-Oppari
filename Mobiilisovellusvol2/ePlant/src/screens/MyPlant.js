@@ -17,24 +17,7 @@ export default function MyPlant(props) {
     const [notifications, setNotifications] = useState("Loading...")
     const [updateDate, setUpdateDate] = useState("Loading...");
     
-    const PlantUpdateDate = () =>  {
 
-        if (updateDate !== "Loading...") {
-        let year = updateDate.slice(0, 4)
-        let month = updateDate.slice(5, 7)
-        let day = updateDate.slice(8, 10)
-        let time = updateDate.slice(11, 19)
-
-        return ( 
-            <Text style={styles.value}>Last updated: <Text style={styles.updateformat}>{day}.{month}.{year} at: {time} </Text></Text>
-        )
-        } else {
-            return (
-                <Text style={styles.value}>Last updated: Error getting data </Text>
-            )
-        }
-   
-    }
     
 
     const plant = props.navigation.state.params.plant[1];
@@ -45,22 +28,24 @@ export default function MyPlant(props) {
     console.log(plant)
 
     const [Field1, setField1] = useState({ 
-        name: plant.ePlantPot.ePlantModel.Field1, 
+        name: plant.ePlantPot.ePlantModel.Field1.Name,
+        field:  plant.ePlantPot.ePlantModel.Field1.Field, 
         value: 0 
     });
 
     const [Field2, setField2] = useState({ 
-        name: plant.ePlantPot.ePlantModel.Field2, 
+        name: plant.ePlantPot.ePlantModel.Field2.Name,
+        field:  plant.ePlantPot.ePlantModel.Field2.Field, 
         value: 0 
     });
 
     const [Field3, setField3] = useState({ 
-        name: plant.ePlantPot.ePlantModel.Field3, 
-        value:  0
+        name: plant.ePlantPot.ePlantModel.Field3.Name, 
+        field:  plant.ePlantPot.ePlantModel.Field3.Field
     });
     const [Field4, setField4] = useState({ 
-        name: plant.ePlantPot.ePlantModel.Field4, 
-        value: 0 
+        name: plant.ePlantPot.ePlantModel.Field4.Name, 
+        field:  plant.ePlantPot.ePlantModel.Field4.Field
     });
 
     //console.log(plant)
@@ -105,6 +90,26 @@ export default function MyPlant(props) {
              console.log(error)
             });
     }
+
+    const PlantUpdateDate = () =>  {
+
+        if (updateDate !== "Loading...") {
+        let year = updateDate.slice(0, 4)
+        let month = updateDate.slice(5, 7)
+        let day = updateDate.slice(8, 10)
+        let time = updateDate.slice(11, 19)
+
+        return ( 
+            <Text style={styles.value}>Last updated: <Text style={styles.updateformat}>{day}.{month}.{year} at: {time} </Text></Text>
+        )
+        } else {
+            return (
+                <Text style={styles.value}>Last updated: Error getting data </Text>
+            )
+        }
+   
+    }
+
 
     const DeletePlant = () => {
 
@@ -172,9 +177,31 @@ export default function MyPlant(props) {
 
         } else {
             return (
-                <Text style={styles.error}>Error getting data! Check your ePlant channel_id</Text>
+                <Text style={styles.error}>Error getting data! Check your ePlant channel_id, or turn on Get ePlant sensor data</Text>
             )
         }
+    }
+
+
+    const HandleSelect = (item, text) => {
+        if(text == "OFF") {
+            if (item.name === "AirPump") {
+                ThingSpeakMiddleware.AirPumpOFF(write_apikey, item.field )
+            } else if (item.name === "Get ePlantSensorData") {
+                ThingSpeakMiddleware.SendPhysicalePlantSensorValuesOFF(write_apikey, item.field)
+                console.log("Sensor data lähetys lakkautetaan")
+            }
+        } 
+
+        if(text == "ON") {
+            if (item.name === "AirPump") {
+                ThingSpeakMiddleware.AirPumpON(write_apikey, item.field )
+            } else if (item.name === "Get ePlantSensorData") {
+                ThingSpeakMiddleware.SendPhysicalePlantSensorValuesON(write_apikey, item.field)
+            }
+        }
+        console.log(item, text)
+
     }
     return (
         <ScrollView style={styles.container}>
@@ -249,8 +276,20 @@ export default function MyPlant(props) {
                 {PlantUpdateDate()}
 
                 <Button 
-                title="asdf"
-                onPress={ () => ThingSpeakMiddleware.AirPumpON()}
+                title={Field3.name + " OFF"}
+                onPress={ () => HandleSelect(Field3, "OFF")}
+                />
+                <Button 
+                title={Field3.name + " ON"}
+                onPress={ () => HandleSelect(Field3, "ON")}
+                />
+                <Button 
+                title={Field4.name + " OFF"}
+                onPress={ () => HandleSelect(Field4, "OFF")}
+                />
+                <Button 
+                title={Field4.name + " ON"}
+                onPress={ () => HandleSelect(Field4, "ON")}
                 />
                 
                 <View style={styles.bottomheader}>

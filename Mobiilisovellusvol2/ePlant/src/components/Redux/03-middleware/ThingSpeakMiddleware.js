@@ -1,7 +1,7 @@
-
+import swal from 'sweetalert';
 
     const AirPumpON = (write_apikey, fieldNumber) => {
-        const url = "https://api.thingspeak.com/update?api_key=" + apikey + "&field" + fieldNumber + "=1";
+        const url = "https://api.thingspeak.com/update?api_key=" + write_apikey + "&field" + fieldNumber + "=1";
         fetch(url)
         .then((response) => response.json())
         .then((responseJson) => {
@@ -10,16 +10,28 @@
                     AirPumpON(write_apikey,fieldNumber)
                     console.log(responseJson);
                 } 
+
+                swal(
+                    {
+                       title: "AirPump is turning on!",
+                       button: false,
+                       timer: 8000
+                     });
+
                 break; 
-            }; 
+            };   
         })
         .catch((error) => {
-            Alert.alert('Error', error);
+            swal(
+                {
+                   title: "Something went wrong!",
+                   button: true,
+                 });
         });
     }
 
     const AirPumpOFF = (write_apikey, fieldNumber) => {
-        const url = "https://api.thingspeak.com/update?api_key=" + apikey + "&field" + fieldNumber + "=0";
+        const url = "https://api.thingspeak.com/update?api_key=" + write_apikey + "&field" + fieldNumber + "=0";
         fetch(url)
         .then((response) => response.json())
         .then((responseJson) => {
@@ -28,17 +40,95 @@
                     AirPumpOFF(write_apikey,fieldNumber)
                     console.log(responseJson);
                 } 
+
+                swal(
+                {
+                   title: "AirPump is turning OFF!",
+                   button: false,
+                   timer: 8000
+                 });
+
                 break; 
             }; 
+            
         })
         .catch((error) => {
-            Alert.alert('Error', error);
+            swal(
+                {
+                   title: "Something went wrong!",
+                   button: true,
+                 });
+        });
+    }
+
+
+    const SendPhysicalePlantSensorValuesON = (write_apikey, fieldNumber) => {
+        const url = "https://api.thingspeak.com/update?api_key=" + write_apikey + "&field" + fieldNumber + "=1";
+        fetch(url)
+        .then((response) => response.json())
+        .then((responseJson) => {
+            while (true) {
+                if (parseInt(responseJson) == 0) { 
+                    SendPhysicalePlantSensorValuesON(write_apikey, fieldNumber)
+                    console.log(responseJson);
+                } 
+
+                swal(
+                {
+                   title: "Starting to send values!",
+                   button: false,
+                   timer: 8000
+                 });
+
+                break; 
+            }; 
+            
+        })
+        .catch((error) => {
+            swal(
+                {
+                   title: "Something went wrong!",
+                   button: true,
+                 });
+        });
+    }
+
+    const SendPhysicalePlantSensorValuesOFF = (write_apikey, fieldNumber) => {
+        const url = "https://api.thingspeak.com/update?api_key=" + write_apikey + "&field" + fieldNumber + "=0";
+        fetch(url)
+        .then((response) => response.json())
+        .then((responseJson) => {
+            while (true) {
+                if (parseInt(responseJson) == 0) { 
+                    SendPhysicalePlantSensorValuesOFF(write_apikey, fieldNumber)
+                    console.log(responseJson);
+                } 
+
+                swal(
+                {
+                   title: "Stopping to send values!",
+                   button: false,
+                   timer: 8000
+                 });
+
+                break; 
+            }; 
+            
+        })
+        .catch((error) => {
+            swal(
+                {
+                   title: "Something went wrong!",
+                   button: true,
+                 });
         });
     }
 
     
 export default {
     AirPumpON,
-    AirPumpOFF
+    AirPumpOFF,
+    SendPhysicalePlantSensorValuesOFF,
+    SendPhysicalePlantSensorValuesON
 
 }

@@ -47,9 +47,9 @@ function UpdateNotifications(dispatch, my_Plants) {
                 imagesrc: plant.species,
                 time: time,
                 plantname: plant.plantName,
-                field1Name: plant.ePlantPot.ePlantModel.Field1,
+                field1Name: plant.ePlantPot.ePlantModel.Field1.Name,
                 field1Value: feedItem.field1,
-                field2Name: plant.ePlantPot.ePlantModel.Field2,
+                field2Name: plant.ePlantPot.ePlantModel.Field2.Name,
                 field2Value: feedItem.field2
                 }
                 return data
