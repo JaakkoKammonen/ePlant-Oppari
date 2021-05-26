@@ -8,14 +8,11 @@ export default function Notifications() {
   let allNotifications = [];
 
   try {
-    allNotifications = useSelector(state => state.firebase.notification).slice().sort((a, b) => new Date(b.time) - new  Date(a.time)).reverse()
+    allNotifications = useSelector(state => state.firebase.notification).slice().sort((a, b) => new Date(b.time) - new  Date(a.time))
   } catch (error) {
     allNotifications = []
   }
   
-  const [notifications, setNotifications] = useState("Loading...")
-  let plants = useSelector(state => state.firebase.my_Plants) 
-
 
   //console.log(allNotifications)
   const timeParser = (date) => {
