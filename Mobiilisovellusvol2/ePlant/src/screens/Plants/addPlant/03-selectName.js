@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, KeyboardAvoidingView } from 'react-native';
-import { Input, Icon } from 'react-native-elements';
-import FireBase from "../../../components/Redux/03-middleware/FireBasemiddleware"
-import AloeVera from "../../../assets/plant_img/aloe_vera.png"
+import { View, Text, StyleSheet, Image, KeyboardAvoidingView, ScrollView, TouchableOpacity } from 'react-native';
+import { Input, Card } from 'react-native-elements';
+import FireBase from "../../../components/Redux/03-middleware/FireBasemiddleware";
 import { useSelector } from 'react-redux';
+import { Ionicons } from "@expo/vector-icons";
 
 export default function SelectName(props) {
+
+    // tyylit käyty läpi -> järjestelty, uudelleen nimetty & poistettu ne, joita ei käytetä  //
     
     const [plantName, setPlantName] = useState('');
     const { navigate } = props.navigation;
@@ -13,7 +15,6 @@ export default function SelectName(props) {
     let ePlant = props.navigation.state.params.eplant
     let my_Plants = useSelector(state => state.firebase.my_Plants)
     let userUid = useSelector(state => state.user.uid)
-    
 
    const AddPlantDb = (event) => {
      event.preventDefault();
@@ -21,27 +22,23 @@ export default function SelectName(props) {
    }
 
     return (
-        <View style={{flex: 1}}>
-            <View style={styles.header}>
-                <Text style={{width:"14%"}}></Text>
-                <Text style={styles.headertitle}>Add a new plant</Text>
-                <Icon 
-                    name="close" 
-                    size={40} 
-                    iconStyle={styles.icon}
-                    onPress={() => navigate('Home')} 
-                />
-            </View>
+        <ScrollView style={styles.container}>
+              <TouchableOpacity onPress={() => navigate("SelectPlant")}>
+                <Ionicons name="arrow-back-outline" size={30} style={styles.arrow} />
+                </TouchableOpacity>
+                    <View>
+                        <Text style={styles.headerText}>Add a new plant</Text>
+                    </View>
             <KeyboardAvoidingView
                 behavior={'padding'}
-                style={styles.container}
+                style={styles.keyboard}
             >
-                <View style={styles.container}>
-                    <View>
-                        <Text style={styles.title}>Almost done!</Text>
+                    <View style={styles.textwrapper}>
+                    <Card.Title>ALMOST DONE!</Card.Title>
                         <Text style={styles.text}>Now, give your plant a name</Text>
                     </View>
-                    <Image style={styles.middleimage} source={AloeVera} />
+                    <Image style={styles.middleimage} source={require("../../../assets/done_pot.png")}/>
+                    <View style={styles.inputstyle}>
                     <Input
                         placeholder='Name it'
                         inputStyle={styles.textinput}
@@ -50,56 +47,54 @@ export default function SelectName(props) {
                         returnKeyType='done'
                         onSubmitEditing={AddPlantDb}
                     />
-                </View>
+                    </View>
             </KeyboardAvoidingView>
-        </View>
+        </ScrollView>
 
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
+        flex: 1
     },
-    icon: {
-        marginTop: "70%",
-        marginRight:15,
-        color: 'grey',
+    arrow: {
+        marginLeft: 20,
+        marginTop: 10,
+        color: 'grey'
     },
-    content: {
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    header: {
-        flexDirection:"row",
-        justifyContent:"space-between",
-    },
-    headertitle: {
-        fontSize: 14,
-        fontWeight: "bold",
-        textAlign: 'center',
-        marginTop: "11%",
-        paddingBottom: 20,
-    },
-    title: {
+    headerText: {
         fontSize: 22,
+        marginTop: 20,
         fontWeight: '600',
         marginBottom: 20,
         color: '#63816D',
         alignSelf: 'center'
     },
+    keyboard: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    textwrapper: {
+        marginTop: 20
+    },
     text: {
-        fontSize: 16,
+        fontSize: 14,
         color: '#404040',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        marginBottom: 20
     },
     middleimage: {
         width: 200,
-        height: 200,
+        height: 250,
         margin: 25,
         alignSelf: 'center'
+    },
+    inputstyle: {
+        marginTop: 10,
+        marginLeft: 20,
+        marginRight: 20
     },
     textinput: {
         fontSize: 12,
@@ -107,5 +102,4 @@ const styles = StyleSheet.create({
         textTransform: "uppercase",
         letterSpacing: 0.5,
     }
-
 });

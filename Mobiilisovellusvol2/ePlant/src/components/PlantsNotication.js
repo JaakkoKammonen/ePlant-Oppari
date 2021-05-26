@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity,Button } from 'react-native';
+import React from 'react';
+import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import {setUser_Notifications} from "./Redux/01-actions"
-import swal from 'sweetalert';
+import { setUser_Notifications } from "./Redux/01-actions"
 
-export default function PlantsNotification(props) {
+export default function PlantsNotification() {
 
     const my_Plants = useSelector(state => state.firebase.my_Plants)
-
     const dispatch = useDispatch();
 
-  
     const Notifications =  () => {
 
     Object.values(my_Plants).map((plant) => {

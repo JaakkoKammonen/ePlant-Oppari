@@ -5,6 +5,9 @@ import LogginMiddleware from "../../components/Redux/03-middleware/LogginMiddlew
 import { useSelector } from "react-redux";
 
 export default function Settings(props) {
+
+  // tyylit käyty läpi -> järjestelty, uudelleen nimetty & poistettu ne, joita ei käytetä  //
+
   const { navigate } = props.navigation;
   let user = useSelector((state) => state.user);
 
@@ -85,33 +88,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
   },
-  profilecontainer: {
-    padding: 20,
-    borderBottomColor: "#DEDDDD",
-    borderBottomWidth: 1,
-    flexDirection: "row",
-    height: 120,
-    alignItems: "center",
-  },
-  content: {
-    flex: 1,
-  },
-  profileinfo: {
-    marginLeft: 20,
-    flex: 2,
-  },
-  headerText: {
-    fontSize: 14,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginTop: 48,
-    marginBottom: 20,
-  },
-  useremail: {
-    fontStyle: "italic",
-    color: "#63816D", 
-    marginBottom: 5
-  },
   header: {
     shadowColor: "#DEDDDD",
     shadowOpacity: 2,
@@ -122,18 +98,35 @@ const styles = StyleSheet.create({
     elevation: 4,
     backgroundColor: "#FAFAFA",
   },
-  buttonlogout: {
-    backgroundColor: "#63816D",
-    borderRadius: 3,
-    marginRight: 3,
-    marginTop: 10,
-    fontSize: 12,
+  headerText: {
+    fontSize: 14,
     fontWeight: "bold",
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
+    textAlign: "center",
+    marginTop: 48,
+    marginBottom: 20,
+  },
+  content: {
+    flex: 1,
+  },
+  profilecontainer: {
+    padding: 20,
+    borderBottomColor: "#DEDDDD",
+    borderBottomWidth: 1,
+    flexDirection: "row",
+    height: 120,
+    alignItems: "center",
   },
   logo: {
     width: 90,
     height: 90,
   },
+  profileinfo: {
+    marginLeft: 20,
+    flex: 2,
+  },
+  useremail: {
+    fontStyle: "italic",
+    color: "#63816D", 
+    marginBottom: 5
+  }
 });

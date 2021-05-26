@@ -5,6 +5,8 @@ import { useSelector } from 'react-redux';
 
 export default function LisaaKasvi({navigation}) {
 
+    // tyylit käyty läpi -> järjestelty, uudelleen nimetty & poistettu ne, joita ei käytetä  //
+
     const plantList = useSelector(state => state.firebase.plants)
     const [filteredPlantList, setFilteredPlantlist] = useState(plantList);
     //console.log(filteredPlantList)
@@ -46,7 +48,7 @@ export default function LisaaKasvi({navigation}) {
                <ScrollView>
             <View style={styles.header}>
                 <Text style={{width:"14%"}}></Text>
-                <Text style={styles.headertitle}>Select plant</Text>
+                <Text style={styles.select_plant}>Select plant</Text>
                 <Icon 
                     name="close" 
                     size={40} 
@@ -54,10 +56,8 @@ export default function LisaaKasvi({navigation}) {
                     onPress={() => navigate('Home')} 
                 />
             </View>
-
-      
             <View style={styles.content}>
-                <Text style={styles.title}>Select plant</Text>
+                <Text style={styles.search_plant}>Select plant</Text>
                 <SearchBar
                     onChangeText={handleChange}
                     placeholder='Search plants'
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
         flexDirection:"row",
         justifyContent:"space-between",
     },
-    headertitle: {
+    select_plant: {
         fontSize: 14,
         fontWeight: "bold",
         textAlign: 'center',
@@ -113,14 +113,14 @@ const styles = StyleSheet.create({
         marginRight:15,
         color: 'grey',
     },
-    title: {
-        fontSize: 22, 
-        marginBottom: 10, 
-        marginLeft: 10
-    },
     content: {
         flexDirection: "column",
         marginTop: 20
+    },
+    search_plant: {
+        fontSize: 22, 
+        marginBottom: 10, 
+        marginLeft: 10
     },
     searchcontainer: {
         backgroundColor: '#FCFCFC',
@@ -128,5 +128,4 @@ const styles = StyleSheet.create({
         borderTopColor: 'transparent',
         marginBottom: 5
     }
-
 });

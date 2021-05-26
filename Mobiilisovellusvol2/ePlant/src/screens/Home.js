@@ -7,6 +7,8 @@ import LogginMiddleware from '../components/Redux/03-middleware/LogginMiddleware
 import setImage from "../components/SetImage";
 
 export default function Home(props) {
+    
+    // tyylit käyty läpi -> järjestelty, uudelleen nimetty & poistettu ne, joita ei käytetä  //
 
     const dispatch = useDispatch();
     const user = useSelector(state => state.user)
@@ -184,70 +186,12 @@ export default function Home(props) {
 
 
 const styles = StyleSheet.create({
-    button: {
-        paddingBottom: 20
-    },
-    container: {
-        flex: 2,
-        padding: 3,
-    },
-    top: {
-        marginLeft: 10,
-        flex: 1,
-        marginTop: 70,
-    },
-    toptext: {
-        fontSize: 26,
-        marginTop: 20,
-        marginLeft: 10,
-        marginBottom: 20,
-    },
-    middle: {
-        flex: 1.5,
-        shadowColor: "#000",
-    },
-    middletext: {
-        fontWeight: 'bold',
-        fontSize: 14,
-        marginLeft: 10,
-    },
-    middleheader: {
-        justifyContent:"space-between",
-        flexDirection: 'row',
-    },
-    text_container:{
-        position: "absolute",
-        width: 170,
-        height: 30,
-        bottom:0,
-        backgroundColor: "rgba(0,0,0, 0.3)",
-        borderBottomLeftRadius : 4,
-        borderBottomRightRadius: 4
-      },
-    header: {
-        fontSize: 14,
-        fontWeight: 'bold',
-        marginLeft: 10,
-        marginBottom: 15
-    },
     noplants: {
         width: 220,
         height: 220,
         marginLeft: 70,
         marginRight: 50,
         marginBottom: 15,
-    },
-    nonotifications: {
-        fontSize: 14,
-        fontWeight: 'normal',
-        marginLeft: 10,
-        marginBottom: 15
-    },
-    header2: {
-        fontSize: 14,
-        fontWeight: 'bold',
-        marginLeft: 10,
-        marginBottom: 15
     },
     border: {
         elevation: 3, // android
@@ -258,6 +202,20 @@ const styles = StyleSheet.create({
         marginTop: 10,
         backgroundColor: 'white',
     },
+    middleimage: {
+        width: 172,
+        height: 187,
+        borderRadius: 6
+    },
+    text_container:{
+        position: "absolute",
+        width: 170,
+        height: 30,
+        bottom:0,
+        backgroundColor: "rgba(0,0,0, 0.3)",
+        borderBottomLeftRadius : 4,
+        borderBottomRightRadius: 4
+    },
     middletext: {
         textAlign: 'center',
         fontSize: 16,
@@ -265,49 +223,24 @@ const styles = StyleSheet.create({
         color: "white",
         fontWeight: 'normal'
     },
-    middleimage: {
-        width: 172,
-        height: 187,
-        borderRadius: 6
-    },
-    card_title: {
-        position: 'absolute',
-        left: 0,
-        top: 100
-      },
-    bottomheader: {
-        justifyContent:"space-between",
-        flexDirection: 'row',
+    nonotifications: {
+        fontSize: 14,
+        fontWeight: 'normal',
         marginLeft: 10,
-    },
-    showmore: {
-        color: '#63816D',
-        fontSize: 12,
-        fontWeight: 'bold',
-        marginRight: 20
-    },
-    bottom: {
-        marginLeft: 15,
-        marginRight: 15,
-        marginBottom: 10,
-        flex: 2,
-        shadowColor: 'rgba(0,0,0, .1)', // IOS
-        shadowOffset: { height: 3, width: 2 }, // IOS
-        shadowOpacity: 1, // IOS
-        shadowRadius: 1, //IOS
-        elevation: 3, // android
-        backgroundColor: '#fbfbfb',
-        borderRadius: 8
+        marginBottom: 15
     },
     bottomitem: {
         flexDirection: "row",
         marginBottom: 5,
         marginTop: 10
     },
-    bottomimage: {
-        width: 30,
-        height: 30,
-        borderRadius: 40
+    circle: {
+        width: 40,
+        height: 40,
+        marginTop: 10,
+        marginLeft: 20,
+        borderRadius: 100/2,
+        backgroundColor: '#eaaf7e'
     },
     bottomtext: {
         marginLeft: 10,
@@ -319,18 +252,6 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: "#ACACAC",
         fontWeight: 'bold'
-    },
-    bottomtext2: {
-        marginLeft: 5,
-        fontSize: 16
-    },
-    circle: {
-        width: 40,
-        height: 40,
-        marginTop: 10,
-        marginLeft: 20,
-        borderRadius: 100/2,
-        backgroundColor: '#eaaf7e'
     },
     fieldname: {
         marginLeft: 5,
@@ -355,5 +276,59 @@ const styles = StyleSheet.create({
         fontSize: 10,
         fontWeight: "normal",
         marginLeft: 3,
+    },
+    container: {
+        flex: 2,
+        padding: 3,
+    },
+    toptext: {
+        fontSize: 26,
+        marginTop: 20,
+        marginLeft: 10,
+        marginBottom: 20,
+    },
+    middle: {
+        flex: 1.5,
+        shadowColor: "#000",
+    },
+    middleheader: {
+        justifyContent:"space-between",
+        flexDirection: 'row',
+    },
+    header: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginLeft: 10,
+        marginBottom: 15
+    },
+    bottomheader: {
+        justifyContent:"space-between",
+        flexDirection: 'row',
+        marginLeft: 10,
+    },
+    header2: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginLeft: 10,
+        marginBottom: 15
+    },
+    showmore: {
+        color: '#63816D',
+        fontSize: 12,
+        fontWeight: 'bold',
+        marginRight: 20
+    },
+    bottom: {
+        marginLeft: 15,
+        marginRight: 15,
+        marginBottom: 10,
+        flex: 2,
+        shadowColor: 'rgba(0,0,0, .1)', // IOS
+        shadowOffset: { height: 3, width: 2 }, // IOS
+        shadowOpacity: 1, // IOS
+        shadowRadius: 1, //IOS
+        elevation: 3, // android
+        backgroundColor: '#fbfbfb',
+        borderRadius: 8
     }
 });

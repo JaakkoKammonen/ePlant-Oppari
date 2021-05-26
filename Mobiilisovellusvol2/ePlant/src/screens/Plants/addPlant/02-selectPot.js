@@ -6,10 +6,10 @@ import kuva from '../../../assets/herbs.png'
 
 export default function SelectPot(props) {
 
+    // tyylit käyty läpi -> järjestelty, uudelleen nimetty & poistettu ne, joita ei käytetä  //
+
     const my_ePlants = useSelector(state => state.firebase.my_ePlants)
-
     const my_Plants = useSelector(state => state.firebase.my_Plants)
-
 
     const { navigate } = props.navigation;
     
@@ -92,7 +92,7 @@ export default function SelectPot(props) {
     return (
         <View style={styles.container}>
             <View style={styles.bordertop}>
-                <Text style={{width:"14%"}}></Text>
+                <Text style={styles.text_top}></Text>
                 <Text style={styles.text}>Select ePlant</Text>
                 <Icon 
                     name="close" 
@@ -107,7 +107,6 @@ export default function SelectPot(props) {
             
         {renderePlants()}
 
-            
             <View style={styles.bottom}>
                 <Button
                     icon={{
@@ -128,30 +127,6 @@ export default function SelectPot(props) {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    text: {
-        fontSize: 14,
-        fontWeight: "bold",
-        textAlign: 'center',
-        marginTop: 48,
-        paddingBottom: 20,
-    },
-    bordertop: {
-        flexDirection:"row",
-        justifyContent:"space-between"
-    },
-    top: {
-        fontSize: 36,
-        marginTop: 30,
-        marginLeft: 20,
-    },
-    icon: {
-        marginTop: "70%",
-        marginRight:15,
-        color: 'grey',
-    },
     middle: {
         alignItems: 'center',
         justifyContent: 'center',
@@ -178,6 +153,33 @@ const styles = StyleSheet.create({
     plantimage: { 
         width: 150, 
         height: 150,
+    },
+    container: {
+        flex: 1,
+    },
+    bordertop: {
+        flexDirection:"row",
+        justifyContent:"space-between"
+    },
+    text_top: {
+        width:"14%"
+    },
+    text: {
+        fontSize: 14,
+        fontWeight: "bold",
+        textAlign: 'center',
+        marginTop: 48,
+        paddingBottom: 20,
+    },
+    icon: {
+        marginTop: "70%",
+        marginRight:15,
+        color: 'grey',
+    },
+    top: {
+        fontSize: 36,
+        marginTop: 30,
+        marginLeft: 20,
     },
     bottom: {
         justifyContent:"center",

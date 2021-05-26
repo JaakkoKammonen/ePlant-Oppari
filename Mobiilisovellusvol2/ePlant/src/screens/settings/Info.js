@@ -1,8 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function Info(props) {
+
+    // tyylit käyty läpi -> järjestelty, uudelleen nimetty & poistettu ne, joita ei käytetä  //
 
     const { navigate } = props.navigation;
 
@@ -21,22 +23,17 @@ export default function Info(props) {
 
 const styles = StyleSheet.create({
     container: {
-        //backgroundColor: '#FCFCFC',
         flex: 1,
     },
-    topimage: {
-        width: '100%',
-        height: 250
+    arrow: {
+        marginLeft: 20,
+        marginTop: 10,
+        color: 'grey'
     },
     description: {
         marginLeft: 15,
         marginRight: 15,
         marginTop: 15,
         fontSize: 14
-    },
-    arrow: {
-        marginLeft: 20,
-        marginTop: 10,
-        color: 'grey'
     }
 });

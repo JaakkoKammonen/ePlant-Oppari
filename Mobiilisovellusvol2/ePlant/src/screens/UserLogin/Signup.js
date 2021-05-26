@@ -6,6 +6,9 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import swal from 'sweetalert';
 
 export default function Signup(props) {
+
+  // tyylit käyty läpi -> järjestelty, uudelleen nimetty & poistettu ne, joita ei käytetä  //
+
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
@@ -81,15 +84,21 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
+  arrow: {
+    padding: 20,
+    marginRight: 350,
+    marginTop: 20,
+    color: "#63816D",
+  },
+  logo: {
+    width: 306,
+    height: 214,
+  },
   signuptext: {
     fontSize: 12,
     fontWeight: "bold",
     textTransform: "uppercase",
     letterSpacing: 0.5,
-  },
-  logo: {
-    width: 306,
-    height: 214,
   },
   buttonsignup: {
     backgroundColor: "#63816D",
@@ -100,11 +109,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textTransform: "uppercase",
     letterSpacing: 0.5,
-  },
-  arrow: {
-    padding: 20,
-    marginRight: 350,
-    marginTop: 20,
-    color: "#63816D",
-  },
+  }
 });

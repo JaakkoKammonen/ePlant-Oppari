@@ -3,9 +3,11 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import LogginMiddleware from "../../components/Redux/03-middleware/LogginMiddleware";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Input, Button } from "react-native-elements";
-//import swal from 'sweetalert';
 
 export default function Login(props) {
+
+  // tyylit käyty läpi -> järjestelty, uudelleen nimetty & poistettu ne, joita ei käytetä  //
+
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [passwordShown, setPasswordShown] = useState(false);
@@ -85,36 +87,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
-  forgotpassword: {
-    fontSize: 10,
-    fontWeight: "normal",
-    textTransform: "uppercase",
-    marginTop: 10,
-    marginBottom: 20,
-    letterSpacing: 0.5,
-  },
-  notamember: {
-    fontSize: 12,
-    fontWeight: "normal",
-    textTransform: "uppercase",
-    marginTop: 20,
-    letterSpacing: 0.5,
+  logo: {
+    width: 306,
+    height: 214,
   },
   signintext: {
     fontSize: 12,
     fontWeight: "bold",
     textTransform: "uppercase",
     letterSpacing: 0.5,
-  },
-  signuptext2: {
-    fontSize: 12,
-    fontWeight: "bold",
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
-  },
-  logo: {
-    width: 306,
-    height: 214,
   },
   buttonsignin: {
     backgroundColor: "#63816D",
@@ -124,6 +105,27 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "bold",
     textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  notamember: {
+    fontSize: 12,
+    fontWeight: "normal",
+    textTransform: "uppercase",
+    marginTop: 20,
+    letterSpacing: 0.5,
+  },
+  signuptext2: {
+    fontSize: 12,
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  forgotpassword: {
+    fontSize: 10,
+    fontWeight: "normal",
+    textTransform: "uppercase",
+    marginTop: 10,
+    marginBottom: 20,
     letterSpacing: 0.5,
   },
 });
