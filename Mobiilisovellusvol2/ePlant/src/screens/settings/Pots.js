@@ -24,12 +24,9 @@ export default function Pots(props) {
             .then((willDelete) => {
                 if (willDelete) {
 
-    FireBasemiddleware.DeleteUserEPlant(ePlantID)
+            FireBasemiddleware.DeleteUserEPlant(ePlantID, navigate)
 
-            swal("Poof! Pot deleted!", {
-                icon: "success",
-                timer: 2000,
-            });
+            
             } else {
             swal("Your pot is safe!", {
                 button: "Close",

@@ -13,12 +13,11 @@
 #define AUTOCONNECT_URI_UPDATE      AUTOCONNECT_URI "/update"
 #define AUTOCONNECT_URI_UPDATE_ACT  AUTOCONNECT_URI "/update_act"*/
 
+/* Replace with your ThingSpeak channel_id and write_apikey!!!! */
 long unsigned  int channel_id = 1079275;        
 const String write_api_key ="CSI9579IPM1KPS7H";  
 const char* server = "api.thingspeak.com";
 
-#define INTERVAL 43200000                                                       // 12h Vesipumpun millis() interval
-static uint64_t send_interval_ms;                                               // Määritelty millis-formaatti
 
 //#define ECAnturi 35
 #define VREF 5.0 // analog reference voltage(Volt) of the ADC
@@ -34,7 +33,16 @@ AutoConnect Portal(Server);
 AutoConnectConfig config;
 WiFiClient wifiClient;
 
-int ilmaPumppu = 33;                                                            // Ilmapumpun ohjauspinni (Releen ohjaus)
+
+/*
+ * AirPump pin, Controlls relay that AirPump is connected.
+ * 
+ * AirPumpThingSpeakField
+ * In ThingSpeak we will set 1 channel that have 3 fields. 
+*/
+int AirPump = 33;
+int AirPumpThingSpeakField = 3;
+
 
 int PHTasoAnturiVirta = 5;                                                      // Antureiden virrat
 int PHAnturi= 32;
@@ -42,18 +50,14 @@ int PHAnturi= 32;
 int ECAnturiVirta = 18;
 int ECAnturi= A0;
  
-int ilmaPumppuThingspeakOhjaus = 4;                                             // ThingSpeakin Read-metodilla päivitettävä arvo 0/1
-int anturienArvo = 5;                                                           // ThingSpeakin Read-metodilla päivitettävä arvo 0/1 
-int moistureRead = 0; 
 
-int moistureField = 2;
-int ThingSpeakFieldIlmaPumppu = 3;                                              // ThingSpeak-field numero
-int ThingSpeakFieldAnturiDataSend = 5;                                          // ThingSpeak-field arvo
-int automaattiOhjausField = 6;                                                  // ThingSpeak-field arvo
+                                              // ThingSpeak-field numero
+int SendSensorDataThingSpeakField= 4;                                          // ThingSpeak-field arvo
+
 
 void setup() {
 
-  pinMode(ilmaPumppu,OUTPUT);                                                   // Pin-output anturien pinneille
+  pinMode(AirPump,OUTPUT);                                                   // Pin-output anturien pinneille
   pinMode(PHTasoAnturiVirta,OUTPUT);                                            // Relay anturien pinneille
   pinMode(ECAnturiVirta,OUTPUT);
   //pinMode(ECAnturi,INPUT);
@@ -80,7 +84,7 @@ void setup() {
 WiFi.setAutoReconnect(true);                                                    // Automaattinen Wifin yhdistys, jos yhteys katkeaa
 ThingSpeak.begin(wifiClient);                                                   // Alustus Thingspeakille datan lähetykseen
 
-send_interval_ms = millis();                                                    // Ajan aloitus
+                                                
 
 }
 
@@ -167,33 +171,48 @@ send_interval_ms = millis();                                                    
 void loop() {
   
   Portal.handleClient();
-
-  if (WiFi.status() != WL_CONNECTED) {                                           // Wifi ei ole kytketty
-      
-  // Pidetään ilmapumppua päällä
-  Serial.println("Ei nettiä, ilmapumppu päällä koko ajan.");
-  // HIGH = pois päältä, LOW = päällä
-  digitalWrite(ilmaPumppu, LOW);                                                 // Ilmapumppu päälle -> Releen pinni aktivoidaan
-  }
   
-   if (WiFi.status() == WL_CONNECTED) {                                          // Wifi kytkettynä
- 
-      ilmaPumppuThingspeakOhjaus = ThingSpeak.readFloatField(channel_id, ThingSpeakFieldIlmaPumppu);   // Luetaan ilmapumpunohjausarvo Thingspeakista
-        
-      if(ilmaPumppuThingspeakOhjaus == 1){                                       // Jos arvo 1 == pumppu päällä 3 sec
-        digitalWrite(ilmaPumppu, HIGH);                                          // Jos arvo 0 == pumppu ei ole päällä
-        Serial.println("ThingSpeak arvo 1. Ilmapumppu on päällä. ");
+  // Wifi is not connected!
+  if (WiFi.status() != WL_CONNECTED) {                                           
+      
+  // AirPump is allways on, when there is no internet connection.
+  Serial.println("No internet connection, AirPump run allways!");
+  // HIGH = OFF, LOW = ON
+  // AirPump ON -> Relay Pin is activated
+  digitalWrite(AirPump, LOW);
+  }
+
+
+    // If Internet connection is made.
+   if (WiFi.status() == WL_CONNECTED) { 
+
+      // Read AirpumpControll value from ThingsPeak. 
+      //If value === 1, Airpump ON,
+      //If value === 0, Airpump OFF
+      int AirPumpONOFFValue = ThingSpeak.readFloatField(channel_id, AirPumpThingSpeakField);
+
+      
+      if(AirPumpONOFFValue == 1){
+        // AirPump ON
+        // HIGH = OFF, LOW = ON
+        digitalWrite(AirPump, LOW);                                          // Jos arvo 0 == pumppu ei ole päällä
+        Serial.println("ThingSpeak value 1. AirPump is ON. ");
       }
-      else if(ilmaPumppuThingspeakOhjaus == 0){
-        digitalWrite(ilmaPumppu, LOW);
-        Serial.println("ThingSpeak arvo 0. Ilmapumppu on pois päältä. ");
+      else if(AirPumpONOFFValue == 0){
+        // AirPump OFF
+        // HIGH = OFF, LOW = ON
+        digitalWrite(AirPump, HIGH);
+        Serial.println("ThingSpeak value 0. AirPump is OFF. ");
       }
      
+      // Read SensorControll value from ThingsPeak. 
+      int SendSensorValuesONOFF = ThingSpeak.readFloatField(channel_id, SendSensorDataThingSpeakField);   
 
-      anturienArvo = ThingSpeak.readFloatField(channel_id, ThingSpeakFieldAnturiDataSend);   // Luetaan anturien lähetyksen ohjausarvo Thingspeakiin
-    
-       if (anturienArvo == 1) {                                                  // Mikäli arvo 1 == luetaan anturit ja tallennetaan
-                                                                                 // metodin sisäisiin muuttujiin ja lähetetään Thingspeakiin
+       // If SensorControll value is 1,
+       // Send Sensors values to ThingSpeak.
+       if (SendSensorValuesONOFF == 1) {
+       
+       Serial.println("ThingSpeak value 1. Reading sensor values then sending them to ThingSpeak"); 
            int PHarvo = PHTasoAnturiArvo();
            int ECarvo = ECAnturiArvo();
            
@@ -216,19 +235,22 @@ void loop() {
               wifiClient.print("\n\n");
               wifiClient.print(data_to_send);
               delay(1000);
-              Serial.println("ThingSpeak arvo 1. Anturit ovat luettu ja lähetetty!");
-  }
-  wifiClient.stop();                                                            // Thingspeak tunneli suljetaan
-  
+              Serial.println("SensorData");
+              Serial.println( );
+              Serial.println("PH-Value:");
+              Serial.println( PHarvo );
+              Serial.println( );
+              Serial.println("PPM-value:");
+              Serial.println(ECarvo );
+               Serial.println( );
+            }
+          wifiClient.stop();
        }
 
-       else {                                                                   // Kun anturien arvo on 0
-        Serial.println("ThingSpeak arvo 0. Anturien arvoja ei lähetetty");      // Tulostetaan consoleen
+       else if (SendSensorValuesONOFF == 0) {
+        Serial.println("ThingSpeak sensor send value is 0. No sensors were read or send!");      // Tulostetaan consoleen
        }
-
-
-  
-       
+    
   } 
   Serial.println("Loop over");
   delay(10000);                                                                 // Odotetaan 10 sekuntia

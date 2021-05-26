@@ -7,6 +7,8 @@ import setImage from "../components/SetImage"
 import FireBasemiddleware from '../components/Redux/03-middleware/FireBasemiddleware';
 import swal from 'sweetalert';
 import { ScrollView } from 'react-native-gesture-handler';
+import { Button } from 'react-native';
+import ThingSpeakMiddleware from '../components/Redux/03-middleware/ThingSpeakMiddleware';
 
 export default function MyPlant(props) {
 
@@ -36,6 +38,9 @@ export default function MyPlant(props) {
     const plant = props.navigation.state.params.plant[1];
     const plantID = props.navigation.state.params.plant[0];
     const channelId = plant.ePlantPot.channel_id;
+    const write_apikey = plant.ePlantPot.write_apikey;
+
+    console.log(plant)
 
     const [Field1, setField1] = useState({ 
         name: plant.ePlantPot.ePlantModel.Field1, 
@@ -44,6 +49,15 @@ export default function MyPlant(props) {
 
     const [Field2, setField2] = useState({ 
         name: plant.ePlantPot.ePlantModel.Field2, 
+        value: 0 
+    });
+
+    const [Field3, setField3] = useState({ 
+        name: plant.ePlantPot.ePlantModel.Field3, 
+        value:  0
+    });
+    const [Field4, setField4] = useState({ 
+        name: plant.ePlantPot.ePlantModel.Field4, 
         value: 0 
     });
 
@@ -198,14 +212,14 @@ export default function MyPlant(props) {
                         <AnimatedCircularProgress
                         size={100}
                         width={10}
-                        fill={Field1.value}
+                        fill={parseFloat(Field1.value, 10)}
                         tintColor="#00e0ff"
                         //onAnimationComplete={() => console.log('onAnimationComplete')}
                         backgroundColor="#3d5875">
                             {
                                 (fill) => (
                                 <Text>
-                                   {Field1.value}
+                                   {fill}
                                 </Text>
                                 )
                             }
@@ -217,14 +231,14 @@ export default function MyPlant(props) {
                         <AnimatedCircularProgress
                         size={100}
                         width={10}
-                        fill={Field2.value}
+                        fill={parseFloat(Field2.value, 10)}
                         tintColor="#00e0ff"
                         //onAnimationComplete={() => console.log('onAnimationComplete')}
                         backgroundColor="#3d5875">
                             {
                                 (fill) => (
                                 <Text>
-                                   {Field2.value}
+                                   {fill}
                                 </Text>
                                 )
                             }
@@ -234,6 +248,11 @@ export default function MyPlant(props) {
                 </View>
 
                 {PlantUpdateDate()}
+
+                <Button 
+                title="asdf"
+                onPress={ () => ThingSpeakMiddleware.AirPumpON()}
+                />
                 
                 <View style={styles.bottomheader}>
                 <Text style={styles.notifi}>Notifications</Text>
