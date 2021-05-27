@@ -278,14 +278,6 @@ export default function MyPlant(props) {
                 title={Field3.name + " ON"}
                 onPress={ () => HandleSelect(Field3, "ON")}
                 />
-                <Button 
-                title={Field4.name + " OFF"}
-                onPress={ () => HandleSelect(Field4, "OFF")}
-                />
-                <Button 
-                title={Field4.name + " ON"}
-                onPress={ () => HandleSelect(Field4, "ON")}
-                />
                 
                 <View style={styles.bottomheader}>
                 <Text style={styles.notifi}>Notifications</Text>

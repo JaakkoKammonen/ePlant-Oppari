@@ -44,8 +44,12 @@ int AirPump = 33;
 int AirPumpThingSpeakField = 3;
 
 
-int PHTasoAnturiVirta = 5;                                                      // Antureiden virrat
-int PHAnturi= 32;
+int PHSensor= 32;
+float calibration_value = 21.34 - 0.7;
+int phval = 0; 
+unsigned long int avgval; 
+int buffer_arr[10],temp;
+float ph_act;
 
 int ECAnturiVirta = 18;
 int ECAnturi= A0;
@@ -53,8 +57,7 @@ int ECAnturi= A0;
 
 void setup() {
 
-  pinMode(AirPump,OUTPUT);                                                   // Pin-output anturien pinneille
-  pinMode(PHTasoAnturiVirta,OUTPUT);                                            // Relay anturien pinneille
+  pinMode(AirPump,OUTPUT);                                          // Relay anturien pinneille
   pinMode(ECAnturiVirta,OUTPUT);
   
   delay(1000);
@@ -83,36 +86,39 @@ ThingSpeak.begin(wifiClient);                                                   
 
 }
 
+
  int getMedianNum(int bArray[], int iFilterLen)
-            {
-            int bTab[iFilterLen];
-            for (byte i = 0; i<iFilterLen; i++)
-            bTab[i] = bArray[i];
-            int i, j, bTemp;
-            for (j = 0; j < iFilterLen - 1; j++)
-            {
-            for (i = 0; i < iFilterLen - j - 1; i++)
-            {
-            if (bTab[i] > bTab[i + 1])
-            {
-            bTemp = bTab[i];
-            bTab[i] = bTab[i + 1];
-            bTab[i + 1] = bTemp;
-            }
-            }
-            }
-            if ((iFilterLen & 1) > 0)
-            bTemp = bTab[(iFilterLen - 1) / 2];
-            else
-            bTemp = (bTab[iFilterLen / 2] + bTab[iFilterLen / 2 - 1]) / 2;
-            return bTemp;
-            }
+                  {
+                  int bTab[iFilterLen];
+                  for (byte i = 0; i<iFilterLen; i++)
+                  bTab[i] = bArray[i];
+                  int i, j, bTemp;
+                  for (j = 0; j < iFilterLen - 1; j++)
+                  {
+                  for (i = 0; i < iFilterLen - j - 1; i++)
+                  {
+                  if (bTab[i] > bTab[i + 1])
+                  {
+                  bTemp = bTab[i];
+                  bTab[i] = bTab[i + 1];
+                  bTab[i + 1] = bTemp;
+                  }
+                  }
+                  }
+                  if ((iFilterLen & 1) > 0)
+                  bTemp = bTab[(iFilterLen - 1) / 2];
+                  else
+                  bTemp = (bTab[iFilterLen / 2] + bTab[iFilterLen / 2 - 1]) / 2;
+                  return bTemp;
+                  }
+
+
             
  static int ECAnturiArvo() {
 
         digitalWrite(ECAnturiVirta, HIGH);                                      // Virrat päälle -> odotus -> luetaan -> tallennetaan muuttujaan tieto -> virrat pois
-        delay(5000);
-        
+        delay(10000);
+
           analogBuffer[analogBufferIndex] = analogRead(ECAnturi); //read the analog value and store into the buffer
           analogBufferIndex++;
           if(analogBufferIndex == SCOUNT)
@@ -132,34 +138,43 @@ ThingSpeak.begin(wifiClient);                                                   
           Serial.println("ppm");
 
         digitalWrite(ECAnturiVirta,LOW);
-      
-       return tdsValue,0;
+        int returnValue = tdsValue;
+        
+       return returnValue;
     };
 
   static  int PHTasoAnturiArvo() {
-  
-        digitalWrite(PHTasoAnturiVirta, HIGH);                                   // Virrat päälle -> odotus -> luetaan -> tallennetaan muuttujaan tieto -> virrat pois
-        delay(5000);
         
-        int PHTaso1 = analogRead(PHAnturi);
-        delay(1000);
-        int PHTaso2 = analogRead(PHAnturi);
-        delay(1000);
-        int PHTaso3 = analogRead(PHAnturi);
-        delay(1000);
-        int PHTaso4 = analogRead(PHAnturi);
-        delay(1000);
-        int PHTaso5 = analogRead(PHAnturi);
-        delay(1000);
+                for(int i=0;i<10;i++) 
+               { 
+               buffer_arr[i]=analogRead(PHSensor);
+               delay(30);
+               }
+               for(int i=0;i<9;i++)
+               {
+               for(int j=i+1;j<10;j++)
+               {
+               if(buffer_arr[i]>buffer_arr[j])
+               {
+               temp=buffer_arr[i];
+               buffer_arr[i]=buffer_arr[j];
+               buffer_arr[j]=temp;
+               }
+               }
+               }
+               avgval=0;
+               for(int i=2;i<8;i++)
+               avgval+=buffer_arr[i];
+               float volt=(float)avgval*5.0/1024/6; 
+                ph_act = -5.70 * volt + calibration_value;
+               
+               Serial.println("pH Val: ");
+               Serial.print(ph_act);
+               delay(1000);
 
-        int PHTaso = (PHTaso1 + PHTaso2 + PHTaso3 + PHTaso4 + PHTaso5)/5;
+          float returnValue = ph_act;   
         
-        Serial.println("PHTaso");
-        Serial.println(PHTaso);
-        Serial.println(" ");
-        digitalWrite(PHTasoAnturiVirta, LOW);
-
-         return PHTaso;
+         return returnValue;
  };
 
    
