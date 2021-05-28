@@ -66,10 +66,8 @@ export default function SelectPot(props) {
 
     const renderePlants = () => {
         if(my_ePlants !== "No ePlants yet") {
-            let eplants = Object.entries(my_ePlants).map((item) => {
-                return item[1]
-            })
-            console.log(eplants)
+         
+            //console.log(Object.entries(my_ePlants))
             return(
                 <View style={styles.middle}>
                     <Carousel
@@ -79,18 +77,18 @@ export default function SelectPot(props) {
                     horizontal={true}
                     layout={'default'}
                     layoutCardOffset={18}
-                    data={eplants}
+                    data={Object.entries(my_ePlants)}
                     keyExtractor={(item, index) => index.toString()}
-                    renderItem={({ eplant }) =>
+                    renderItem={({ item }) =>
                    
                     <TouchableOpacity
-                    onPress={() => handleSelect(eplant)}
+                    onPress={() => handleSelect(item)}
                     title={"choosePot"}
                     style={styles.border}
                     >
                     <Image style={styles.plantimage} source={require("../../../assets/pot_test.png")} />
                     <View style={styles.text_container}>
-                    <Text style={styles.plantheader}>{eplant.ePlantModel.type}</Text>
+                    <Text style={styles.plantheader}>{item[1].ePlantModel.type}</Text>
                     </View>
                 </TouchableOpacity>
                 }
