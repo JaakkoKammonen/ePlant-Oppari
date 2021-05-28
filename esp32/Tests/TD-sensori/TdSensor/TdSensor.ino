@@ -35,9 +35,10 @@ Serial.print("TDS Value:");
 Serial.print(tdsValue,0);
 Serial.println("ppm");
 
-
-
 delay(5000);
+Float retrunValue = tdsValue 
+return returnValue
+
 }
 
 

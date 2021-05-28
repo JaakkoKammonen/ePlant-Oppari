@@ -9,24 +9,10 @@
 #include <WebServer.h>
 #include <ThingSpeak.h>
 
-/*#define AUTOCONNECT_URI             "/ac"
-#define AUTOCONNECT_URI_UPDATE      AUTOCONNECT_URI "/update"
-#define AUTOCONNECT_URI_UPDATE_ACT  AUTOCONNECT_URI "/update_act"*/
-
 /* Replace with your ThingSpeak channel_id and write_apikey!!!! */
 long unsigned  int channel_id = 1079275;        
 const String write_api_key ="CSI9579IPM1KPS7H";  
 const char* server = "api.thingspeak.com";
-
-
-//#define ECAnturi 35
-#define VREF 5.0 // analog reference voltage(Volt) of the ADC
-#define SCOUNT 30 // sum of sample point
-
-int analogBuffer[SCOUNT]; // store the analog value in the array, read from ADC
-int analogBufferTemp[SCOUNT];
-int analogBufferIndex = 0,copyIndex = 0;
-float averageVoltage = 3.3,tdsValue = 0,temperature = 25;
 
 WebServer Server;
 AutoConnect Portal(Server);
@@ -43,19 +29,33 @@ WiFiClient wifiClient;
 int AirPump = 33;
 int AirPumpThingSpeakField = 3;
 
-
+// PH-sensor
 int pHSense = 35;
 int samples = 10;
 float adc_resolution = 1024.0;
 
-int ECAnturiVirta = 18;
-int ECAnturi= A0;
+//TDS
+int TDSVirta = 18;
+#define TdsSensorPin 34
+#define VREF 3.3 // analog reference voltage(Volt) of the ADC
+#define SCOUNT 30 // sum of sample point
+int analogBuffer[SCOUNT]; // store the analog value in the array, read from ADC
+int analogBufferTemp[SCOUNT];
+int analogBufferIndex = 0,copyIndex = 0;
+float averageVoltage = 0,tdsValue = 0,temperature = 25;
+
+// Millis()
+int period = 3600000;
+// hour 3 600 000
+// 6hours = 21 600 000
+unsigned long time_now = 0;
 
 
 void setup() {
 
   pinMode(AirPump,OUTPUT);                                          // Relay anturien pinneille
-  pinMode(ECAnturiVirta,OUTPUT);
+  pinMode(TDSVirta,OUTPUT);
+  pinMode(TdsSensorPin,INPUT);
   
   delay(1000);
   config.apid = "ePlantVol2";                                                   // Hotspot-nimi
@@ -87,31 +87,36 @@ ThingSpeak.begin(wifiClient);                                                   
  
  static int ECAnturiArvo() {
 
-        digitalWrite(ECAnturiVirta, HIGH);                                      // Virrat päälle -> odotus -> luetaan -> tallennetaan muuttujaan tieto -> virrat pois
+        digitalWrite(TDSVirta, HIGH);                                      // Virrat päälle -> odotus -> luetaan -> tallennetaan muuttujaan tieto -> virrat pois
         delay(10000);
 
-          analogBuffer[analogBufferIndex] = analogRead(ECAnturi); //read the analog value and store into the buffer
+         analogBuffer[analogBufferIndex] = analogRead(TdsSensorPin); //read the analog value and store into the buffer
           analogBufferIndex++;
-          if(analogBufferIndex == SCOUNT)
+          if(analogBufferIndex == SCOUNT) {
           analogBufferIndex = 0;
-
-          for(copyIndex=0;copyIndex<SCOUNT;copyIndex++)
+          }
+          
+          
+          for(copyIndex=0;copyIndex<SCOUNT;copyIndex++){
           analogBufferTemp[copyIndex]= analogBuffer[copyIndex];
-          averageVoltage = getMedianNum(analogBufferTemp,SCOUNT) * (float)VREF/ 4095; // read the analog value more stable by the median filtering algorithm, and convert to voltage value
+          averageVoltage = getMedianNum(analogBufferTemp,SCOUNT) * (float)VREF/ 1024.0; // read the analog value more stable by the median filtering algorithm, and convert to voltage value
           float compensationCoefficient=1.0+0.02*(temperature-25.0); //temperature compensation formula: fFinalResult(25^C) = fFinalResult(current)/(1.0+0.02*(fTP-25.0));
           float compensationVolatge=averageVoltage/compensationCoefficient; //temperature compensation
           tdsValue=(133.42*compensationVolatge*compensationVolatge*compensationVolatge - 255.86*compensationVolatge*compensationVolatge + 857.39*compensationVolatge)*0.5; //convert voltage value to tds value
+          
+          }
           //Serial.print("voltage:");
           //Serial.print(averageVoltage,2);
           //Serial.print("V ");
-          //Serial.print("TDS Value:");
-          //Serial.print(tdsValue,0);
-          //Serial.println("ppm");
+          Serial.print("TDS Value:");
+          Serial.print(tdsValue,0);
+          Serial.println("ppm");
+          
+          delay(5000);
+          digitalWrite(TDSVirta, LOW); 
+          float returnValue = tdsValue;
+          return returnValue;
 
-        digitalWrite(ECAnturiVirta,LOW);
-        int returnValue = tdsValue;
-        
-       return returnValue;
     };
 
 
@@ -121,18 +126,17 @@ float ph (float voltage) {
 
   static  int PHTasoAnturiArvo() {
         
-                 int measurings=0;
-  float x = analogRead(pHSense);
-  for (int i = 0; i < samples; i++)
-  {
-    measurings += analogRead(pHSense);
-    delay(10);
-  }
-    float voltage = 5 / adc_resolution * (measurings/5.75)/samples;
-    //Serial.print("pH= ");
-    //Serial.println(ph(voltage));
-    delay(3000);
-
+           int measurings=0;
+          float x = analogRead(pHSense);
+          for (int i = 0; i < samples; i++)
+          {
+            measurings += analogRead(pHSense);
+            delay(10);
+          }
+            float voltage = 4.96 / adc_resolution * (measurings/5.75)/samples;
+            Serial.print("pH= ");
+            Serial.println(ph(voltage));
+            delay(3000);
 
           float returnValue = ph(voltage);   
         
@@ -142,7 +146,7 @@ float ph (float voltage) {
    
 void loop() {
   
-  Portal.handleClient();
+  Portal.handleClient();   
   
   // Wifi is not connected!
   if (WiFi.status() != WL_CONNECTED) {                                           
@@ -178,8 +182,10 @@ void loop() {
       }
      
     
-       
-       Serial.println("Reading sensor values then sending them to ThingSpeak"); 
+       if(millis() >= time_now + period){
+        time_now += period;
+
+         Serial.println("Reading sensor values then sending them to ThingSpeak. "); 
            float PHarvo = PHTasoAnturiArvo();
            float ECarvo = ECAnturiArvo();
            
@@ -211,40 +217,40 @@ void loop() {
               Serial.println(ECarvo );
                Serial.println( );
             }
+        
+    }
+       
           wifiClient.stop();
        }
 
   
   Serial.println("Loop over");
-  delay(10000);     // Odotetaan 10 sekuntia
+  delay(5000);     // Odotetaan 10 sekuntia
  }
 
 
-          int getMedianNum(int bArray[], int iFilterLen){
-  
-                  int bTab[iFilterLen];
-                  for (byte i = 0; i<iFilterLen; i++)
-                  bTab[i] = bArray[i];
-                  int i, j, bTemp;
-                  for (j = 0; j < iFilterLen - 1; j++)
-                  {
-                  for (i = 0; i < iFilterLen - j - 1; i++)
-                  {
-                  if (bTab[i] > bTab[i + 1])
-                  {
-                  bTemp = bTab[i];
-                  bTab[i] = bTab[i + 1];
-                  bTab[i + 1] = bTemp;
-                  }
-                  }
-                  }
-                  if ((iFilterLen & 1) > 0)
-                  bTemp = bTab[(iFilterLen - 1) / 2];
-                  else
-                  bTemp = (bTab[iFilterLen / 2] + bTab[iFilterLen / 2 - 1]) / 2;
-                  return bTemp;
-               }
-
-
+         int getMedianNum(int bArray[], int iFilterLen){
+            int bTab[iFilterLen];
+            for (byte i = 0; i<iFilterLen; i++)
+            bTab[i] = bArray[i];
+            int i, j, bTemp;
+            for (j = 0; j < iFilterLen - 1; j++)
+            {
+            for (i = 0; i < iFilterLen - j - 1; i++)
+            {
+            if (bTab[i] > bTab[i + 1])
+            {
+            bTemp = bTab[i];
+            bTab[i] = bTab[i + 1];
+            bTab[i + 1] = bTemp;
+            }
+            }
+            }
+            if ((iFilterLen & 1) > 0)
+            bTemp = bTab[(iFilterLen - 1) / 2];
+            else
+            bTemp = (bTab[iFilterLen / 2] + bTab[iFilterLen / 2 - 1]) / 2;
+              return bTemp;
+           }
             
  
