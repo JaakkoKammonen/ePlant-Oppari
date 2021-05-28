@@ -25,7 +25,7 @@ export default function MyPlant(props) {
     const channelId = plant.ePlantPot.channel_id;
     const write_apikey = plant.ePlantPot.write_apikey;
 
-    console.log(plant)
+    //console.log(plant)
 
     const [Field1, setField1] = useState({ 
         name: plant.ePlantPot.ePlantModel.Field1.Name,
@@ -48,7 +48,7 @@ export default function MyPlant(props) {
         field:  plant.ePlantPot.ePlantModel.Field4.Field
     });
 
-    //console.log(plant)
+    //console.log(channelId)
     //console.log(Field1, Field2)
     
     const { navigate } = props.navigation;
@@ -74,6 +74,8 @@ export default function MyPlant(props) {
                     setNotifications(responseJson.feeds)
                 } else {
                     setField1({...Field1, value: 0})
+                    setNotifications(responseJson.feeds)
+                    setUpdateDate(responseJson.feeds[responseJson.feeds.length-1].created_at)
                 }
 
                 if (responseJson.feeds[responseJson.feeds.length-1].field2 != null) {

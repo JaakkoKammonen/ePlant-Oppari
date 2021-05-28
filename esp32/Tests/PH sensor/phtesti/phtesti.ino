@@ -21,7 +21,7 @@ void loop () {
     measurings += analogRead(pHSense);
     delay(10);
   }
-    float voltage = 5 / adc_resolution * (measurings/5.75)/samples;
+    float voltage = 4.96 / adc_resolution * (measurings/5.75)/samples;
     Serial.print("pH= ");
     Serial.println(ph(voltage));
     delay(3000);
