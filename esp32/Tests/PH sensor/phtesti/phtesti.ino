@@ -1,42 +1,28 @@
-const int analogInPin = 35; 
-int sensorValue = 0; 
-unsigned long int avgValue; 
-float b;
-int buf[10],temp;
-void setup() {
- Serial.begin(115200);
+int pHSense = 35;
+int samples = 10;
+float adc_resolution = 1024.0;
+
+void setup()
+{
+  Serial.begin(115200);
+  delay(100);
+  Serial.println("cimpleo pH Sense");
 }
- 
-void loop() {
- for(int i=0;i<10;i++) 
- { 
-  buf[i]=analogRead(analogInPin);
-  delay(10);
- }
- for(int i=0;i<9;i++)
- {
-  for(int j=i+1;j<10;j++)
+
+float ph (float voltage) {
+  return 7 + ((2.5 - voltage) / 0.18);
+}
+
+void loop () {
+  int measurings=0;
+  float x = analogRead(pHSense);
+  for (int i = 0; i < samples; i++)
   {
-   if(buf[i]>buf[j])
-   {
-    temp=buf[i];
-    buf[i]=buf[j];
-    buf[j]=temp;
-   }
+    measurings += analogRead(pHSense);
+    delay(10);
   }
- }
- avgValue=0;
- for(int i=2;i<8;i++)
- avgValue+=buf[i];
-
-  float pHVol=(float)avgValue/6*4.95/4095;
-  Serial.print("v = ");
-  Serial.println(pHVol);
-
-  float phValue = -5.70 * pHVol + 21.34;    
-  //float phValue = 7 + ((2.5 - pHVol) / 0.18);
-  Serial.print("Ph=");
-  Serial.println(phValue);
- 
- delay(20);
+    float voltage = 5 / adc_resolution * (measurings/5.75)/samples;
+    Serial.print("pH= ");
+    Serial.println(ph(voltage));
+    delay(3000);
 }

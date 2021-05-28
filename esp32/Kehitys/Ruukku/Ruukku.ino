@@ -44,11 +44,9 @@ int AirPump = 33;
 int AirPumpThingSpeakField = 3;
 
 
-int PHSensor= 35; 
-int sensorValue = 0; 
-unsigned long int avgValue; 
-float b;
-int buf[10],temp;
+int pHSense = 35;
+int samples = 10;
+float adc_resolution = 1024.0;
 
 int ECAnturiVirta = 18;
 int ECAnturi= A0;
@@ -116,39 +114,27 @@ ThingSpeak.begin(wifiClient);                                                   
        return returnValue;
     };
 
+
+float ph (float voltage) {
+  return 7 + ((2.5 - voltage) / 0.18);
+}
+
   static  int PHTasoAnturiArvo() {
         
-                for(int i=0;i<10;i++) 
-                 { 
-                  buf[i]=analogRead(PHSensor);
-                  delay(10);
-                 }
-                 for(int i=0;i<9;i++)
-                 {
-                  for(int j=i+1;j<10;j++)
-                  {
-                   if(buf[i]>buf[j])
-                   {
-                    temp=buf[i];
-                    buf[i]=buf[j];
-                    buf[j]=temp;
-                   }
-                  }
-                 }
-                 avgValue=0;
-                 for(int i=2;i<8;i++)
-                 avgValue+=buf[i];
-                
-                  float pHVol=(float)avgValue/6*4.95/4095;
-                  //Serial.print("v = ");
-                  //Serial.println(pHVol);
-                
-                  float phValue = -5.70 * pHVol + 21.34;    
-                  //float phValue = 7 + ((2.5 - pHVol) / 0.18);
-                  //Serial.print("Ph=");
-                  //Serial.println(phValue);
+                 int measurings=0;
+  float x = analogRead(pHSense);
+  for (int i = 0; i < samples; i++)
+  {
+    measurings += analogRead(pHSense);
+    delay(10);
+  }
+    float voltage = 5 / adc_resolution * (measurings/5.75)/samples;
+    //Serial.print("pH= ");
+    //Serial.println(ph(voltage));
+    delay(3000);
 
-          float returnValue = phValue;   
+
+          float returnValue = ph(voltage);   
         
          return returnValue;
  };
@@ -194,8 +180,8 @@ void loop() {
     
        
        Serial.println("Reading sensor values then sending them to ThingSpeak"); 
-           int PHarvo = PHTasoAnturiArvo();
-           int ECarvo = ECAnturiArvo();
+           float PHarvo = PHTasoAnturiArvo();
+           float ECarvo = ECAnturiArvo();
            
         if (wifiClient.connect(server, 80))                                      // api.thingspeak.com
             {                                                                    // Thingspeak tunneli avataan
