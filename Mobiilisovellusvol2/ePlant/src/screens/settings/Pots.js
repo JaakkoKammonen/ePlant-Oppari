@@ -60,12 +60,12 @@ export default function Pots(props) {
                             <View style={styles.buttonwrapper}>
                             <Button
                             title="Edit"
-                            buttonStyle={styles.potbutton}
+                            buttonStyle={styles.buttonpot}
                             onPress={() => ModifyePlant(item)}
                             />
                              <Button
                             title="Delete"
-                            buttonStyle={styles.potbutton}
+                            buttonStyle={styles.buttonpot}
                             onPress={() => DeletePot(item)}
                             />
                             </View>

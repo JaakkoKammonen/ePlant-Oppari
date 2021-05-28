@@ -146,8 +146,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginTop: 2,
         fontStyle: "italic",
-        color: "#63816D", 
-        marginBottom: 0
+        color: "#63816D"
       },
       buttoncontainer: {
         marginTop: 10,
