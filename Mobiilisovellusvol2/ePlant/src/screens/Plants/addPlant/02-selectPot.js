@@ -67,7 +67,7 @@ export default function SelectPot(props) {
     const renderePlants = () => {
         if(my_ePlants !== "No ePlants yet") {
          
-            //console.log(Object.entries(my_ePlants))
+            console.log(Object.entries(my_ePlants))
             return(
                 <View style={styles.middle}>
                     <Carousel
@@ -89,8 +89,12 @@ export default function SelectPot(props) {
                     <Image style={styles.plantimage} source={require("../../../assets/pot_test.png")} />
                     <View style={styles.text_container}>
                     <Text style={styles.plantheader}>{item[1].ePlantModel.type}</Text>
+            
                     </View>
+                    /** vaihda **/
+                    <Text style={styles.plantheader}>{item[1].ePlantName}</Text>
                 </TouchableOpacity>
+                
                 }
 
                 />

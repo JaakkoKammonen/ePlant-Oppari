@@ -121,6 +121,7 @@ function AddPlantToUser(userUid,species, plantName, ePlant, navigate) {
           date: Date(),
           ePlantPot: {
             ePlantID: ePlant[0],
+            ePlantName: ePlant[1].ePlantName,
             channel_id: ePlant[1].channel_id,
             write_apikey: ePlant[1].write_apikey,
             ePlantModel: ePlant[1].ePlantModel
@@ -147,6 +148,7 @@ function AddePlantToUser(userUid, ePlant, navigate) {
       
       firebase.database().ref('users/' + userUid + '/ePlant').push(
         { 
+          ePlantName: ePlant.ePlantName,
           channel_id: ePlant.channel_id,
           write_apikey: ePlant.write_apikey,
           ePlantModel: ePlant.ePlantModel
@@ -189,6 +191,7 @@ function AddePlantToUser(userUid, ePlant, navigate) {
     //console.log("Ei erroreita, lisätään uusi ePlant")
     firebase.database().ref('users/' + userUid + '/ePlant').push(
     { 
+      ePlantName: ePlant.ePlantName,
       channel_id: ePlant.channel_id,
       write_apikey: ePlant.write_apikey,
       ePlantModel: ePlant.ePlantModel

@@ -13,6 +13,7 @@ export default function SelectName(props) {
     const navigate = props.navigation.state.params.navigation;
 
     const [ePlant, setePlant] = useState({
+        ePlantName: "",
         channel_id: 0,
         write_apikey: "",
         ePlantModel: props.navigation.state.params.ePlantModel
@@ -41,6 +42,20 @@ export default function SelectName(props) {
         source={require("../../../assets/thingspeak.png")}
         />
         <View style={styles.titlewrapper}>
+            <Card.Title>Name your ePlant!</Card.Title>
+            </View>
+            <Input
+                    placeholder=" Eve, John etc."
+                    type="text"
+                    required={true}
+                    inputStyle={styles.channelidinput}
+                    leftIcon={<AntDesign name="areachart" size={24} color="grey" />}
+                    onChangeText={text => setePlant({
+                                    ...ePlant, ePlantName: text})}
+                                returnKeyType='done'
+                />
+                 <View style={styles.titlewrapper}>
+
             <Card.Title>THINGSPEAK CHANNEL ID</Card.Title>
             </View>
             <Input
@@ -53,6 +68,7 @@ export default function SelectName(props) {
                                     ...ePlant, channel_id: text})}
                                 returnKeyType='done'
                 />
+
                    <View style={styles.titlewrapper}>
                <Card.Title>THINGSPEAK WRITE API-KEY</Card.Title>
                </View>

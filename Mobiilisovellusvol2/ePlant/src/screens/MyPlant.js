@@ -16,16 +16,14 @@ export default function MyPlant(props) {
 
     const [notifications, setNotifications] = useState("Loading...")
     const [updateDate, setUpdateDate] = useState("Loading...");
-    
-
-    
 
     const plant = props.navigation.state.params.plant[1];
     const plantID = props.navigation.state.params.plant[0];
     const channelId = plant.ePlantPot.channel_id;
     const write_apikey = plant.ePlantPot.write_apikey;
-
-    //console.log(plant)
+    const ePlantName = plant.ePlantPot.ePlantName;
+    const { navigate } = props.navigation;
+    //console.log(ePlantName)
 
     const [Field1, setField1] = useState({ 
         name: plant.ePlantPot.ePlantModel.Field1.Name,
@@ -43,16 +41,6 @@ export default function MyPlant(props) {
         name: plant.ePlantPot.ePlantModel.Field3.Name, 
         field:  plant.ePlantPot.ePlantModel.Field3.Field
     });
-    const [Field4, setField4] = useState({ 
-        name: plant.ePlantPot.ePlantModel.Field4.Name, 
-        field:  plant.ePlantPot.ePlantModel.Field4.Field
-    });
-
-    //console.log(channelId)
-    //console.log(Field1, Field2)
-    
-    const { navigate } = props.navigation;
-
     
     useEffect(() => {
         getData();
@@ -94,7 +82,8 @@ export default function MyPlant(props) {
     }
 
     const PlantUpdateDate = () =>  {
-
+        // Jos arvo on Loading => Palautetaan else arvo, eli datan hakuvirhe
+        // Jos arvo on saatavilla parsitaan se vuoteen, kk, päivään ja aikaa ja näytetään se!
         if (updateDate !== "Loading...") {
         let year = updateDate.slice(0, 4)
         let month = updateDate.slice(5, 7)
@@ -114,7 +103,8 @@ export default function MyPlant(props) {
 
 
     const DeletePlant = () => {
-
+    // Poistetaan kasvi. Ensin kysytään oletko varma. Jos painetaan Do it!, käytetään middlewarea poistossa.
+    // Jos painetaan Cancel -> ilmoitetaan, että kasville ei tehdä mitään.
         swal({
             title: "Delete plant?",
             text: "Are you sure?",
@@ -142,7 +132,9 @@ export default function MyPlant(props) {
 
 
     const timeParser = (date) => {
-            
+            // Notifikaatioiden ajan muunnos.
+            // Jos datan haku on onnistunut tätä käytetään. 
+            // Parsitaan se vuoteen, kk, päivään ja aikaa  => Palautetaan ne!
             let year = date.slice(0, 4)
             let month = date.slice(5, 7)
             let day = date.slice(8, 10)
@@ -150,11 +142,16 @@ export default function MyPlant(props) {
 
             return( day + "." + month + "." + year + " at: " +time)
     }
+
     const NotificationMaker = () => {
         
         //console.log(notifications)
+        // Jos datan haussa tapahtuu error => arvoksi jää Loading...
+        // Tällöin palautetaan else eli teksti, jossa lukee että haussa tapahtui error
+        // Jos notificaatiot tulevat normaalisti if arvo on tosi.
         if (notifications !== "Loading...") {
 
+        // Haetaan viimeiset kymmenen arvoa!
         let lastTen = notifications.slice(notifications.length-11, notifications.length-1).reverse()
         
         return(        
@@ -218,6 +215,8 @@ export default function MyPlant(props) {
             <View style={styles.container2}>
                 <View style={styles.date}>    
                     <Text style={styles.datetext1}>{moment(plant.paivays).format("DD.MM.YYYY")}</Text>
+                      <Text>ePlantName: {ePlantName} </Text>  
+
                     <View style={styles.moredetails}>
                 <Ionicons 
                 name="ios-trash" 
