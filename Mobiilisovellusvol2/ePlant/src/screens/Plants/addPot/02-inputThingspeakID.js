@@ -42,20 +42,20 @@ export default function SelectName(props) {
         source={require("../../../assets/thingspeak.png")}
         />
         <View style={styles.titlewrapper}>
-            <Card.Title>Name your ePlant!</Card.Title>
+            <Card.Title>NAME YOUR POT</Card.Title>
             </View>
             <Input
-                    placeholder=" Eve, John etc."
+                    placeholder=" Anna, John etc."
                     type="text"
                     required={true}
-                    inputStyle={styles.channelidinput}
+                    inputStyle={styles.potinput}
                     leftIcon={<AntDesign name="areachart" size={24} color="grey" />}
                     onChangeText={text => setePlant({
                                     ...ePlant, ePlantName: text})}
                                 returnKeyType='done'
                 />
-                 <View style={styles.titlewrapper}>
 
+                 <View style={styles.titlewrapper}>
             <Card.Title>THINGSPEAK CHANNEL ID</Card.Title>
             </View>
             <Input
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
       fontSize: 22,
       marginTop: 20,
       fontWeight: '600',
-      marginBottom: 20,
+      marginBottom: 5,
       color: '#63816D',
       alignSelf: 'center'
   },
@@ -116,12 +116,18 @@ const styles = StyleSheet.create({
         padding: 50,
     },
     logo: {
-        width: 260,
-        height: 210,
+        width: 240,
+        height: 190,
     },
     titlewrapper: {
         marginTop: 20
     },
+    potinput: {
+        fontSize: 12,
+        fontWeight: "normal",
+        textTransform: "uppercase",
+        letterSpacing: 0.5,
+      },
     channelidinput: {
       fontSize: 12,
       fontWeight: "normal",

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList, TouchableHighlight } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import moment from "moment";
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
@@ -7,7 +7,6 @@ import setImage from "../components/SetImage"
 import FireBasemiddleware from '../components/Redux/03-middleware/FireBasemiddleware';
 import swal from 'sweetalert';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Button } from 'react-native';
 import ThingSpeakMiddleware from '../components/Redux/03-middleware/ThingSpeakMiddleware';
 
 export default function MyPlant(props) {
@@ -206,17 +205,34 @@ export default function MyPlant(props) {
                     </TouchableOpacity>
                     <Text style={styles.plantname}>{plant.plantName}</Text>
                     <Text style={styles.plantheader}>{plant.species}</Text>
-                    <Image style={styles.topimage} source={require('../assets/smile.png')} />
-                </View>
-                <View>
+
+                    <Text style={styles.fieldtxt}>{Field3.name}</Text>
+                    <View style={styles.buttonwrapper}>
+                    <TouchableHighlight 
+                    activeOpacity={1}
+                    onPress={ () => HandleSelect(Field3, "ON")}>
+                    <View style={styles.onbutton}>
+                    <Text style={styles.on}>ON</Text>
+                    </View>
+                    </TouchableHighlight>
+
+                    <TouchableHighlight 
+                    activeOpacity={1}
+                    onPress={ () => HandleSelect(Field3, "OFF")}>
+                    <View style={styles.offbutton}>
+                    <Text style={styles.off}>OFF</Text>
+                    </View>
+                    </TouchableHighlight>
+                    </View>
+                    </View>
+                    <View>
                     <Image style={styles.topimage2} source={setImage(plant.species.toLowerCase())} />
                 </View>
             </View>
             <View style={styles.container2}>
                 <View style={styles.date}>    
                     <Text style={styles.datetext1}>{moment(plant.paivays).format("DD.MM.YYYY")}</Text>
-                      <Text>ePlantName: {ePlantName} </Text>  
-
+                      <Text style={styles.potname}>Pot name:<Text style={styles.potdata}> {ePlantName} </Text></Text>
                     <View style={styles.moredetails}>
                 <Ionicons 
                 name="ios-trash" 
@@ -233,14 +249,13 @@ export default function MyPlant(props) {
                         <Text style={styles.field1Value}>{Field1.name}</Text>
                         <AnimatedCircularProgress
                         size={100}
-                        width={10}
+                        width={7}
                         fill={parseFloat(Field1.value, 10)}
-                        tintColor="#00e0ff"
-                        //onAnimationComplete={() => console.log('onAnimationComplete')}
-                        backgroundColor="#3d5875">
+                        tintColor="#51799B"
+                        backgroundColor="#E8E7E2">
                             {
                                 (fill) => (
-                                <Text>
+                                <Text style={styles.filltext}>
                                    {fill}
                                 </Text>
                                 )
@@ -252,14 +267,13 @@ export default function MyPlant(props) {
                         <View>
                         <AnimatedCircularProgress
                         size={100}
-                        width={10}
+                        width={7}
                         fill={parseFloat(Field2.value, 10)}
-                        tintColor="#00e0ff"
-                        //onAnimationComplete={() => console.log('onAnimationComplete')}
-                        backgroundColor="#3d5875">
+                        tintColor="#51799B"
+                        backgroundColor="#E8E7E2">
                             {
                                 (fill) => (
-                                <Text>
+                                <Text style={styles.filltext}>
                                    {fill}
                                 </Text>
                                 )
@@ -271,15 +285,6 @@ export default function MyPlant(props) {
 
                 {PlantUpdateDate()}
 
-                <Button 
-                title={Field3.name + " OFF"}
-                onPress={ () => HandleSelect(Field3, "OFF")}
-                />
-                <Button 
-                title={Field3.name + " ON"}
-                onPress={ () => HandleSelect(Field3, "ON")}
-                />
-                
                 <View style={styles.bottomheader}>
                 <Text style={styles.notifi}>Notifications</Text>
                 </View>
@@ -350,7 +355,7 @@ const styles = StyleSheet.create({
         marginLeft: 4,
     },
     field01value: {
-        fontSize: 10,
+        fontSize: 13,
         fontWeight: "normal",
         marginLeft: 3,
     },
@@ -360,7 +365,7 @@ const styles = StyleSheet.create({
         marginLeft: 4,
     },
     field02value: {
-        fontSize: 10,
+        fontSize: 13,
         fontWeight: "normal",
         marginLeft: 3,
     },
@@ -386,7 +391,7 @@ const styles = StyleSheet.create({
         color: 'grey'
     },
     plantname: {
-        fontSize: 22,
+        fontSize: 20,
         fontWeight: 'bold',
         marginTop: 10,
         marginLeft: 30
@@ -399,6 +404,47 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         fontStyle: 'italic'
     },
+    fieldtxt: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginLeft: 30,
+        marginTop: 20,
+        marginBottom: 10
+    },
+    buttonwrapper: {
+        flexDirection: 'row',
+        marginLeft: 30,
+    },
+    onbutton: {
+        alignItems: "center",
+        textAlign: "center",
+        backgroundColor: "#63816D",
+        padding: 5,
+        borderRadius: 10,
+        color: "white",
+        width: 40,
+        height: 30,
+    },
+    on: {
+        color: "white",
+        width: 40,
+        height: 30,
+    },
+    offbutton: {
+        textAlign: "center",
+        alignItems: "center",
+        backgroundColor: "#63816D",
+        padding: 5,
+        borderRadius: 10,
+        width: 40,
+        height: 30,
+        marginLeft: 5
+    },
+    off: {
+        color: "white",
+        width: 40,
+        height: 30,
+    },
     topimage: {
         width: 50,
         height: 50,
@@ -410,7 +456,7 @@ const styles = StyleSheet.create({
     topimage2: {
         width: 200,
         height: 200,
-        marginLeft: 40,
+        marginLeft: 30,
         marginTop: 10,
         borderRadius: 160
     },
@@ -433,6 +479,16 @@ const styles = StyleSheet.create({
         color: '#63816D',
         marginLeft: 20,
         fontWeight: 'bold'
+    },
+    potname: {
+        fontSize: 12,
+        color: '#63816D',
+        fontWeight: 'bold',
+    },
+    potdata: {
+        fontSize: 12,
+        color: '#63816D',
+        fontWeight: 'normal',
     },
     moredetails: {
         color: '#63816D',
@@ -468,6 +524,10 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         fontWeight: 'bold',
         marginRight: 50
+    },
+    filltext: {
+        fontSize: 22,
+        color: '#63816D'
     },
     field2Value: {
         fontSize: 16,

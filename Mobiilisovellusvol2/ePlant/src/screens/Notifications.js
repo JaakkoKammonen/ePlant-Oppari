@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   field01value: {
-    fontSize: 10,
+    fontSize: 13,
     fontWeight: "normal",
     marginLeft: 3,
   },
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   field02value: {
-    fontSize: 10,
+    fontSize: 13,
     fontWeight: "normal",
     marginLeft: 3,
   },

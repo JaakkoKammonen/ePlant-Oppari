@@ -120,9 +120,7 @@ export default function Home(props) {
                 renderItem={({ item }) =>
                 <View style={styles.bottomitem}>
                     <View>
-
                     <Image style={styles.circle} source={setImage(item.imagesrc.toLowerCase())}/>
-                    
                     </View>
                     <View >
                     <View style={styles.bottomtext}>
@@ -263,7 +261,7 @@ const styles = StyleSheet.create({
         marginLeft: 4,
     },
     field01value: {
-        fontSize: 10,
+        fontSize: 13,
         fontWeight: "normal",
         marginLeft: 3,
     },
@@ -273,7 +271,7 @@ const styles = StyleSheet.create({
         marginLeft: 4,
     },
     field02value: {
-        fontSize: 10,
+        fontSize: 13,
         fontWeight: "normal",
         marginLeft: 3,
     },

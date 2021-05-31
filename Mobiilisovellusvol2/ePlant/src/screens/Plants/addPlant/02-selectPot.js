@@ -88,11 +88,8 @@ export default function SelectPot(props) {
                     >
                     <Image style={styles.plantimage} source={require("../../../assets/pot_test.png")} />
                     <View style={styles.text_container}>
-                    <Text style={styles.plantheader}>{item[1].ePlantModel.type}</Text>
-            
+                    <Text style={styles.plantheader}>{item[1].ePlantModel.type}: <Text style={styles.potname}>{item[1].ePlantName}</Text></Text>  
                     </View>
-                    /** vaihda **/
-                    <Text style={styles.plantheader}>{item[1].ePlantName}</Text>
                 </TouchableOpacity>
                 
                 }
@@ -113,14 +110,12 @@ export default function SelectPot(props) {
          <TouchableOpacity onPress={() => navigate("SelectPlant")}>
                 <Ionicons name="arrow-back-outline" size={30} style={styles.arrow} />
                 </TouchableOpacity>
-            <View>
                 <Text style={styles.top}>Select a pot for your plant</Text>
                 <Text style={styles.note}>You can not add two plants in the same pot</Text>
-                
-            </View>
             
         {renderePlants()}
 
+        <Text style={styles.note2}>or</Text>
             <View style={styles.bottom}>
                 <Button
                     title="Add a new pot"
@@ -139,23 +134,31 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flex: 4,
+        marginTop: 60
     },
     text_container:{
         position: "absolute",
         width: 200,
-        height: 25,
+        height: 26,
         marginLeft: 10,
         bottom: 0,
         borderBottomLeftRadius : 4,
         borderBottomRightRadius: 4,
     },
-
     plantheader: { 
         textAlign: 'center',
         fontSize: 16,
         marginTop: 3,
         color: "white",
         backgroundColor: "rgba(0,0,0, 0.3)",
+        bottom: 0,
+        fontWeight: 'normal'
+    },
+    potname: {
+        textAlign: 'center',
+        fontSize: 16,
+        marginTop: 3,
+        color: "white",
         bottom: 0,
         fontWeight: 'normal'
     },
@@ -219,10 +222,21 @@ const styles = StyleSheet.create({
         color: "#63816D",
         marginBottom: 20
     },
+    note2: {
+        fontSize: 14,
+        textAlign:"center",
+        fontWeight: "italic",
+        color: "#63816D",
+        marginBottom: 5,
+        flexDirection: "row",
+        justifyContent: "center",
+        flex: 1,
+        marginTop: 30
+    },
     bottom: {
-        justifyContent:"center",
-        flexDirection:"row",
-        flex:1,
+        justifyContent: "center",
+        flexDirection: "row",
+        flex: 1,
     },
     btn: {
         backgroundColor: "#63816D",

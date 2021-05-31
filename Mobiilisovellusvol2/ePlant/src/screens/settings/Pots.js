@@ -53,7 +53,9 @@ export default function Pots(props) {
                         <Card>
                             <Card.Title>POT</Card.Title>
                             <Card.Divider />
+                            <Card.Image source={require("../../assets/selectpot.png")} style={styles.potimage}/>
                             <Text style={styles.modeltype}>Model: <Text style={styles.modeldata}>{ePlantPots[item].ePlantModel.type}</Text> </Text>
+                            <Text style={styles.pname}>Name: <Text style={styles.pdata}>{ePlantPots[item].ePlantName}</Text> </Text>
                             <Text style={styles.version}>Version: <Text style={styles.versiondata}>{ePlantPots[item].ePlantModel.version}</Text></Text>
                             <Text style={styles.channel}>Channel ID: <Text style={styles.channeldata}>{ePlantPots[item].channel_id}</Text> </Text>
                             <Text style={styles.apikey}>API key: <Text style={styles.apidata}>{ePlantPots[item].write_apikey}</Text> </Text>
@@ -98,6 +100,12 @@ export default function Pots(props) {
 };
 
 const styles = StyleSheet.create({
+    potimage: {
+        width: 172,
+        height: 187,
+        marginLeft: 60,
+        marginRight: 50
+    },
     modeltype: {
         fontSize: 15,
         fontWeight: "bold",
@@ -106,6 +114,19 @@ const styles = StyleSheet.create({
         letterSpacing: 0.5,
     },
     modeldata: {
+        fontSize: 15,
+        fontWeight: "normal",
+        marginTop: 20,
+        marginLeft: 5,
+        letterSpacing: 0.5,
+    },
+    pname: {
+        fontSize: 15,
+        fontWeight: "bold",
+        marginLeft: 20,
+        letterSpacing: 0.5,
+    },
+    pdata: {
         fontSize: 15,
         fontWeight: "normal",
         marginTop: 20,
@@ -174,7 +195,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 2,
         padding: 3,
-        marginBottom: 10
+        marginBottom: 5,
     },
     arrow: {
         marginLeft: 20,
