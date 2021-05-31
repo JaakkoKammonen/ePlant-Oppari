@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser_Notifications } from "./Redux/01-actions"
+import { setUser_Notifications } from "../Redux/01-actions"
 
 export default function PlantsNotification() {
 

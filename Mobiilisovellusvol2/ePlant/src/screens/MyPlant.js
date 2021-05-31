@@ -76,7 +76,7 @@ export default function MyPlant(props) {
                 title: "Error",
                 text: "Something went wrong while getting plant data. Check that your Channel Id is correct!",
              })
-             console.log(error)
+             //console.log(error)
             });
     }
 
