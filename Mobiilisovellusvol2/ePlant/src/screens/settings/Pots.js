@@ -177,14 +177,14 @@ const styles = StyleSheet.create({
     },
     buttonpot: {
         backgroundColor: "#63816D",
-        borderRadius: 3,
+        borderRadius: 10,
+        padding: 5,
         marginTop: 10,
-        fontSize: 12,
         fontWeight: "bold",
         textTransform: "uppercase",
         letterSpacing: 0.5,
-        width: 100,
-        height: 40
+        width: 90,
+        height: 30
     },
     noplantsyet: {
         fontSize: 14,
