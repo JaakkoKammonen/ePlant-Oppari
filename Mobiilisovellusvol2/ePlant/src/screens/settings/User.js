@@ -10,6 +10,32 @@ export default function UserNotification(props) {
    
     const { navigate } = props.navigation;
     let user = useSelector(state => state.user)
+    let plants = useSelector(state => state.firebase.my_Plants)
+    let ePlants = useSelector(state => state.firebase.my_ePlants)
+
+    try {
+      if(plants !== "No plants yet") {
+        plants = Object.values(plants).length;
+      } else {
+        plants = 0
+      }
+      
+    } catch (error) {
+      plants = 0;
+
+    }
+
+    try {
+      if(ePlants !== "No ePlants yet") {
+        ePlants = Object.values(ePlants).length;
+      } else {
+        ePlants = 0
+      }
+    } catch (error) {
+      ePlants = 0;
+      
+    }
+    //console.log(plants, ePlants)
 
     const DeleteUser = () => {
 
@@ -61,11 +87,11 @@ export default function UserNotification(props) {
           <View style={styles.profiledetail}>
             <View style={styles.detailcontent}>
               <Text style={styles.title}>Plants</Text>
-              <Text style={styles.count}>3</Text>
+              <Text style={styles.count}>{plants}</Text>
             </View>
             <View style={styles.detailcontent}>
               <Text style={styles.title}>Pots</Text>
-              <Text style={styles.count}>2</Text>
+              <Text style={styles.count}>{ePlants}</Text>
             </View>
           </View>
                 <View style={styles.buttoncontainer}>
