@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, StyleSheet, FlatList, Image, ScrollView } from "react-native";
 import { useSelector } from "react-redux";
 import setImage from "../components/SetImage";
