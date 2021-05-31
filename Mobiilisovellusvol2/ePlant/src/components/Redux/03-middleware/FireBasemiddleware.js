@@ -399,7 +399,7 @@ function DeleteUserEPlant(ePlantID, navigate) {
 
     // Jos kasveja ei ole poistetaan huoletta ePlant
     if (allMyPlants === null) {
-      console.log("Ei kasveja. Poistetaan pelkkä ePlant")
+      //console.log("Ei kasveja. Poistetaan pelkkä ePlant")
       firebase.database().ref('users/' + user.uid + "/ePlant/" + ePlantID).remove()
       navigate('Home', {showSnackbar: true, plantName: "ePlant was deleted!"})
 
@@ -441,7 +441,7 @@ function DeleteUserEPlant(ePlantID, navigate) {
 
       } else {
         // Jos kasvia listasta ei löydy sama ePlantPottia poistetaan pelkästään ePlant
-        console.log("Kasvi listasta ei löytynyt samaa ePlanttiä. Poistetaan pelkkä ePlant")
+        //console.log("Kasvi listasta ei löytynyt samaa ePlanttiä. Poistetaan pelkkä ePlant")
         firebase.database().ref('users/' + user.uid + "/ePlant/" + ePlantID).remove();
 
         swal("Poof! ePlant deleted!", {

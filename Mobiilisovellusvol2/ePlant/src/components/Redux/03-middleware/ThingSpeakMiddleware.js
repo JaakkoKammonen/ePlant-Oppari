@@ -8,7 +8,7 @@ import swal from 'sweetalert';
             while (true) {
                 if (parseInt(responseJson) == 0) { 
                     AirPumpON(write_apikey,fieldNumber)
-                    console.log(responseJson);
+                   // console.log(responseJson);
                 } 
 
                 swal(
@@ -38,7 +38,7 @@ import swal from 'sweetalert';
             while (true) {
                 if (parseInt(responseJson) == 0) { 
                     AirPumpOFF(write_apikey,fieldNumber)
-                    console.log(responseJson);
+                    //console.log(responseJson);
                 } 
 
                 swal(
