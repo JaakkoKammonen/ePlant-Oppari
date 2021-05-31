@@ -28,7 +28,7 @@ export default function Login(props) {
 
   const togglePasswordVisiblity = () => {
     setPasswordShown(passwordShown ? false : true);
-    //console.log(passwordShown);
+    console.log(passwordShown);
   };
 
   return (
@@ -49,7 +49,7 @@ export default function Login(props) {
         placeholder="Password"
         type={passwordShown ? "text" : "password"}
         required={true}
-        secureTextEntry={true}
+        secureTextEntry={passwordShown}
         inputStyle={styles.signintext}
         leftIcon={<MaterialIcons name="lock" size={18} color="grey" />}
         rightIcon={
