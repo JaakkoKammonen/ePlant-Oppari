@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
       },
       userbutton: {
         backgroundColor: "#63816D",
-        borderRadius: 3,
+        borderRadius: 10,
         fontSize: 12,
         fontWeight: "bold",
         textTransform: "uppercase",

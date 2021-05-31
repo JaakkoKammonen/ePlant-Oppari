@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   },
   buttonedituser: {
     backgroundColor: "#63816D",
-    borderRadius: 3,
+    borderRadius: 10,
     marginTop: 10,
     fontSize: 12,
     fontWeight: "bold",
