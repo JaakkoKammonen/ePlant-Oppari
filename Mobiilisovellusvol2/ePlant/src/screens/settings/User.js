@@ -79,7 +79,7 @@ export default function UserNotification(props) {
             <TouchableOpacity onPress={() => navigate('Settings')}>
                     <Ionicons name="arrow-back-outline" size={30} style={styles.arrow} />
                 </TouchableOpacity></View>
-            <Image style={styles.avatar} source={require("../../assets/userprofile.png")}/>
+            <Image style={styles.avatar} source={require("../../assets/safety.png")}/>
             <View style={styles.body}>
               <View style={styles.bodycontent}>
               <Text style={styles.name}>{user.displayName}</Text>
@@ -124,11 +124,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-    arrow: {
-        marginLeft: 20,
-        marginTop: 10,
-        color: 'grey'
-    },
     header:{
         shadowColor: "#DEDDDD",
         backgroundColor: "#FAFAFA",
@@ -139,6 +134,11 @@ const styles = StyleSheet.create({
           },
         height:200,
       },
+    arrow: {
+        marginLeft: 20,
+        marginTop: 10,
+        color: 'grey'
+    },
       avatar: {
         width: 130,
         height: 130,

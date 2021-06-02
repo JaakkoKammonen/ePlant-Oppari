@@ -30,7 +30,7 @@ export default function Login(props) {
         <Ionicons name="arrow-back-outline" size={30} style={styles.arrow} />
         </TouchableOpacity>
         </View>
-    <Image style={styles.avatar} source={require("../../assets/userprofile.png")}/>
+    <Image style={styles.avatar} source={require("../../assets/safety.png")}/>
     <View style={styles.body}>
               <View style={styles.bodycontent}>
               <View>
