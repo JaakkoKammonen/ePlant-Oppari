@@ -12,7 +12,7 @@ export default function Signup(props) {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
-  const [passwordShown, setPasswordShown] = useState(false);
+  const [passwordShown, setPasswordShown] = useState(true);
   const navigate = props.navigation.navigate;
   //console.log(props.navigation.state.params.errorAlert.title)
 
@@ -56,7 +56,7 @@ export default function Signup(props) {
           placeholder="Password"
           type={passwordShown ? "text" : "password"}
           required={true}
-          secureTextEntry={true}
+          secureTextEntry={passwordShown}
           inputStyle={styles.signuptext}
           leftIcon={<MaterialIcons name="lock" size={18} color="grey" />}
           rightIcon={
