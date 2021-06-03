@@ -21,17 +21,17 @@ export default function Safety(props) {
           <View style={styles.bodycontent}>
           <View style={styles.textwrapper}>
         <Text h4>Privacy Policy</Text>
-        <Text>When registering on our app, as appropriate, you may be asked to enter your name, email address or other details 
+        <Text style={styles.safety_text}>When registering on our app, as appropriate, you may be asked to enter your name, email address or other details 
         so that we can provide our services to you.</Text>
         </View>
         <View style={styles.textwrapper}>
         <Text h4>Firebase</Text>
-        <Text>We use firebase as a database that stores user information and plant / pot information. 
+        <Text style={styles.safety_text}>We use firebase as a database that stores user information and plant / pot information. 
         The user is able to manage their own plants and pots by logging in.</Text>
         </View>
         <View style={styles.textwrapper}>
         <Text h4>ThingSpeak</Text>
-        <Text>Thingspeak is an open platform that allows you to aggregate, visualize, and analyze live data streams in the cloud. The values ​​are 
+        <Text style={styles.safety_text}>Thingspeak is an open platform that allows you to aggregate, visualize, and analyze live data streams in the cloud. The values ​​are 
         visible to all ThingSpeak users. With authentication, only the user can edit their channel information. We use data from the pot 
         to measure water pH and ppm values ​​(in hydro version) or soil moisture and water level (in soil version). The user can read data 
         from thingspeak.com or directly from the application on their own plant's screen.</Text>
@@ -82,5 +82,9 @@ const styles = StyleSheet.create({
       },
       textwrapper: {
         margin: 10
+      },
+      safety_text: {
+        marginTop: 10,
+        fontSize: 13,
       }
 });

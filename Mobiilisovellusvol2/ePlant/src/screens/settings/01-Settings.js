@@ -19,6 +19,11 @@ export default function Settings(props) {
       navigate: "Pots",
     },
     {
+      name: "Info",
+      icon: "info",
+      navigate: "Info",
+    },
+    {
       name: "Safety",
       icon: "security",
       navigate: "Safety",
@@ -29,9 +34,9 @@ export default function Settings(props) {
       navigate: "User",
     },
     {
-      name: "Info",
-      icon: "info",
-      navigate: "Info",
+      name: "Help",
+      icon: "help",
+      navigate: "Help",
     },
     
   ];
