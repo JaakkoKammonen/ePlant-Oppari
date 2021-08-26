@@ -115,7 +115,6 @@ export default function SelectPot(props) {
             
         {renderePlants()}
 
-        <Text style={styles.note2}>or</Text>
             <View style={styles.bottom}>
                 <Button
                     title="Add a new pot"
@@ -236,13 +235,12 @@ const styles = StyleSheet.create({
     bottom: {
         justifyContent: "center",
         flexDirection: "row",
-        flex: 1,
     },
     btn: {
         backgroundColor: "#63816D",
         borderRadius: 3,
         marginRight: 3,
-        marginTop: 10,
+        marginTop: 15,
         fontSize: 12,
         fontWeight: "bold",
         textTransform: "uppercase",
